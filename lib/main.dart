@@ -1,125 +1,258 @@
-import 'package:flutter/material.dart';
+//메인 페이지
+import 'package:flutter/material.dart'; // Flutter의 기본 위젯과 머티리얼 디자인 사용
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart'; // 뉴모픽 디자인 사용
+import 'package:shared_preferences/shared_preferences.dart'; // 로컬 저장소 접근을 위한 패키지
+import 'diet/diet_page.dart'; // 식단 관리 페이지 임포트
+import 'routine/routine_page.dart'; // 루틴 관리 페이지 임포트
+import 'package:oss_team_project_app/exercise/exercise_info_page.dart'; // 운동 정보 페이지 임포트
+import 'user_info_page.dart'; // 사용자 정보 페이지 임포트
 
+// 앱의 시작점
 void main() {
-  runApp(const MyApp());
+  runApp(HealthManagementApp()); // HealthManagementApp 위젯 실행
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// 건강 관리 앱의 메인 클래스
+class HealthManagementApp extends StatelessWidget {
+  final Color backgroundColor = Colors.white; // 앱의 배경색 설정
+  final Color accentColor = Colors.blue; // 강조 색상 설정
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return NeumorphicApp(
+      title: 'FITNESS 앱', // 앱 제목 설정(임시)
+      theme: NeumorphicThemeData(
+        baseColor: backgroundColor, // 기본 배경색
+        accentColor: accentColor, // 강조 색상
+        defaultTextColor: Colors.black, // 기본 텍스트 색상
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      themeMode: ThemeMode.light, // 항상 라이트 모드 사용
+      home: InitialScreen(), // 앱 시작 시 InitialScreen 위젯 표시
+      debugShowCheckedModeBanner: false, // 디버그 배너 숨김
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+// 초기 화면을 보여주는 위젯 클래스
+class InitialScreen extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _InitialScreenState createState() => _InitialScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+// InitialScreen의 상태를 관리하는 클래스
+class _InitialScreenState extends State<InitialScreen> {
+  bool _isUserInfoSaved = false; // 사용자 정보 저장 여부를 확인하는 변수
 
-  void _incrementCounter() {
+  @override
+  void initState() {
+    super.initState();
+    _checkUserInfoStatus(); // 위젯 초기화 시 사용자 정보 저장 상태 확인
+  }
+
+  // 사용자 정보가 저장되어 있는지 확인하는 함수
+  Future<void> _checkUserInfoStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance(); // SharedPreferences 인스턴스 획득
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      // 나이, 키, 몸무게 정보가 모두 저장되어 있는지 확인
+      _isUserInfoSaved = prefs.containsKey('age') &&
+          prefs.containsKey('height') &&
+          prefs.containsKey('weight');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    // 사용자 정보가 저장되어 있으면 메인 페이지로, 아니면 사용자 정보 입력 페이지로 이동
+    return _isUserInfoSaved ? HomePage() : UserInfoInputPage();
+  }
+}
+
+// 사용자 정보 입력 페이지를 나타내는 위젯 클래스
+class UserInfoInputPage extends StatefulWidget {
+  @override
+  _UserInfoInputPageState createState() => _UserInfoInputPageState();
+}
+
+// UserInfoInputPage의 상태를 관리하는 클래스
+class _UserInfoInputPageState extends State<UserInfoInputPage> {
+  final TextEditingController ageInputController = TextEditingController(); // 나이 입력 컨트롤러
+  final TextEditingController heightInputController = TextEditingController(); // 키 입력 컨트롤러
+  final TextEditingController weightInputController = TextEditingController(); // 몸무게 입력 컨트롤러
+
+  // 사용자 정보를 로컬 저장소에 저장하는 함수
+  Future<void> _saveUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance(); // SharedPreferences 인스턴스 획득
+    await prefs.setInt('age', int.parse(ageInputController.text)); // 나이 저장
+    await prefs.setDouble('height', double.parse(heightInputController.text)); // 키 저장
+    await prefs.setDouble('weight', double.parse(weightInputController.text)); // 몸무게 저장
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()), // 저장 후 메인 페이지로 이동
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        backgroundColor: Colors.white, // 앱바 배경색 설정
+        title: Text(
+          '사용자 정보 입력',
+          style: TextStyle(
+            fontFamily: 'Bebas Neue', // 폰트 패밀리 설정
+            fontSize: 28.0, // 폰트 크기 설정
+            fontWeight: FontWeight.w900, // 폰트 굵기 설정
+          ),
+        ),
+        iconTheme: IconThemeData(), // 아이콘 테마 설정
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: Padding(
+        padding: EdgeInsets.all(16.0), // 화면 여백 설정
+        child: ListView(
+          children: [
+            // 나이 입력 필드
+            _buildTextField(
+              controller: ageInputController,
+              label: '나이',
+              hintText: '나이를 입력하세요',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            SizedBox(height: 16.0), // 입력 필드 간 간격
+            // 키 입력 필드
+            _buildTextField(
+              controller: heightInputController,
+              label: '키 (cm)',
+              hintText: '키를 입력하세요',
+            ),
+            SizedBox(height: 16.0), // 입력 필드 간 간격
+            // 몸무게 입력 필드
+            _buildTextField(
+              controller: weightInputController,
+              label: '몸무게 (kg)',
+              hintText: '몸무게를 입력하세요',
+            ),
+            SizedBox(height: 32.0), // 버튼과 입력 필드 간 간격
+            // 저장 버튼
+            ElevatedButton(
+              onPressed: _saveUserInfo, // 버튼 클릭 시 사용자 정보 저장 함수 호출
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent, // 버튼 배경색
+                elevation: 4.0, // 버튼 그림자 높이
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+                ),
+                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 내부 여백 설정
+              ),
+              child: Text(
+                '저장하고 시작하기',
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue', // 폰트 패밀리 설정
+                  fontSize: 20.0, // 폰트 크기 설정
+                  fontWeight: FontWeight.bold, // 폰트 굵기 설정
+                  color: Colors.white, // 폰트 색상 설정
+                ),
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  // 텍스트 입력 필드를 생성하는 함수
+  Widget _buildTextField({
+    required TextEditingController controller, // 입력 컨트롤러
+    required String label, // 레이블 텍스트
+    String? hintText, // 힌트 텍스트
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.0), // 입력 필드 내부 여백 설정
+      decoration: BoxDecoration(
+        color: Colors.grey[100], // 입력 필드 배경색 설정
+        borderRadius: BorderRadius.circular(16.0), // 입력 필드 모서리 둥글게 설정
+      ),
+      child: TextField(
+        controller: controller, // 입력 컨트롤러 연결
+        decoration: InputDecoration(
+          labelText: label, // 레이블 텍스트 설정
+          labelStyle: TextStyle(
+            fontFamily: 'Roboto', // 폰트 패밀리 설정
+            fontWeight: FontWeight.w600, // 폰트 굵기 설정
+            fontSize: 16.0, // 폰트 크기 설정
+            color: Colors.black87, // 폰트 색상 설정
+          ),
+          hintText: hintText, // 힌트 텍스트 설정
+          hintStyle: TextStyle(
+            fontFamily: 'Roboto', // 폰트 패밀리 설정
+            fontSize: 14.0, // 폰트 크기 설정
+            color: Colors.black54, // 폰트 색상 설정
+          ),
+          border: InputBorder.none, // 기본 입력창 테두리 제거
+        ),
+        keyboardType: TextInputType.number, // 숫자 입력 전용 키보드 사용
+      ),
     );
   }
 }
+
+// 메인 페이지를 나타내는 위젯 클래스
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+// HomePage의 상태를 관리하는 클래스
+class _HomePageState extends State<HomePage> {
+  MenuOption _selectedOption = MenuOption.Diet; // 현재 선택된 메뉴 옵션, 기본값은 식단
+
+  // 선택된 메뉴에 따라 해당 페이지를 반환하는 함수
+  Widget _getSelectedPage() {
+    switch (_selectedOption) {
+      case MenuOption.Diet:
+        return DietPage(); // 식단 관리 페이지 반환
+      case MenuOption.Routine:
+        return RoutinePage(); // 루틴 관리 페이지 반환
+      case MenuOption.ExerciseInfo:
+        return ExerciseInfoPage(); // 운동 정보 페이지 반환
+      default:
+        return Container(); // 기본적으로 빈 컨테이너 반환
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _getSelectedPage(), // 선택된 페이지를 화면에 표시
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: NeumorphicTheme.baseColor(context), // 바탕색 설정
+        selectedItemColor: NeumorphicTheme.isUsingDark(context)
+            ? Colors.blueAccent
+            : Colors.blue, // 선택된 아이템 색상
+        unselectedItemColor:
+        NeumorphicTheme.isUsingDark(context) ? Colors.white70 : Colors.grey, // 선택되지 않은 아이템 색상
+        currentIndex: _selectedOption.index, // 현재 선택된 인덱스 설정
+        onTap: (int index) {
+          setState(() {
+            _selectedOption = MenuOption.values[index]; // 선택된 메뉴 옵션 변경
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant), // 아이콘 설정
+            label: '식단', // 메뉴 레이블
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list), // 아이콘 설정
+            label: '루틴', // 메뉴 레이블
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center), // 아이콘 설정
+            label: '운동 정보', // 메뉴 레이블
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// 메뉴 옵션을 정의하는 열거형(enum)
+enum MenuOption { Diet, Routine, ExerciseInfo }
