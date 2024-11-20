@@ -1,3 +1,4 @@
+
 // 루틴 상세 페이지
 import 'dart:convert'; // JSON 데이터를 인코딩 및 디코딩하기 위해 사용
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
@@ -67,11 +68,14 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     }
   }
 
+
   // 루틴을 삭제하고 이전 화면으로 돌아간다
   void _deleteRoutine() {
     widget.onDelete(); // 삭제 함수 호출
     Navigator.pop(context); // 화면 닫기
   }
+
+
 
   @override
   void dispose() {
@@ -143,7 +147,31 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 );
               }).toList(),
             ],
+
             SizedBox(height: 32.0), // 간격 추가
+            ElevatedButton(
+              onPressed: _showAddExerciseForm, // 운동 추가 폼 표시
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // 버튼 배경색
+                elevation: 4.0, // 그림자 효과
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0), // 둥근 모서리
+                ),
+                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩
+              ),
+              child: Text(
+                '운동 추가', // 버튼 텍스트
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue', // 폰트
+                  fontSize: 20.0, // 글자 크기
+                  fontWeight: FontWeight.bold, // 글자 두께
+                  color: Colors.white, // 텍스트 색상
+                ),
+              ),
+            ),
+
+
+            SizedBox(height: 16.0), // 간격 추가
             ElevatedButton(
               onPressed: _saveRoutine, // 저장 버튼 클릭 시 루틴 저장
               style: ElevatedButton.styleFrom(
@@ -185,9 +213,183 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 ),
               ),
             ),
+
           ],
         ),
       ),
+    );
+  }
+
+  // 운동 추가 폼 표시 메소드
+  void _showAddExerciseForm() {
+    String? selectedBodyPart; // 선택된 운동 부위
+    List<String> filteredExercises = []; // 필터링된 운동 목록
+    String? selectedExercise; // 선택된 운동
+    int? selectedTime; // 선택된 운동 시간
+    int? selectedSets; // 선택된 세트 수
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom), // 키보드 높이에 맞게 패딩 조절
+              child: Padding(
+                padding: const EdgeInsets.all(16.0), // 전체 패딩
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // 운동 부위 선택
+                    DropdownButtonFormField<String>(
+                      value: selectedBodyPart, // 선택된 운동 부위
+                      items: bodyParts.map((part) => DropdownMenuItem(
+                        value: part,
+                        child: Text(
+                          part,
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedBodyPart = value; // 운동 부위 업데이트
+                          filteredExercises = allExercises
+                              .where((exercise) => exercise['bodyPart'] == selectedBodyPart) // 운동 목록 필터링
+                              .map((exercise) => exercise['name'] as String)
+                              .toList();
+                          selectedExercise = null; // 운동 초기화
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '운동 부위',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
+                    // 운동 이름 선택
+                    DropdownButtonFormField<String>(
+                      value: selectedExercise,
+                      items: filteredExercises.map((exerciseName) => DropdownMenuItem(
+                        value: exerciseName,
+                        child: Text(
+                          exerciseName,
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedExercise = value; // 운동 이름 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '운동 이름',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
+                    // 운동 시간 선택
+                    DropdownButtonFormField<int>(
+                      value: selectedTime,
+                      items: secondsOptions.map((seconds) => DropdownMenuItem(
+                        value: seconds,
+                        child: Text('$seconds 초'),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedTime = value; // 운동 시간 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '운동 시간 (초)',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
+                    // 세트 수 선택
+                    DropdownButtonFormField<int>(
+                      value: selectedSets,
+                      items: setOptions.map((sets) => DropdownMenuItem(
+                        value: sets,
+                        child: Text('$sets 세트'),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedSets = value; // 세트 수 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '세트 수',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 32.0),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        if (selectedBodyPart != null &&
+                            selectedExercise != null &&
+                            selectedTime != null &&
+                            selectedSets != null) {
+                          setState(() {
+                            exercises.add({
+                              'bodyPart': selectedBodyPart,
+                              'exercise': selectedExercise,
+                              'time': selectedTime,
+                              'sets': selectedSets,
+                            }); // 운동 추가
+                          });
+                          Navigator.pop(context); // 모달 닫기
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('모든 정보를 입력해주세요.')),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
+                      child: Text(
+                        '추가',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
