@@ -202,7 +202,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
             mainAxisSize: MainAxisSize.min, // 최소 크기 설정
             children: [
               ListTile(
-                leading: Icon(Icons.edit, color: Colors.blue), // 수정 아이콘
+                leading: Icon(Icons.edit, color: Colors.black), // 수정 아이콘
                 title: Text('운동 수정'), // 수정 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
@@ -210,7 +210,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.delete, color: Colors.red), // 삭제 아이콘
+                leading: Icon(Icons.delete, color: Colors.black), // 삭제 아이콘
                 title: Text('운동 삭제'), // 삭제 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
