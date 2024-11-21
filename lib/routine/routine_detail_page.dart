@@ -594,6 +594,41 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     SizedBox(height: 16.0),
                     // 세트 수 선택
+                    //************************************************************************************************
+                    // 세트 당 운동 횟수 선택
+                    DropdownButtonFormField<int>(
+                      value: repsOptions.contains(exercises[index]['reps']) ? exercises[index]['reps'] : null, // 선택된 세트 당 운동 횟수 설정
+                      items: repsOptions.map((reps) => DropdownMenuItem(
+                        value: reps,
+                        child: Text(
+                          '$reps 회',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          exercises[index]['reps'] = value; // 세트 당 운동횟수 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '세트 당 운동 횟수',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      hint: Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
+                    ),
+                    SizedBox(height: 16.0),
+                    //************************************************************************************************
                     DropdownButtonFormField<int>(
                       value: setOptions.contains(exercises[index]['sets']) ? exercises[index]['sets'] : null, // 선택된 세트 수 설정
                       items: setOptions.map((sets) => DropdownMenuItem(
@@ -631,13 +666,15 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         if (selectedBodyPart != null &&
                             exercises[index]['exercise'] != null &&
                             exercises[index]['time'] != null &&
-                            exercises[index]['sets'] != null) {
+                            exercises[index]['sets'] != null &&
+                            exercises[index]['reps'] != null) {
                           setState(() {
                             exercises[index] = {
                               'exercise': exercises[index]['exercise'], // 운동 이름 업데이트
                               'bodyPart': selectedBodyPart, // 운동 부위 업데이트
                               'time': exercises[index]['time'], // 운동 시간 업데이트
                               'sets': exercises[index]['sets'], // 세트 수 업데이트
+                              'reps': exercises[index]['reps'], // 세트 당 운동 횟수 업데이트
                             };
                           });
                           Navigator.pop(context); // 모달 닫기
