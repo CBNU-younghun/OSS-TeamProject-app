@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart'; // 데이터 저장
 import 'add_diet_page.dart'; // 식단 추가 페이지를 위한 선언
 import 'diet_detail_page.dart'; // 식단 상세 페이지를 위한 선언
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위한 파일 추가
+import 'package:oss_team_project_app/utils/json_loader.dart'; // JSON 로더 임포트
+
 
 // DietPage는 사용자가 식단을 관리할 수 있는 화면을 제공함
 class DietPage extends StatefulWidget {
@@ -18,8 +20,16 @@ class _DietPageState extends State<DietPage> {
   @override
   void initState() {
     super.initState();
-    _loadDiets(); // 위젯 초기화 시 저장된 식단 데이터를 로드함
+    _loadDiets();
+    _initializeJsonData(); // JSON 데이터 초기화
   }
+
+// JSON 데이터 로드 및 저장
+  List<Map<String, dynamic>> jsonData = [];
+  void _initializeJsonData() async {
+    jsonData = await loadJsonData();
+  }
+
 
   // 저장된 식단 데이터를 SharedPreferences에서 불러오는 함수
   void _loadDiets() async {
