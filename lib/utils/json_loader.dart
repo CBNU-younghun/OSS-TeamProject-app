@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-Future<List<Map<String, dynamic>>> loadJsonData() async {
-  // assets 폴더에서 JSON 파일 읽기
-  String jsonString = await rootBundle.loadString('assets/food_data.json');
+Future<List<Map<String, dynamic>>> loadJsonData(String fileName) async {
+  // 특정 파일 이름의 JSON 파일 읽기
+  String jsonString = await rootBundle.loadString('assets/food_data_by_category/$fileName.json');
   return List<Map<String, dynamic>>.from(json.decode(jsonString));
 }
 
