@@ -1,6 +1,7 @@
 // 식단 추가 페이지
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
 import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하거나 시스템과의 상호작용을 위해 사용
+import 'package:oss_team_project_app/utils/json_loader.dart'; // JSON 로더 임포트
 
 // AddDietPage는 새로운 식단을 추가할 수 있는 화면을 제공한다
 class AddDietPage extends StatefulWidget {
@@ -26,6 +27,46 @@ class _AddDietPageState extends State<AddDietPage> {
 
   // 추가된 음식 목록을 저장하는 리스트
   List<Map<String, dynamic>> foodList = [];
+
+  // 추가한 변수: JSON 데이터를 저장하는 리스트
+  List<Map<String, dynamic>> foodData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFoodData(); // JSON 데이터를 로드
+  }
+
+  // 추가한 함수: JSON 데이터를 로드하는 함수
+  Future<void> _loadFoodData() async {
+    foodData = await loadJsonData(); // json_loader.dart의 loadJsonData 함수 호출
+  }
+
+  // JSON 데이터를 이용하여 음식을 검색 후 추가
+  void _searchAndAddFood() async {
+    if (foodData.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('음식 데이터를 불러오는 중입니다. 잠시 후 다시 시도해주세요.')),
+      );
+      return;
+    }
+
+    showSearch(
+      context: context,
+      delegate: FoodSearchDelegate(
+        foodData: foodData, // 검색에 사용할 JSON 데이터
+        onFoodSelected: (selectedFood) {
+          setState(() {
+            // 선택된 음식을 foodList에 추가
+            foodList.add({
+              'foodName': selectedFood['음식명'], // JSON 데이터의 '음식명' 키 사용
+              'calories': selectedFood['칼로리'], // JSON 데이터의 '칼로리' 키 사용
+            });
+          });
+        },
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -162,26 +203,51 @@ class _AddDietPageState extends State<AddDietPage> {
             SizedBox(height: 16.0), // 간격 추가
 
             // 음식 추가 버튼
+            // 기존 음식 추가 버튼
             ElevatedButton(
               onPressed: _addFood, // 버튼 클릭 시 _addFood 함수 호출
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // 버튼 배경색을 녹색으로 설정
-                elevation: 4.0, // 버튼의 그림자 높이를 설정
+                backgroundColor: Colors.green,
+                elevation: 4.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리를 둥글게 설정
+                  borderRadius: BorderRadius.circular(16.0),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 세로 패딩을 16.0으로 설정
+                padding: EdgeInsets.symmetric(vertical: 16.0),
               ),
               child: Text(
-                '음식 추가', // 버튼에 표시될 텍스트
+                '음식 추가',
                 style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상을 흰색으로 설정
+                  fontFamily: 'Bebas Neue',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ),
+            SizedBox(height: 16.0), // 간격 추가
+
+            // 추가할 음식 검색 버튼
+            ElevatedButton(
+              onPressed: _searchAndAddFood, // JSON 데이터 기반 검색
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                elevation: 4.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+              ),
+              child: Text(
+                '음식 검색',
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+
             SizedBox(height: 16.0), // 간격 추가
 
             // 음식 목록이 비어있지 않을 경우 추가된 음식 목록을 표시
@@ -280,5 +346,58 @@ class _AddDietPageState extends State<AddDietPage> {
         keyboardType: keyboardType, // 텍스트 필드의 키보드 타입 설정
       ),
     );
+  }
+}
+
+class FoodSearchDelegate extends SearchDelegate {
+  final List<Map<String, dynamic>> foodData;
+  final Function(Map<String, dynamic>) onFoodSelected;
+
+  FoodSearchDelegate({required this.foodData, required this.onFoodSelected});
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () => query = '',
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () => close(context, null),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final results = foodData.where((food) {
+      final foodName = food['음식명'] as String;
+      return foodName.contains(query);
+    }).toList();
+
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final food = results[index];
+        return ListTile(
+          title: Text('${food['음식명']}'),
+          subtitle: Text('칼로리: ${food['칼로리']} kcal'),
+          onTap: () {
+            onFoodSelected(food);
+            close(context, null);
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return buildResults(context);
   }
 }
