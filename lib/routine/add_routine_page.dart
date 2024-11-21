@@ -49,9 +49,11 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
           'time': selectedTime, // 운동 시간 추가
           'sets': selectedSets, // 세트 수 추가
           'bodyPart': selectedExercise!['bodyPart'], // 운동 부위 추가
+          'reps':selectedReps, //세트 당 운동횟수 추가
         });
         selectedTime = null; // 선택된 시간 초기화
         selectedSets = null; // 선택된 세트 수 초기화
+        selectedReps = null; // 선택된 세트 당 운동횟수 초기화
       });
     } else {
       // 유효하지 않은 입력 처리
@@ -251,11 +253,11 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
               ),
               child: DropdownButtonFormField<int>(
-                value: selectedReps, // 현재 선택된 세트 수
-                items: repsOptions.map((sets) => DropdownMenuItem(
-                  value: sets, // 각 세트 수 값을 드롭다운 항목으로 설정
+                value: selectedReps, // 현재 선택된 세트 당 운동횟수
+                items: repsOptions.map((reps) => DropdownMenuItem(
+                  value: reps, // 각 세트 당 운동횟수 값을 드롭다운 항목으로 설정
                   child: Text(
-                    '$sets 회', // 세트 수 표시
+                    '$reps 회', // 세트 당 운동횟수 표시
                     style: TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontWeight: FontWeight.w600, // 글자 두께 설정
@@ -266,7 +268,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 )).toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedReps = value; // 선택된 세트 수 업데이트
+                    selectedReps = value; // 선택된 세트 당 운동횟수 업데이트
                   });
                 },
                 decoration: InputDecoration(
@@ -319,7 +321,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
                 return ListTile(
                   title: Text(
-                    '${exercise['exercise']} - ${exercise['time']}초, ${exercise['sets']}세트', // 운동 이름, 시간, 세트 수 표시
+                    '${exercise['exercise']} - ${exercise['time']}초, ${exercise['sets']}세트, ${exercise['reps']}회',// 운동 이름, 시간, 세트 수 표시
                     style: TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
