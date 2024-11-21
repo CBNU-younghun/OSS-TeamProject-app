@@ -18,6 +18,10 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
   int? selectedSets; // 선택된 세트 수
   List<int> secondsOptions = List.generate(60, (index) => index + 1); // 운동 시간 옵션 (1초부터 60초까지)
   List<int> setOptions = List.generate(10, (index) => index + 1); // 세트 수 옵션 (1세트부터 10세트까지)
+  int? selectedReps; // 세트당 운동횟수
+  List<int> repsOptions = List.generate(50, (index) => index + 1); // 세트당 운동횟수 옵션
+
+
 
   @override
   void initState() {
@@ -229,6 +233,44 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 },
                 decoration: InputDecoration(
                   labelText: '세트 수', // 라벨 텍스트 설정
+                  labelStyle: TextStyle(
+                    fontFamily: 'Roboto', // 폰트 설정
+                    fontWeight: FontWeight.w600, // 글자 두께 설정
+                    fontSize: 16.0, // 글자 크기 설정
+                    color: Colors.black87, // 글자 색상 설정
+                  ),
+                  border: InputBorder.none, // 테두리 없음
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0), // 간격 추가
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
+              decoration: BoxDecoration(
+                color: Colors.grey[100], // 배경색 설정
+                borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
+              ),
+              child: DropdownButtonFormField<int>(
+                value: selectedReps, // 현재 선택된 세트 수
+                items: repsOptions.map((sets) => DropdownMenuItem(
+                  value: sets, // 각 세트 수 값을 드롭다운 항목으로 설정
+                  child: Text(
+                    '$sets 회', // 세트 수 표시
+                    style: TextStyle(
+                      fontFamily: 'Roboto', // 폰트 설정
+                      fontWeight: FontWeight.w600, // 글자 두께 설정
+                      fontSize: 16.0, // 글자 크기 설정
+                      color: Colors.black87, // 글자 색상 설정
+                    ),
+                  ),
+                )).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedReps = value; // 선택된 세트 수 업데이트
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: '세트 당 운동횟수', // 라벨 텍스트 설정
                   labelStyle: TextStyle(
                     fontFamily: 'Roboto', // 폰트 설정
                     fontWeight: FontWeight.w600, // 글자 두께 설정
