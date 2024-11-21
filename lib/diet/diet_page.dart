@@ -27,7 +27,7 @@ class _DietPageState extends State<DietPage> {
 // JSON 데이터 로드 및 저장
   List<Map<String, dynamic>> jsonData = [];
   void _initializeJsonData() async {
-    jsonData = await loadJsonData();
+    jsonData = await loadJsonData('밥류.json');
   }
 
 

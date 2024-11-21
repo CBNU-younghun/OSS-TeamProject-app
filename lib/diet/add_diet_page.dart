@@ -1,125 +1,112 @@
-// 식단 추가 페이지
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
-import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하거나 시스템과의 상호작용을 위해 사용
-import 'package:oss_team_project_app/utils/json_loader.dart'; // JSON 로더 임포트
+import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하기 위해 사용
+import 'dart:convert'; // JSON 데이터를 파싱하기 위해 사용
 
-// AddDietPage는 새로운 식단을 추가할 수 있는 화면을 제공한다
+// 식단 추가 페이지를 위한 StatefulWidget 정의
 class AddDietPage extends StatefulWidget {
   @override
   _AddDietPageState createState() => _AddDietPageState();
 }
 
+// 식단 추가 페이지의 상태 관리 클래스
 class _AddDietPageState extends State<AddDietPage> {
-  // 식단 이름을 입력받기 위한 텍스트 컨트롤러
+  // 입력된 식단 이름을 관리하는 컨트롤러
   final TextEditingController dietNameController = TextEditingController();
 
-  // 음식 이름을 입력받기 위한 텍스트 컨트롤러
-  final TextEditingController foodNameController = TextEditingController();
-
-  // 음식 칼로리를 입력받기 위한 텍스트 컨트롤러
-  final TextEditingController foodCalorieController = TextEditingController();
-
-  // 선택 가능한 식사 종류 리스트
-  final List<String> mealTypes = ['아침', '점심', '저녁', '간식']; //임시로 아침,점심,저녁,간식을 적어 넣음, 추후 다른 방식으로 활용할 수 있음
-
-  // 현재 선택된 식사 종류를 저장하는 변수
-  String? selectedMealType;
-
-  // 추가된 음식 목록을 저장하는 리스트
+  // 선택된 음식 목록을 저장하는 리스트
   List<Map<String, dynamic>> foodList = [];
 
-  // 추가한 변수: JSON 데이터를 저장하는 리스트
+  // 특정 카테고리의 음식 데이터를 저장하는 리스트
   List<Map<String, dynamic>> foodData = [];
 
-  @override
-  void initState() {
-    super.initState();
-    _loadFoodData(); // JSON 데이터를 로드
-  }
+  // 선택된 카테고리와 음식
+  String? selectedCategory;
+  String? selectedFood;
 
-  // 추가한 함수: JSON 데이터를 로드하는 함수
-  Future<void> _loadFoodData() async {
-    foodData = await loadJsonData(); // json_loader.dart의 loadJsonData 함수 호출
-  }
+  // 음식 카테고리 리스트
+  List<String> categories = [
+    '곡류,서류 제품', '과일류', '구이류', '국 및 탕류', '김치류', '나물·숙채류', '두류, 견과 및 종실류', '면 및 만두류', '밥류', '볶음류',
+    '빵 및 과자류', '생채·무침류', '수·조·어·육류', '유제품류 및 빙과류', '음료 및 차류', '장류, 양념류',
+    '장아찌·절임류', '전·적 및 부침류', '젓갈류', '조림류', '죽 및 스프류', '찌개 및 전골류', '찜류', '튀김류'
+  ];
 
-  // JSON 데이터를 이용하여 음식을 검색 후 추가
-  void _searchAndAddFood() async {
-    if (foodData.isEmpty) {
+  // 선택된 카테고리에 따라 필터링된 음식 이름 리스트
+  List<String> filteredFoods = [];
+
+  // 선택된 카테고리에 해당하는 JSON 데이터를 로드
+  Future<void> _loadFoodDataByCategory(String category) async {
+    try {
+      // JSON 파일 경로 설정
+      String fileName = 'assets/food_data_by_category/${category}.json';
+
+      // JSON 파일 읽기
+      String jsonString = await rootBundle.loadString(fileName);
+
+      // JSON 문자열을 파싱하여 리스트로 변환
+      List<dynamic> jsonResponse = json.decode(jsonString);
+
+      // 불필요한 "records/" 접두어 제거 후 정리
+      List<Map<String, dynamic>> cleanedData = jsonResponse.map((item) {
+        return {
+          '식품명': item['records/식품명'],
+          '에너지(kcal)': item['records/에너지(kcal)'],
+        };
+      }).toList();
+
+      // 상태 업데이트
+      setState(() {
+        foodData = cleanedData;
+        filteredFoods = foodData.map((food) => food['식품명'] as String).toList();
+        selectedFood = null; // 새 카테고리 선택 시 선택된 음식 초기화
+      });
+    } catch (e) {
+      // 오류 발생 시 스낵바로 알림 표시
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('음식 데이터를 불러오는 중입니다. 잠시 후 다시 시도해주세요.')),
+        SnackBar(content: Text('음식 데이터를 불러오는 중 오류가 발생했습니다.')),
+      );
+    }
+  }
+
+  // 새로운 음식을 추가하는 함수
+  void _addFood() {
+    if (selectedFood == null) {
+      // 음식이 선택되지 않았을 경우 경고 메시지 표시
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('음식을 선택해주세요.')),
       );
       return;
     }
 
-    showSearch(
-      context: context,
-      delegate: FoodSearchDelegate(
-        foodData: foodData, // 검색에 사용할 JSON 데이터
-        onFoodSelected: (selectedFood) {
-          setState(() {
-            // 선택된 음식을 foodList에 추가
-            foodList.add({
-              'foodName': selectedFood['음식명'], // JSON 데이터의 '음식명' 키 사용
-              'calories': selectedFood['칼로리'], // JSON 데이터의 '칼로리' 키 사용
-            });
-          });
-        },
-      ),
+    // 선택된 음식 데이터를 foodData 리스트에서 가져오기
+    final selectedFoodData = foodData.firstWhere(
+          (food) => food['식품명'] == selectedFood,
     );
-  }
 
-  @override
-  void dispose() {
-    // 페이지가 사라질 때 텍스트 컨트롤러를 해제하여 메모리 누수를 방지
-    dietNameController.dispose();
-    foodNameController.dispose();
-    foodCalorieController.dispose();
-    super.dispose();
-  }
-
-  // 새로운 음식을 foodList에 추가하는 함수
-  void _addFood() {
-    // 음식 이름과 칼로리가 비어있지 않고, 칼로리가 정수인지 확인
-    if (foodNameController.text.isNotEmpty &&
-        foodCalorieController.text.isNotEmpty &&
-        int.tryParse(foodCalorieController.text) != null) {
-
-      // 새로운 음식 항목 생성
-      final newFood = {
-        'foodName': foodNameController.text, // 음식 이름
-        'calories': int.parse(foodCalorieController.text), // 음식 칼로리
-      };
-
-      setState(() {
-        foodList.add(newFood); // 음식 목록에 새 음식 추가
+    // 선택된 음식 데이터를 foodList에 추가
+    setState(() {
+      foodList.add({
+        'foodName': selectedFoodData['식품명'],
+        'calories': selectedFoodData['에너지(kcal)'],
       });
+    });
 
-      // 입력 필드 초기화
-      foodNameController.clear();
-      foodCalorieController.clear();
-    } else {
-      // 입력이 유효하지 않을 경우 스낵바로 사용자에게 알림
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('음식 이름과 칼로리를 올바르게 입력해주세요.')),
-      );
-    }
+    // 선택 항목 초기화
+    selectedCategory = null;
+    filteredFoods = [];
+    selectedFood = null;
   }
 
-  // 새로 추가된 식단을 저장하고 이전 화면으로 돌아가는 함수
+  // 식단을 저장하는 함수
   void _saveDiet() {
-    // 음식 목록이 비어있지 않은지 확인
     if (foodList.isNotEmpty) {
-      // 새로운 식단 데이터 생성
+      // 새로운 식단 데이터를 생성하여 Navigator를 통해 이전 화면으로 전달
       final newDiet = {
-        'name': dietNameController.text, // 식단 이름
-        'mealType': selectedMealType, // 선택된 식사 종류
-        'foods': List<Map<String, dynamic>>.from(foodList), // 음식 목록
+        'name': dietNameController.text,
+        'foods': List<Map<String, dynamic>>.from(foodList),
       };
-
-      // 이전 화면으로 새 식단 데이터를 전달하며 돌아감
       Navigator.pop(context, newDiet);
     } else {
-      // 음식 목록이 비어있을 경우 스낵바로 사용자에게 알림
+      // 음식이 추가되지 않은 경우 경고 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('최소 한 개의 음식을 추가해주세요.')),
       );
@@ -130,82 +117,75 @@ class _AddDietPageState extends State<AddDietPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white, // 앱바의 배경색을 흰색으로 설정
-        iconTheme: IconThemeData(color: Colors.black), // 앱바 아이콘의 색상을 검은색으로 설정
+        backgroundColor: Colors.white, // 앱바 배경색
+        iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상
         title: Text(
-          '식단 추가', // 앱바의 제목 텍스트
+          '식단 추가', // 앱바 제목
           style: TextStyle(
-            fontFamily: 'Bebas Neue', // 폰트 설정
-            fontSize: 28.0, // 폰트 크기 설정
-            fontWeight: FontWeight.w900, // 폰트 두께 설정
-            color: Colors.black, // 텍스트 색상 설정
+            fontFamily: 'Bebas Neue',
+            fontSize: 28.0,
+            fontWeight: FontWeight.w900,
+            color: Colors.black,
           ),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0), // 전체 패딩을 16.0으로 설정
+        padding: EdgeInsets.all(16.0), // 페이지 전체 패딩 설정
         child: ListView(
           children: [
-            // 식단 이름 입력 필드 레이블
+            // 식단 이름 입력 필드
             _buildTextField(
-              controller: dietNameController, // 식단 이름 텍스트 필드 컨트롤러 연결
-              label: '식단 이름', // 텍스트 필드의 라벨
-              hintText: '식단 이름을 입력하세요', // 텍스트 필드의 힌트 텍스트
+              controller: dietNameController,
+              label: '식단 이름',
+              hintText: '식단 이름을 입력하세요',
             ),
-            SizedBox(height: 16.0), // 간격 추가
+            SizedBox(height: 16.0),
 
-            // 식사 종류 선택 드롭다운 필드
+            // 카테고리 선택 드롭다운
             DropdownButtonFormField<String>(
-              value: selectedMealType, // 현재 선택된 식사 종류
-              items: mealTypes.map((mealType) => DropdownMenuItem(
-                value: mealType, // 드롭다운 항목의 값 설정
-                child: Text(
-                  mealType, // 드롭다운 항목의 텍스트
-                  style: TextStyle(
-                    fontFamily: 'Roboto', // 폰트 설정
-                    fontWeight: FontWeight.w600, // 글자 두께 설정
-                    fontSize: 16.0, // 글자 크기 설정
-                  ),
-                ),
-              )).toList(),
+              value: selectedCategory,
               onChanged: (value) {
                 setState(() {
-                  selectedMealType = value; // 선택된 식사 종류 업데이트
+                  selectedCategory = value; // 선택된 카테고리 업데이트
+                  if (value != null) {
+                    _loadFoodDataByCategory(value); // 선택된 카테고리에 해당하는 음식 데이터 로드
+                  }
                 });
               },
+              items: categories.map((category) {
+                return DropdownMenuItem(
+                  value: category,
+                  child: Text(category),
+                );
+              }).toList(),
               decoration: InputDecoration(
-                labelText: '식사 종류', // 드롭다운 필드의 라벨 텍스트
-                labelStyle: TextStyle(
-                  fontFamily: 'Roboto', // 폰트 설정
-                  fontWeight: FontWeight.w600, // 글자 두께 설정
-                  fontSize: 16.0, // 글자 크기 설정
-                ),
-                border: InputBorder.none, // 드롭다운 필드의 테두리를 없음으로 설정
+                labelText: '카테고리 선택', // 드롭다운 라벨
+                border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16.0), // 간격 추가
+            SizedBox(height: 6.0),
 
-            // 음식 이름 입력 필드 레이블
-            _buildTextField(
-              controller: foodNameController, // 음식 이름 텍스트 필드 컨트롤러 연결
-              label: '음식 이름', // 텍스트 필드의 라벨
-              hintText: '음식 이름을 입력하세요', // 텍스트 필드의 힌트 텍스트
-            ),
-            SizedBox(height: 16.0), // 간격 추가
-
-            // 음식 칼로리 입력 필드 레이블
-            _buildTextField(
-              controller: foodCalorieController, // 음식 칼로리 텍스트 필드 컨트롤러 연결
-              label: '칼로리 (kcal)', // 텍스트 필드의 라벨
-              hintText: '음식의 칼로리를 입력하세요', // 텍스트 필드의 힌트 텍스트
-              keyboardType: TextInputType.number, // 숫자 키보드 사용 설정
-            ),
-            SizedBox(height: 16.0), // 간격 추가
+            // 음식 선택 드롭다운 (카테고리 선택 후 표시)
+            if (filteredFoods.isNotEmpty)
+              DropdownButtonFormField<String>(
+                value: selectedFood,
+                onChanged: (value) => setState(() => selectedFood = value),
+                items: filteredFoods.map((food) {
+                  return DropdownMenuItem(
+                    value: food,
+                    child: Text(food),
+                  );
+                }).toList(),
+                decoration: InputDecoration(
+                  labelText: '음식 선택',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            SizedBox(height: 6.0),
 
             // 음식 추가 버튼
-            // 기존 음식 추가 버튼
             ElevatedButton(
-              onPressed: _addFood, // 버튼 클릭 시 _addFood 함수 호출
+              onPressed: _addFood,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 elevation: 4.0,
@@ -224,13 +204,51 @@ class _AddDietPageState extends State<AddDietPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0), // 간격 추가
+            SizedBox(height: 16.0),
 
-            // 추가할 음식 검색 버튼
+            // 추가된 음식 목록
+            if (foodList.isNotEmpty) ...[
+              Text(
+                '추가된 음식 목록',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18.0,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              // 각 음식 항목을 리스트로 표시
+              ...foodList.asMap().entries.map((entry) {
+                int index = entry.key;
+                Map<String, dynamic> food = entry.value;
+                return ListTile(
+                  title: Text(
+                    '${food['foodName']} - ${food['calories']}kcal',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 16.0,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      setState(() {
+                        foodList.removeAt(index); // 선택된 음식 삭제
+                      });
+                    },
+                  ),
+                );
+              }).toList(),
+            ],
+            SizedBox(height: 32.0),
+
+            // 저장 버튼
             ElevatedButton(
-              onPressed: _searchAndAddFood, // JSON 데이터 기반 검색
+              onPressed: _saveDiet,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: Colors.blue,
                 elevation: 4.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
@@ -238,77 +256,12 @@ class _AddDietPageState extends State<AddDietPage> {
                 padding: EdgeInsets.symmetric(vertical: 16.0),
               ),
               child: Text(
-                '음식 검색',
+                '저장',
                 style: TextStyle(
                   fontFamily: 'Bebas Neue',
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                ),
-              ),
-            ),
-
-            SizedBox(height: 16.0), // 간격 추가
-
-            // 음식 목록이 비어있지 않을 경우 추가된 음식 목록을 표시
-            if (foodList.isNotEmpty) ...[
-              // 추가된 음식 목록 제목
-              Text(
-                '추가된 음식 목록',
-                style: TextStyle(
-                  fontFamily: 'Roboto', // 폰트 설정
-                  fontWeight: FontWeight.w600, // 글자 두께 설정
-                  fontSize: 18.0, // 글자 크기 설정
-                  color: Colors.black, // 글자 색상 설정
-                ),
-              ),
-              SizedBox(height: 8.0), // 간격 추가
-
-              // 추가된 각 음식을 ListTile 형태로 표시
-              ...foodList.asMap().entries.map((entry) {
-                int index = entry.key; // 음식의 인덱스
-                Map<String, dynamic> food = entry.value; // 음식 데이터
-
-                return ListTile(
-                  title: Text(
-                    '${food['foodName']} - ${food['calories']}kcal', // 음식 이름과 칼로리 표시
-                    style: TextStyle(
-                      fontFamily: 'Roboto', // 폰트 설정
-                      fontSize: 16.0, // 글자 크기 설정
-                      color: Colors.black87, // 글자 색상 설정
-                    ),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete), // 삭제 아이콘 설정
-                    onPressed: () {
-                      setState(() {
-                        foodList.removeAt(index); // 해당 음식을 목록에서 제거
-                      });
-                    },
-                  ),
-                );
-              }).toList(),
-            ],
-            SizedBox(height: 32.0), // 간격 추가
-
-            // 식단 저장 버튼
-            ElevatedButton(
-              onPressed: _saveDiet, // 버튼 클릭 시 _saveDiet 함수 호출
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // 버튼 배경색을 파란색으로 설정
-                elevation: 4.0, // 버튼의 그림자 높이를 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리를 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 세로 패딩을 16.0으로 설정
-              ),
-              child: Text(
-                '저장', // 버튼에 표시될 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상을 흰색으로 설정
                 ),
               ),
             ),
@@ -318,86 +271,33 @@ class _AddDietPageState extends State<AddDietPage> {
     );
   }
 
-  // 일관된 스타일의 텍스트 필드를 생성하는 헬퍼 메소드
+  // 텍스트 입력 필드를 생성하는 위젯
   Widget _buildTextField({
-    required TextEditingController controller, // 입력을 제어하는 컨트롤러
-    required String label, // 텍스트 필드의 라벨
-    String? hintText, // 텍스트 필드의 힌트 텍스트
-    TextInputType keyboardType = TextInputType.text, // 키보드 타입 설정 (기본값: 텍스트)
+    required TextEditingController controller,
+    required String label,
+    String? hintText,
+    TextInputType keyboardType = TextInputType.text,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너의 가로 패딩을 12.0으로 설정
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
       decoration: BoxDecoration(
-        color: Colors.grey[100], // 컨테이너의 배경색을 연한 회색으로 설정
-        borderRadius: BorderRadius.circular(16.0), // 컨테이너의 모서리를 둥글게 설정
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(16.0),
       ),
       child: TextField(
-        controller: controller, // 텍스트 필드에 컨트롤러 연결
+        controller: controller,
         decoration: InputDecoration(
-          labelText: label, // 텍스트 필드의 라벨 텍스트 설정
+          labelText: label,
           labelStyle: TextStyle(
-            fontFamily: 'Roboto', // 폰트 설정
-            fontWeight: FontWeight.w600, // 글자 두께 설정
-            fontSize: 16.0, // 글자 크기 설정
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w600,
+            fontSize: 16.0,
           ),
-          hintText: hintText, // 텍스트 필드의 힌트 텍스트 설정
-          border: InputBorder.none, // 텍스트 필드의 테두리를 없음으로 설정
+          hintText: hintText,
+          border: InputBorder.none,
         ),
-        keyboardType: keyboardType, // 텍스트 필드의 키보드 타입 설정
+        keyboardType: keyboardType,
       ),
     );
-  }
-}
-
-class FoodSearchDelegate extends SearchDelegate {
-  final List<Map<String, dynamic>> foodData;
-  final Function(Map<String, dynamic>) onFoodSelected;
-
-  FoodSearchDelegate({required this.foodData, required this.onFoodSelected});
-
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () => query = '',
-      ),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () => close(context, null),
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    final results = foodData.where((food) {
-      final foodName = food['음식명'] as String;
-      return foodName.contains(query);
-    }).toList();
-
-    return ListView.builder(
-      itemCount: results.length,
-      itemBuilder: (context, index) {
-        final food = results[index];
-        return ListTile(
-          title: Text('${food['음식명']}'),
-          subtitle: Text('칼로리: ${food['칼로리']} kcal'),
-          onTap: () {
-            onFoodSelected(food);
-            close(context, null);
-          },
-        );
-      },
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return buildResults(context);
   }
 }
