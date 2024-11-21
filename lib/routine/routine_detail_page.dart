@@ -29,6 +29,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
   List<String> filteredExercises = []; // 선택된 운동 부위에 따른 운동 목록
   List<int> secondsOptions = List.generate(60, (index) => index + 1); // 시간 선택 옵션 (1초부터 60초까지)
   List<int> setOptions = List.generate(10, (index) => index + 1); // 세트 수 선택 옵션 (1세트부터 10세트까지)
+  List<int> repsOptions = List.generate(50,(index) => index+1); // 세트 당 운동 횟수 선택 옵션(1회부터 50회까지)
 
   @override
   void initState() {
@@ -133,7 +134,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
                 return ListTile(
                   title: Text(
-                    '${exercise['exercise']} - ${exercise['time']}초 X ${exercise['sets']}세트', // 운동 정보 표시
+                    '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회 X ${exercise['sets']}세트', // 운동 정보 표시
                     style: TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
@@ -227,6 +228,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     String? selectedExercise; // 선택된 운동
     int? selectedTime; // 선택된 운동 시간
     int? selectedSets; // 선택된 세트 수
+    int? selectedReps; // 선택된 세트당 운동 횟수
 
     showModalBottomSheet(
       context: context,
@@ -323,6 +325,26 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     SizedBox(height: 16.0),
 
+                    DropdownButtonFormField<int>(
+                      value: selectedReps,
+                      items: repsOptions.map((reps) => DropdownMenuItem(
+                        value: reps,
+                        child: Text('$reps 세트'),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedReps = value; // 세트 당 운동 횟수 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '세트 당 운동 횟수',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
                     // 세트 수 선택
                     DropdownButtonFormField<int>(
                       value: selectedSets,
@@ -391,7 +413,8 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
         );
       },
     );
-  }
+  } //void _showAddExerciseForm()
+
 
   // 운동 항목에 대한 편집 옵션을 보여주는 함수
   void _showEditExerciseOptions(int index) {

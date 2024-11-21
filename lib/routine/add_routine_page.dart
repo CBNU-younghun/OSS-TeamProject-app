@@ -119,6 +119,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               label: '루틴 이름', // 라벨 텍스트 설정
             ),
             SizedBox(height: 16.0), // 간격 추가
+
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
               decoration: BoxDecoration(
@@ -208,44 +209,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               ),
             ),
             SizedBox(height: 16.0), // 간격 추가
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
-              decoration: BoxDecoration(
-                color: Colors.grey[100], // 배경색 설정
-                borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
-              ),
-              child: DropdownButtonFormField<int>(
-                value: selectedSets, // 현재 선택된 세트 수
-                items: setOptions.map((sets) => DropdownMenuItem(
-                  value: sets, // 각 세트 수 값을 드롭다운 항목으로 설정
-                  child: Text(
-                    '$sets 세트', // 세트 수 표시
-                    style: TextStyle(
-                      fontFamily: 'Roboto', // 폰트 설정
-                      fontWeight: FontWeight.w600, // 글자 두께 설정
-                      fontSize: 16.0, // 글자 크기 설정
-                      color: Colors.black87, // 글자 색상 설정
-                    ),
-                  ),
-                )).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedSets = value; // 선택된 세트 수 업데이트
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: '세트 수', // 라벨 텍스트 설정
-                  labelStyle: TextStyle(
-                    fontFamily: 'Roboto', // 폰트 설정
-                    fontWeight: FontWeight.w600, // 글자 두께 설정
-                    fontSize: 16.0, // 글자 크기 설정
-                    color: Colors.black87, // 글자 색상 설정
-                  ),
-                  border: InputBorder.none, // 테두리 없음
-                ),
-              ),
-            ),
-            SizedBox(height: 16.0), // 간격 추가
+
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
               decoration: BoxDecoration(
@@ -283,6 +247,45 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 ),
               ),
             ),
+            SizedBox(height: 16.0),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
+              decoration: BoxDecoration(
+                color: Colors.grey[100], // 배경색 설정
+                borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
+              ),
+              child: DropdownButtonFormField<int>(
+                value: selectedSets, // 현재 선택된 세트 수
+                items: setOptions.map((sets) => DropdownMenuItem(
+                  value: sets, // 각 세트 수 값을 드롭다운 항목으로 설정
+                  child: Text(
+                    '$sets 세트', // 세트 수 표시
+                    style: TextStyle(
+                      fontFamily: 'Roboto', // 폰트 설정
+                      fontWeight: FontWeight.w600, // 글자 두께 설정
+                      fontSize: 16.0, // 글자 크기 설정
+                      color: Colors.black87, // 글자 색상 설정
+                    ),
+                  ),
+                )).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedSets = value; // 선택된 세트 수 업데이트
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: '세트 수', // 라벨 텍스트 설정
+                  labelStyle: TextStyle(
+                    fontFamily: 'Roboto', // 폰트 설정
+                    fontWeight: FontWeight.w600, // 글자 두께 설정
+                    fontSize: 16.0, // 글자 크기 설정
+                    color: Colors.black87, // 글자 색상 설정
+                  ),
+                  border: InputBorder.none, // 테두리 없음
+                ),
+              ),
+            ), // 간격 추가
+
             SizedBox(height: 16.0), // 간격 추가
             ElevatedButton(
               onPressed: _addExercise, // 운동 추가 버튼 클릭 시 운동 추가 함수 호출
@@ -321,7 +324,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
                 return ListTile(
                   title: Text(
-                    '${exercise['exercise']} - ${exercise['time']}초, ${exercise['sets']}세트, ${exercise['reps']}회',// 운동 이름, 시간, 세트 수 표시
+                    '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회, ${exercise['sets']}세트',// 운동 이름, 시간, 세트 수 표시
                     style: TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
@@ -392,3 +395,4 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
     );
   }
 }
+
