@@ -2,7 +2,6 @@
 import 'dart:convert'; // JSON 데이터를 인코딩 및 디코딩하기 위해 사용됨
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지임
 import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하거나 시스템과의 상호작용을 위해 사용됨
-import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // 폰트어썸 아이콘을 사용하기 위해 필요함
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위해 import 추가
 
 // ExerciseInfoPage는 운동 정보를 표시하고, 사용자가 운동을 선택하여 상세 정보를 확인할 수 있는 화면이다
@@ -18,9 +17,11 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
 
   // 로컬 JSON 파일에서 운동 데이터를 로드하는 함수이다
   Future<void> _loadExercises() async {
-    String data = await rootBundle.loadString('assets/exercise_data.json'); // assets 폴더의 exercise_data.json 파일을 로드함
+    String data = await rootBundle.loadString(
+        'assets/exercise_data.json'); // assets 폴더의 exercise_data.json 파일을 로드함
     setState(() {
-      exercises = List<Map<String, dynamic>>.from(json.decode(data)); // JSON 데이터를 디코딩하여 exercises 리스트에 저장함
+      exercises = List<Map<String, dynamic>>.from(
+          json.decode(data)); // JSON 데이터를 디코딩하여 exercises 리스트에 저장함
     });
   }
 
@@ -30,219 +31,409 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     _loadExercises(); // 위젯이 초기화될 때 운동 데이터를 로드함
   }
 
+  // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
+  List<Map<String, dynamic>> get filteredCategory {
+    if (selectedBodyPart == null) {
+      return exercises;
+    }
+    return exercises.where((exercises) {
+      return exercises['bodyPart'].contains(selectedBodyPart);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          selectedBodyPart == null ? '운동 정보' : selectedBodyPart!, // 선택된 부위가 없으면 '운동 정보' 제목을, 있으면 해당 부위 이름을 표시함
-          style: TextStyle(
-            fontFamily: 'Bebas Neue', // 폰트 적용
-            fontSize: 28.0, // 폰트 크기 설정
-            fontWeight: FontWeight.w900, // 폰트 두께 설정
-            color: Colors.black, // 폰트 색상 설정
-          ),
-        ),
-        backgroundColor: Colors.white, // 앱바 배경색을 흰색으로 설정함
-        iconTheme: IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정함
-        leading: selectedBodyPart == null
-            ? null
-            : IconButton(
-          onPressed: () {
-            setState(() {
-              selectedBodyPart = null; // 뒤로가기 버튼을 누르면 선택된 부위를 해제함
-            });
-          },
-          icon: Icon(Icons.arrow_back, color: Colors.black), // 뒤로가기 아이콘을 검은색으로 설정함
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // 마이페이지로 이동하는 함수
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserInfoPage(), // UserInfoPage로 이동함
-                  fullscreenDialog: true, // 전체 화면 다이얼로그로 표시함
-                ),
-              );
-            },
-            icon: const Icon(Icons.person, color: Colors.black), // 사람 아이콘을 검은색으로 설정함
-          ),
-        ],
-      ),
-      body: exercises.isEmpty
-          ? Center(child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
-          : selectedBodyPart == null
-          ? _buildBodyPartSelection() // 선택된 부위가 없으면 부위 선택 화면을 표시함
-          : _buildExerciseList(), // 선택된 부위가 있으면 해당 부위의 운동 목록을 표시함
-    );
-  }
-
-  // 운동 부위를 선택할 수 있는 그리드 뷰를 생성하는 함수이다
-  Widget _buildBodyPartSelection() {
-    final bodyParts = [
-      {'name': '가슴', 'icon': FontAwesomeIcons.userAlt}, // 가슴 부위와 관련된 아이콘
-      {'name': '하체', 'icon': FontAwesomeIcons.shoePrints}, // 하체 부위와 관련된 아이콘
-      {'name': '팔', 'icon': FontAwesomeIcons.handFist}, // 팔 부위와 관련된 아이콘
-      {'name': '등', 'icon': FontAwesomeIcons.user}, // 등 부위와 관련된 아이콘
-      {'name': '어깨', 'icon': FontAwesomeIcons.child}, // 어깨 부위와 관련된 아이콘
-      {'name': '유산소', 'icon': FontAwesomeIcons.personRunning}, // 유산소 운동과 관련된 아이콘
-    ];
-
-    return GridView.builder(
-      padding: EdgeInsets.all(24.0), // 그리드 패딩 설정
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // 한 줄에 2개의 아이템을 표시함
-        crossAxisSpacing: 16.0, // 가로 간격 설정
-        mainAxisSpacing: 16.0, // 세로 간격 설정
-      ),
-      itemCount: bodyParts.length, // 그리드 아이템의 개수를 부위 리스트의 길이로 설정함
-      itemBuilder: (context, index) {
-        final bodyPart = bodyParts[index]; // 현재 인덱스의 부위 정보를 가져옴
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedBodyPart = bodyPart['name'] as String; // 선택된 부위를 업데이트함
-              filteredExercises = exercises
-                  .where((exercise) => exercise['bodyPart'] == bodyPart['name'])
-                  .toList(); // 선택된 부위에 해당하는 운동 목록을 필터링함
-            });
-          },
-          child: Card(
-            elevation: 4.0, // 카드의 그림자 높이를 설정함
-            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0), // 카드의 외부 여백을 설정함
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0), // 카드의 모서리를 둥글게 설정함
+        appBar: AppBar(
+          title: const Text(
+            '운동 정보', // 선택된 부위가 없으면 '운동 정보' 제목을, 있으면 해당 부위 이름을 표시함
+            style: TextStyle(
+              fontFamily: 'Roboto', // 폰트 적용
+              fontSize: 21.0, // 폰트 크기 설정
+              fontWeight: FontWeight.w900, // 폰트 두께 설정
+              color: Colors.black, // 폰트 색상 설정
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // 열의 자식들을 중앙에 배치함
-              children: [
-                FaIcon(
-                  bodyPart['icon'] as IconData, // 부위에 해당하는 아이콘을 표시함
-                  size: 50.0, // 아이콘 크기를 설정함
-                  color: Colors.blue, // 아이콘 색상을 파란색으로 설정함
-                ),
-                SizedBox(height: 10.0), // 아이콘과 텍스트 사이의 간격을 설정함
-                Text(
-                  bodyPart['name'] as String, // 부위 이름을 표시함
-                  style: TextStyle(
-                    fontFamily: 'Roboto', // 폰트 설정함
-                    fontWeight: FontWeight.bold, // 글자 두께를 굵게 설정함
-                    fontSize: 18.0, // 글자 크기를 설정함
+          ),
+          shape: const Border(
+            bottom: BorderSide(
+              color: Color(0xFFEFEFEF),
+              width: 1,
+            ),
+          ), // header border setting
+          backgroundColor: Colors.white, // 앱바 배경색을 흰색으로 설정함
+          iconTheme: const IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정함
+          actions: [
+            IconButton(
+              onPressed: () {
+                // 마이페이지로 이동하는 함수
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserInfoPage(), // UserInfoPage로 이동함
+                    fullscreenDialog: true, // 전체 화면 다이얼로그로 표시함
                   ),
-                ),
-              ],
+                );
+              },
+              icon: const Icon(
+                  Icons.person, color: Colors.black), // 사람 아이콘을 검은색으로 설정함
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  // 선택된 부위의 운동 목록을 표시하는 리스트 뷰를 생성하는 함수이다
-  Widget _buildExerciseList() {
-    return ListView.builder(
-      padding: EdgeInsets.all(24.0), // 리스트 패딩 설정
-      itemCount: filteredExercises.length, // 리스트 아이템의 개수를 필터링된 운동 목록의 길이로 설정함
-      itemBuilder: (context, index) {
-        final exercise = filteredExercises[index]; // 현재 인덱스의 운동 정보를 가져옴
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ExerciseDetailPage(exercise: exercise), // 운동 상세 페이지로 이동함
-                fullscreenDialog: true, // 전체 화면 다이얼로그로 표시함
+          ],
+        ),
+        body: exercises.isEmpty
+            ? const Center(
+            child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
+            : Column(
+          children: [
+            //카테고리 buttom
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                // 추출 카테고리 정의
+                children: ['All', '어깨', '가슴', '등', '팔', '하체', '복근', '유산소']
+                    .map((category) {
+                      //카테고리 선택 여부 확인
+                      bool isSelected = selectedBodyPart == category || (category == 'All' && selectedBodyPart == null);
+                  return Row(
+                    children: [
+                      // 'All' 버튼의 왼쪽 SizedBox 추가
+                      if (category == 'All') const SizedBox(width: 20.0),
+                      Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 4.0, vertical: 14.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                            isSelected ? Colors.blue : const Color(0xFFECEDEE),
+                            minimumSize: const Size(80, 30),
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90), // 角を丸くする
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              selectedBodyPart =
+                              (category == 'All') ? null : category;
+                            });
+                          },
+                          child: Text(
+                            category,
+                            style: TextStyle(
+                              fontSize: 16.0, // 글자 크기를 설정함
+                              color: isSelected ? Colors.white : Colors.black,
+                              fontFamily: 'Roboto', // 폰트 설정함
+                            ),
+                          ),
+                        ), //카테고리 버튼 디자인
+                      ),
+                      // '유산소' 버튼의 오른쪽 SizedBox 추가
+                      if (category == '유산소') const SizedBox(width: 20.0),
+                    ],
+                  );
+                }).toList(),
               ),
-            );
-          },
-          child: Card(
-            elevation: 4.0, // 카드의 그림자 높이를 설정함
-            margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0), // 카드의 외부 여백을 설정함
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0), // 카드의 모서리를 둥글게 설정함
             ),
-            child: ListTile(
-              contentPadding: EdgeInsets.all(16.0), // 리스트 타일의 내부 여백을 설정함
-              title: Text(
-                exercise['name'], // 운동 이름을 표시함
-                style: TextStyle(
-                  fontFamily: 'Roboto', // 폰트 설정함
-                  fontWeight: FontWeight.bold, // 글자 두께를 굵게 설정함
-                  fontSize: 18.0, // 글자 크기를 설정함
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 0.0,
+                  bottom: 20.0,
+                  left: 20.0,
+                  right: 20.0,
                 ),
+                child: ListView.builder(
+                itemCount: filteredCategory.length,
+                itemBuilder: (context, index) {
+                  final exercise = filteredCategory[index];
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2), // 그림자의 빛깔
+                            offset: const Offset(0, 1.5), // 그림자위치(오른쪽 0px, 아래 1.5px)
+                          blurRadius: 2.0, // 흐림의 반지름
+                          spreadRadius: 0, // 그림자의 확대
+                        ),
+                      ],
+                      border: Border.all(
+                        color: const Color(0xFFDEDFE0),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                            // 운동명(타이틀)과 영어명을 세로로 늘어놓다
+                            Text(
+                              exercise['name'],
+                              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold,),
+                            ),
+                              const SizedBox(width: 10.0),
+                            Text(
+                              exercise['exerciseNameEnglish'],
+                              style: const TextStyle(fontSize: 14.0, color: Colors.grey,),
+                            ),
+                            ],
+                          ),
+                          const SizedBox(height: 8.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                            // 난이도와 운동 부위를 세로로 나열합니다
+                            Text(
+                              '${exercise['difficulty']}  | ${exercise['bodyPart']}',
+                              style: const TextStyle(fontSize: 14.0, color: Colors.black),
+                            ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                _ExerciseDetailPage(exercise: exercise),
+                            fullscreenDialog: true, // 전체 화면 다이얼로그로 표시함
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
               ),
             ),
-          ),
-        );
-      },
+          ],
+        )
     );
   }
 }
 
 // ExerciseDetailPage는 선택된 운동의 상세 정보를 표시하는 페이지이다
-class ExerciseDetailPage extends StatelessWidget {
+class _ExerciseDetailPage extends StatelessWidget {
   final Map<String, dynamic> exercise; // 상세 정보를 표시할 운동 데이터
 
-  ExerciseDetailPage({required this.exercise}); // 생성자에서 운동 데이터를 필수로 받음
+  _ExerciseDetailPage({required this.exercise}); // 생성자에서 운동 데이터를 필수로 받음
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          exercise['name'], // 운동 이름을 앱바 제목으로 표시함
+        title: const Text(
+          '실천 방법',
           style: TextStyle(
-            fontFamily: 'Bebas Neue', // 폰트 적용함
-            fontSize: 28.0, // 폰트 크기 설정함
+            fontFamily: 'Roboto', // 폰트 적용함
+            fontSize: 21.0,
             fontWeight: FontWeight.w900, // 폰트 두께 설정함
             color: Colors.black, // 폰트 색상 설정함
           ),
         ),
         backgroundColor: Colors.white, // 앱바 배경색을 흰색으로 설정함
-        iconTheme: IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정함
+        iconTheme: const IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정함
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context); // 뒤로가기 버튼을 누르면 이전 화면으로 돌아감
           },
-          icon: Icon(Icons.arrow_back, color: Colors.black), // 뒤로가기 아이콘을 검은색으로 설정함
+          icon: const Icon(Icons.arrow_back, color: Colors.black), // 뒤로가기 아이콘을 검은색으로 설정함
+        ),
+        shape: const Border(
+          bottom: BorderSide(
+            color: Color(0xFFEFEFEF),
+            width: 1,
+          ),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(24.0), // 전체 패딩 설정함
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // 자식 위젯들을 좌측 정렬함
-          children: [
-            Text(
-              exercise['name'], // 운동 이름을 크게 표시함
-              style: TextStyle(
-                fontSize: 24.0, // 글자 크기를 설정함
-                fontWeight: FontWeight.bold, // 글자 두께를 굵게 설정함
-                color: Colors.black, // 글자 색상을 검은색으로 설정함
-                fontFamily: 'Roboto', // 폰트 설정함
+        padding: const EdgeInsets.all(20.0), // 전체 패딩 설정함
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${exercise['name']}',
+                    style: const TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text('(${exercise['englishName']})',
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    color: Color(0xFF666666),
+                  ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 16.0), // 글자와 다음 항목 사이의 간격을 설정함
-            Text(
-              '운동 부위: ${exercise['bodyPart']}', // 운동 부위를 표시함
-              style: TextStyle(
-                fontSize: 18.0, // 글자 크기를 설정함
-                fontWeight: FontWeight.w500, // 글자 두께를 중간으로 설정함
-                color: Colors.black54, // 글자 색상을 회색으로 설정함
-                fontFamily: 'Roboto', // 폰트 설정함
+              const SizedBox(height: 24),
+              // 기준 정보 설정
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFDEDFE0)),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text('난이도',style: TextStyle(fontSize: 16.0)),
+                        const SizedBox(width: 4.0),
+                        //아이콘을 클릭하면 표시
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('난이도',textAlign: TextAlign.center),
+                                  backgroundColor: Colors.white, // ポップアップの背景色を白に設定
+                                  contentPadding: const EdgeInsets.all(21.0),
+                                  content: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('Low Level',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold)),
+                                      Text('간단한 동작, 적은 무게나 낮은 강도, 초보자용 운동.',style: TextStyle(fontSize: 16.0)),
+                                      SizedBox(width: 12.0),
+                                      Text('Medium Level',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold)),
+                                      Text('기본적인 동작, 적당한 무게나 근력 요구, 다소 어려운 운동.',style: TextStyle(fontSize: 16.0)),
+                                      SizedBox(width: 12.0),
+                                      Text('High Level',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold)),
+                                      Text('복잡한 동작, 높은 무게나 기술 요구, 근육 강도가 큰 운동.',style: TextStyle(fontSize: 16.0)),
+                                    ],
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0), // 角丸の設定
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('閉じる',style: TextStyle(color: Colors.blue),),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(2.0), // ボタンの内側余白を設定
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100), // ボタンの角を丸くする
+                            ),
+                            child: const Icon(
+                              Icons.info_outline,
+                              size: 20.0, // アイコンサイズを設定
+                              color: Color(0xFF8B8B8B), // アイコンの色を設定
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 42.0),
+                        Text(': ${exercise['difficulty']}',style: const TextStyle(fontSize: 16.0)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text('운동 부위',style: TextStyle(fontSize: 16.0)),
+                        const SizedBox(width: 50.0),
+                        Text(': ${exercise['bodyPart']}',style: const TextStyle(fontSize: 16.0)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text('소비 칼로리',style: TextStyle(fontSize: 16.0)),
+                        const SizedBox(width: 4.0),
+                        //아이콘을 클릭하면 표시
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white, // ポップアップの背景色を白に設定
+                                  contentPadding: const EdgeInsets.all(21.0),
+                                  title: Text('${exercise['caloriesBurned']}'),
+                                  content: const Text('소비 칼로리는 30분간 운동을 했을 때의 일반적인 평균값으로, 운동 강도, 체중, 운동 방식(세트와 반복 횟수) 등에 따라 달라지며, 개인의 체력 수준과 운동 방식에 따라 차이가 있을 수 있습니다.',
+                                  style: TextStyle(fontSize: 16.0),),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0), // 角丸の設定
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('閉じる',style: TextStyle(color: Colors.blue),),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(2.0), // ボタンの内側余白を設定
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100), // ボタンの角を丸くする
+                            ),
+                            child: const Icon(
+                              Icons.info_outline,
+                              size: 20.0, // アイコンサイズを設定
+                              color: Color(0xFF8B8B8B), // アイコンの色を設定
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        const Text(': 250-350 kcal',style: TextStyle(fontSize: 16.0)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 8.0), // 글자와 다음 항목 사이의 간격을 설정함
-            Text(
-              '설명: ${exercise['description']}', // 운동 설명을 표시함
-              style: TextStyle(
-                fontSize: 16.0, // 글자 크기를 설정함
-                color: Colors.black, // 글자 색상을 검은색으로 설정함
-                fontFamily: 'Roboto', // 폰트 설정함
+              const SizedBox(height: 24),
+              // 사진
+              Center(
+                child: Image.asset('assets/images/sample.jpg'),
               ),
-            ),
-          ],
+              const SizedBox(height: 30),
+              // 3colums
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("준비", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  ...exercise['preparation'].map<Widget>((prep) => Text("- $prep",style: const TextStyle(fontSize: 16.0))).toList(),
+
+                  const SizedBox(height: 24),
+
+                  const Text("실행 방법", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  ...exercise['steps'].map<Widget>((step) => Text("- $step",style: const TextStyle(fontSize: 16.0))).toList(),
+
+                  const SizedBox(height: 24),
+
+                  const Text("중요한 포인트", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  ...exercise['keyPoints'].map<Widget>((point) => Text("- $point",style: const TextStyle(fontSize: 16.0))).toList(),
+
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
