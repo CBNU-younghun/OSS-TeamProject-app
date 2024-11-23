@@ -179,7 +179,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                             ),
                               const SizedBox(width: 10.0),
                             Text(
-                              exercise['exerciseNameEnglish'],
+                              exercise['englishName'],
                               style: const TextStyle(fontSize: 14.0, color: Colors.grey,),
                             ),
                             ],
