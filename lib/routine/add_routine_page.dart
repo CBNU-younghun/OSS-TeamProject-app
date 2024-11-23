@@ -18,6 +18,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
   int? selectedSets; // 선택된 세트 수
   List<int> secondsOptions = List.generate(60, (index) => index + 1); // 운동 시간 옵션 (1초부터 60초까지)
   List<int> setOptions = List.generate(10, (index) => index + 1); // 세트 수 옵션 (1세트부터 10세트까지)
+  List<Map<String, dynamic>> filteredExercises = []; // 선택된 부위에 따라 필터링된 운동 목록
 
   @override
   void initState() {
@@ -30,9 +31,9 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
     String data = await rootBundle.loadString('assets/exercise_data.json'); // JSON 파일 로드
     setState(() {
       exercises = json.decode(data); // 운동 데이터 파싱
-      if (exercises.isNotEmpty) {
+      /*if (exercises.isNotEmpty) {
         selectedExercise = exercises.first; // 기본으로 첫 번째 운동 선택
-      }
+      }*/
     });
   }
 
@@ -48,6 +49,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
         });
         selectedTime = null; // 선택된 시간 초기화
         selectedSets = null; // 선택된 세트 수 초기화
+        selectedExercise = null; // 선택된 운동 초기화
       });
     } else {
       // 유효하지 않은 입력 처리
@@ -113,57 +115,96 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               label: '루틴 이름', // 라벨 텍스트 설정
             ),
             SizedBox(height: 16.0), // 간격 추가
+//************************************************************************************************
+            // 운동 부위 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
+              padding: EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
-                color: Colors.grey[100], // 배경색 설정
-                borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: DropdownButtonFormField<String>(
+                items: exercises
+                    .map((exercise) => exercise['bodyPart'])
+                    .toSet()
+                    .map((bodyPart) => DropdownMenuItem<String>(
+                  value: bodyPart,
+                  child: Text(
+                    bodyPart,
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16.0,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    filteredExercises = exercises
+                        .where((exercise) => exercise['bodyPart'] == value)
+                        .map((exercise) => exercise as Map<String,dynamic>)
+                        .toList();
+                    selectedExercise = null; // 운동 초기화
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: '운동 부위',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16.0,
+                    color: Colors.black87,
+                  ),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0),
+
+            // 운동 선택 필드
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<Map<String, dynamic>>(
-                value: selectedExercise, // 현재 선택된 운동
-                items: exercises.map<DropdownMenuItem<Map<String, dynamic>>>((exercise) {
+                value: selectedExercise,
+                items: filteredExercises.map((exercise) {
                   return DropdownMenuItem<Map<String, dynamic>>(
-                    value: exercise, // 각 운동을 드롭다운 항목으로 설정
+                    value: exercise,
                     child: Text(
-                      exercise['name'], // 운동 이름 표시
+                      exercise['name'],
                       style: TextStyle(
-                        fontFamily: 'Roboto', // 폰트 설정
-                        fontWeight: FontWeight.w600, // 글자 두께 설정
-                        fontSize: 16.0, // 글자 크기 설정
-                        color: Colors.black87, // 글자 색상 설정
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16.0,
+                        color: Colors.black87,
                       ),
                     ),
                   );
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedExercise = value; // 선택된 운동 업데이트
+                    selectedExercise = value;
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: '운동 종류', // 라벨 텍스트 설정
+                  labelText: '운동 종류',
                   labelStyle: TextStyle(
-                    fontFamily: 'Roboto', // 폰트 설정
-                    fontWeight: FontWeight.w600, // 글자 두께 설정
-                    fontSize: 16.0, // 글자 크기 설정
-                    color: Colors.black87, // 글자 색상 설정
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16.0,
+                    color: Colors.black87,
                   ),
-                  border: InputBorder.none, // 테두리 없음
+                  border: InputBorder.none,
                 ),
               ),
             ),
-            SizedBox(height: 8.0), // 간격 추가
-            if (selectedExercise != null) ...[
-              Text(
-                '운동 부위: ${selectedExercise!['bodyPart']}', // 선택된 운동의 부위 표시
-                style: TextStyle(
-                  fontFamily: 'Roboto', // 폰트 설정
-                  fontSize: 16.0, // 글자 크기 설정
-                  color: Colors.black, // 글자 색상 설정
-                ),
-              ),
-            ],
-            SizedBox(height: 16.0), // 간격 추가
+            SizedBox(height: 16.0),
+//************************************************************************************************
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
               decoration: BoxDecoration(
