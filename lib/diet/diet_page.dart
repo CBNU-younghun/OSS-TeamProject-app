@@ -1,4 +1,3 @@
-// 식단 관리 페이지
 import 'dart:convert'; // JSON 데이터를 인코딩 및 디코딩하기 위해 사용
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
 import 'package:shared_preferences/shared_preferences.dart'; // 데이터 저장을 위한 패키지
@@ -126,6 +125,12 @@ class _DietPageState extends State<DietPage> {
     return totalCalories.toInt(); // 총 칼로리를 정수로 반환함
   }
 
+  // 오늘이 지나면 오늘 섭취한 칼로리를 계산하지 않도록 설정하는 함수
+  bool _isToday(String date) {
+    String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    return date == today;
+  }
+
   // 오늘 섭취한 영양정보를 계산하는 함수
   Map<String, num> _calculateTodayNutrition() {
     num carbs = 0;
@@ -133,7 +138,7 @@ class _DietPageState extends State<DietPage> {
     num fat = 0;
     String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
     for (var diet in diets) {
-      if (diet['date'] == today) { // 오늘 날짜의 식단만 합산
+      if (_isToday(diet['date'])) { // 오늘 날짜의 식단만 합산
         for (var food in diet['foods']) {
           carbs += (food['carbs'] ?? 0);
           protein += (food['protein'] ?? 0);
@@ -147,6 +152,12 @@ class _DietPageState extends State<DietPage> {
   @override
   Widget build(BuildContext context) {
     final todayNutrition = _calculateTodayNutrition();
+
+    // 총 영양 성분 합산 값 계산
+    num totalNutrition = (todayNutrition['carbs'] ?? 0) +
+        (todayNutrition['protein'] ?? 0) +
+        (todayNutrition['fat'] ?? 0);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -192,7 +203,9 @@ class _DietPageState extends State<DietPage> {
         child: Column(
           children: [
             Text(
-              '오늘 섭취 칼로리: ${_calculateTotalCalories()} kcal', // 오늘 총 칼로리 표시
+              _isToday(DateFormat('yyyy-MM-dd').format(DateTime.now()))
+                  ? '오늘 섭취 칼로리: ${_calculateTotalCalories()} kcal' // 오늘 총 칼로리 표시
+                  : '오늘 섭취한 칼로리 정보가 없습니다.',
               style: TextStyle(
                 fontFamily: 'Roboto', // 폰트 설정
                 fontSize: 20.0, // 글자 크기 설정
@@ -202,7 +215,7 @@ class _DietPageState extends State<DietPage> {
             ),
             SizedBox(height: 16.0),
             // 영양정보 도넛형 그래프
-            if (todayNutrition['carbs']! > 0 || todayNutrition['protein']! > 0 || todayNutrition['fat']! > 0)
+            if (totalNutrition > 0)
               SizedBox(
                 height: 200,
                 child: PieChart(
@@ -210,19 +223,22 @@ class _DietPageState extends State<DietPage> {
                     sections: [
                       PieChartSectionData(
                         value: (todayNutrition['carbs'] ?? 0).toDouble(),
-                        title: '탄수화물',
+                        title:
+                        '${((todayNutrition['carbs'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
                         color: Colors.blue,
                         radius: 50,
                       ),
                       PieChartSectionData(
                         value: (todayNutrition['protein'] ?? 0).toDouble(),
-                        title: '단백질',
+                        title:
+                        '${((todayNutrition['protein'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
                         color: Colors.green,
                         radius: 50,
                       ),
                       PieChartSectionData(
                         value: (todayNutrition['fat'] ?? 0).toDouble(),
-                        title: '지방',
+                        title:
+                        '${((todayNutrition['fat'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
                         color: Colors.red,
                         radius: 50,
                       ),
@@ -239,11 +255,11 @@ class _DietPageState extends State<DietPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildLegend(Color(Colors.blue.value), '탄수화물'),
+                _buildLegend(Colors.blue, '탄수화물'),
                 SizedBox(width: 16.0),
-                _buildLegend(Color(Colors.green.value), '단백질'),
+                _buildLegend(Colors.green, '단백질'),
                 SizedBox(width: 16.0),
-                _buildLegend(Color(Colors.red.value), '지방'),
+                _buildLegend(Colors.red, '지방'),
               ],
             ),
             SizedBox(height: 16.0),
