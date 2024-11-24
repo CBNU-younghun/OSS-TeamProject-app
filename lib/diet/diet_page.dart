@@ -212,44 +212,40 @@ class _DietPageState extends State<DietPage> {
                         value: (todayNutrition['carbs'] ?? 0).toDouble(),
                         title: '탄수화물',
                         color: Colors.blue,
-                        radius: 60,
-                        titleStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        radius: 50,
                       ),
                       PieChartSectionData(
                         value: (todayNutrition['protein'] ?? 0).toDouble(),
                         title: '단백질',
                         color: Colors.green,
-                        radius: 60,
-                        titleStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        radius: 50,
                       ),
                       PieChartSectionData(
                         value: (todayNutrition['fat'] ?? 0).toDouble(),
                         title: '지방',
                         color: Colors.red,
-                        radius: 60,
-                        titleStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        radius: 50,
                       ),
                     ],
-                    sectionsSpace: 2,
-                    centerSpaceRadius: 40,
-                    borderData: FlBorderData(show: false),
+                    sectionsSpace: 2, // 섹션 간 간격
+                    centerSpaceRadius: 40, // 가운데 공간 크기
                   ),
                   swapAnimationDuration: Duration(milliseconds: 800), // 애니메이션 시간 설정
                   swapAnimationCurve: Curves.easeInOut, // 애니메이션 곡선 설정
                 ),
               ),
+            SizedBox(height: 16.0),
+            // 영양정보 라벨
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildLegend(Color(Colors.blue.value), '탄수화물'),
+                SizedBox(width: 16.0),
+                _buildLegend(Color(Colors.green.value), '단백질'),
+                SizedBox(width: 16.0),
+                _buildLegend(Color(Colors.red.value), '지방'),
+              ],
+            ),
             SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
@@ -302,6 +298,31 @@ class _DietPageState extends State<DietPage> {
           color: Colors.white, // 아이콘 색상 설정
         ),
       ),
+    );
+  }
+
+  // 라벨을 표시하는 위젯 생성 함수
+  Widget _buildLegend(Color color, String text) {
+    return Row(
+      children: [
+        Container(
+          width: 12.0,
+          height: 12.0,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.rectangle,
+          ),
+        ),
+        SizedBox(width: 4.0),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+      ],
     );
   }
 }
