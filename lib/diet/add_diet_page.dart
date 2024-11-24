@@ -274,7 +274,7 @@ class _AddDietPageState extends State<AddDietPage> {
                 Map<String, dynamic> food = entry.value;
                 return ListTile(
                   title: Text(
-                    '${food['foodName']} - ${food['calories']}kcal (탄수화물: ${food['carbs']}g, 단백질: ${food['protein']}g, 지방: ${food['fat']}g)',
+                    '${food['foodName']} - ${food['calories']}kcal',
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       fontSize: 16.0,
