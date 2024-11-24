@@ -216,52 +216,56 @@ class _DietPageState extends State<DietPage> {
             SizedBox(height: 16.0),
             // 영양정보 도넛형 그래프
             if (totalNutrition > 0)
-              SizedBox(
-                height: 200,
-                child: PieChart(
-                  PieChartData(
-                    sections: [
-                      PieChartSectionData(
-                        value: (todayNutrition['carbs'] ?? 0).toDouble(),
-                        title:
-                        '${((todayNutrition['carbs'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
-                        color: Colors.blue,
-                        radius: 50,
+              Column(
+                children: [
+                  SizedBox(
+                    height: 200,
+                    child: PieChart(
+                      PieChartData(
+                        sections: [
+                          PieChartSectionData(
+                            value: (todayNutrition['carbs'] ?? 0).toDouble(),
+                            title:
+                            '${((todayNutrition['carbs'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
+                            color: Colors.blue,
+                            radius: 50,
+                          ),
+                          PieChartSectionData(
+                            value: (todayNutrition['protein'] ?? 0).toDouble(),
+                            title:
+                            '${((todayNutrition['protein'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
+                            color: Colors.green,
+                            radius: 50,
+                          ),
+                          PieChartSectionData(
+                            value: (todayNutrition['fat'] ?? 0).toDouble(),
+                            title:
+                            '${((todayNutrition['fat'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
+                            color: Colors.red,
+                            radius: 50,
+                          ),
+                        ],
+                        sectionsSpace: 2, // 섹션 간 간격
+                        centerSpaceRadius: 40, // 가운데 공간 크기
                       ),
-                      PieChartSectionData(
-                        value: (todayNutrition['protein'] ?? 0).toDouble(),
-                        title:
-                        '${((todayNutrition['protein'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
-                        color: Colors.green,
-                        radius: 50,
-                      ),
-                      PieChartSectionData(
-                        value: (todayNutrition['fat'] ?? 0).toDouble(),
-                        title:
-                        '${((todayNutrition['fat'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
-                        color: Colors.red,
-                        radius: 50,
-                      ),
-                    ],
-                    sectionsSpace: 2, // 섹션 간 간격
-                    centerSpaceRadius: 40, // 가운데 공간 크기
+                      swapAnimationDuration: Duration(milliseconds: 800), // 애니메이션 시간 설정
+                      swapAnimationCurve: Curves.easeInOut, // 애니메이션 곡선 설정
+                    ),
                   ),
-                  swapAnimationDuration: Duration(milliseconds: 800), // 애니메이션 시간 설정
-                  swapAnimationCurve: Curves.easeInOut, // 애니메이션 곡선 설정
-                ),
+                  SizedBox(height: 16.0),
+                  // 영양정보 라벨
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildLegend(Colors.blue, '탄수화물'),
+                      SizedBox(width: 16.0),
+                      _buildLegend(Colors.green, '단백질'),
+                      SizedBox(width: 16.0),
+                      _buildLegend(Colors.red, '지방'),
+                    ],
+                  ),
+                ],
               ),
-            SizedBox(height: 16.0),
-            // 영양정보 라벨
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildLegend(Colors.blue, '탄수화물'),
-                SizedBox(width: 16.0),
-                _buildLegend(Colors.green, '단백질'),
-                SizedBox(width: 16.0),
-                _buildLegend(Colors.red, '지방'),
-              ],
-            ),
             SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
