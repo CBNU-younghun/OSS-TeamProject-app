@@ -6,7 +6,7 @@ import 'add_diet_page.dart'; // 식단 추가 페이지를 위한 선언
 import 'diet_detail_page.dart'; // 식단 상세 페이지를 위한 선언
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위한 파일 추가
 import 'package:oss_team_project_app/utils/json_loader.dart'; // JSON 로더 임포트
-
+import 'package:intl/intl.dart'; // 날짜 형식을 위해 사용
 
 // DietPage는 사용자가 식단을 관리할 수 있는 화면을 제공함
 class DietPage extends StatefulWidget {
@@ -24,12 +24,11 @@ class _DietPageState extends State<DietPage> {
     _initializeJsonData(); // JSON 데이터 초기화
   }
 
-// JSON 데이터 로드 및 저장
+  // JSON 데이터 로드 및 저장
   List<Map<String, dynamic>> jsonData = [];
   void _initializeJsonData() async {
     jsonData = await loadJsonData('밥류.json');
   }
-
 
   // 저장된 식단 데이터를 SharedPreferences에서 불러오는 함수
   void _loadDiets() async {
@@ -51,6 +50,7 @@ class _DietPageState extends State<DietPage> {
   // 새로운 식단을 추가하는 함수
   void _addNewDiet(Map<String, dynamic> diet) {
     setState(() {
+      diet['date'] = DateFormat('yyyy-MM-dd').format(DateTime.now()); // 식단에 추가한 날짜를 추가함
       diets.add(diet); // diets 리스트에 새로운 식단 추가
       _saveDiets(); // 변경된 diets 리스트를 저장함
     });
@@ -59,6 +59,7 @@ class _DietPageState extends State<DietPage> {
   // 기존 식단을 업데이트하는 함수
   void _updateDiet(int index, Map<String, dynamic> updatedDiet) {
     setState(() {
+      updatedDiet['date'] = diets[index]['date']; // 기존 날짜 유지
       diets[index] = updatedDiet; // 지정된 인덱스의 식단을 업데이트함
       _saveDiets(); // 변경된 diets 리스트를 저장함
     });
@@ -110,12 +111,15 @@ class _DietPageState extends State<DietPage> {
     }
   }
 
-  // 총 섭취 칼로리를 계산하는 함수
+  // 오늘 섭취한 총 칼로리를 계산하는 함수
   int _calculateTotalCalories() {
     num totalCalories = 0;
+    String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
     for (var diet in diets) {
-      for (var food in diet['foods']) {
-        totalCalories += (food['calories'] ?? 0); // 각 음식의 칼로리를 합산함
+      if (diet['date'] == today) { // 오늘 날짜의 식단만 합산
+        for (var food in diet['foods']) {
+          totalCalories += (food['calories'] ?? 0); // 각 음식의 칼로리를 합산함
+        }
       }
     }
     return totalCalories.toInt(); // 총 칼로리를 정수로 반환함
@@ -164,12 +168,11 @@ class _DietPageState extends State<DietPage> {
         ),
       )
           : Padding(
-        padding:
-        const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0), // 전체 패딩 설정
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0), // 전체 패딩 설정
         child: Column(
           children: [
             Text(
-              '총 섭취 칼로리: ${_calculateTotalCalories()} kcal', // 총 칼로리 표시
+              '오늘 섭취 칼로리: ${_calculateTotalCalories()} kcal', // 오늘 총 칼로리 표시
               style: TextStyle(
                 fontFamily: 'Roboto', // 폰트 설정
                 fontSize: 20.0, // 글자 크기 설정
@@ -201,6 +204,14 @@ class _DietPageState extends State<DietPage> {
                             fontWeight: FontWeight.bold, // 글자 두께 설정
                             fontSize: 18.0, // 글자 크기 설정
                             fontFamily: 'Roboto', // 폰트 설정
+                          ),
+                        ),
+                        subtitle: Text(
+                          '${diet['date']}', // 식단 추가 날짜 표시
+                          style: const TextStyle(
+                            fontSize: 14.0, // 글자 크기 설정
+                            fontFamily: 'Roboto', // 폰트 설정
+                            color: Colors.black54, // 글자 색상 설정
                           ),
                         ),
                       ),
