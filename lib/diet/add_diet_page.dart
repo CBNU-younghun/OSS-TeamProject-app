@@ -50,19 +50,22 @@ class _AddDietPageState extends State<AddDietPage> {
         return {
           '식품명': item['records/식품명'],
           '에너지(kcal)': item['records/에너지(kcal)'],
+          '탄수화물(g)': item['records/탄수화물(g)'],
+          '단백질(g)': item['records/단백질(g)'],
+          '지방(g)': item['records/지방(g)'],
         };
       }).toList();
 
       // 상태 업데이트
       setState(() {
         foodData = cleanedData;
-        filteredFoods = foodData.map((food) => food['식품명'] as String).toList();
+        filteredFoods = foodData.map((food) => food['식품명'] as String).toSet().toList(); // 중복 제거
         selectedFood = null; // 새 카테고리 선택 시 선택된 음식 초기화
       });
     } catch (e) {
       // 오류 발생 시 스낵바로 알림 표시
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('음식 데이터를 불러오는 중 오류가 발생했습니다.')),
+        SnackBar(content: Text('음식 데이터를 불러오는 중 오류가 발생했습니다: ${e.toString()}')),
       );
     }
   }
@@ -87,6 +90,9 @@ class _AddDietPageState extends State<AddDietPage> {
       foodList.add({
         'foodName': selectedFoodData['식품명'],
         'calories': selectedFoodData['에너지(kcal)'],
+        'carbs': selectedFoodData['탄수화물(g)'],
+        'protein': selectedFoodData['단백질(g)'],
+        'fat': selectedFoodData['지방(g)'],
       });
     });
 
@@ -141,70 +147,114 @@ class _AddDietPageState extends State<AddDietPage> {
             ),
             SizedBox(height: 16.0),
 
-            // 카테고리 선택 드롭다운
-            DropdownButtonFormField<String>(
-              value: selectedCategory,
-              onChanged: (value) {
-                setState(() {
-                  selectedCategory = value; // 선택된 카테고리 업데이트
-                  if (value != null) {
-                    _loadFoodDataByCategory(value); // 선택된 카테고리에 해당하는 음식 데이터 로드
-                  }
-                });
-              },
-              items: categories.map((category) {
-                return DropdownMenuItem(
-                  value: category,
-                  child: Text(category),
-                );
-              }).toList(),
-              decoration: InputDecoration(
-                labelText: '카테고리 선택', // 드롭다운 라벨
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 6.0),
-
-            // 음식 선택 드롭다운 (카테고리 선택 후 표시)
-            if (filteredFoods.isNotEmpty)
-              DropdownButtonFormField<String>(
-                value: selectedFood,
-                onChanged: (value) => setState(() => selectedFood = value),
-                items: filteredFoods.map((food) {
+// 카테고리 선택 드롭다운
+            Container(
+              width: double.infinity, // 화면의 너비에 맞게 설정
+              child: DropdownButtonFormField<String>(
+                value: selectedCategory,
+                onChanged: (value) {
+                  setState(() {
+                    selectedCategory = value; // 선택된 카테고리 업데이트
+                    if (value != null) {
+                      _loadFoodDataByCategory(value); // 선택된 카테고리에 해당하는 음식 데이터 로드
+                    }
+                  });
+                },
+                items: categories.map((category) {
                   return DropdownMenuItem(
-                    value: food,
-                    child: Text(food),
+                    value: category,
+                    child: Text(category),
                   );
                 }).toList(),
+                hint: Text('카테고리 선택'), // 선택되지 않았을 때 표시될 기본 텍스트 추가
                 decoration: InputDecoration(
-                  labelText: '음식 선택',
+                  labelText: '카테고리 선택', // 드롭다운 라벨
                   border: OutlineInputBorder(),
-                ),
-              ),
-            SizedBox(height: 6.0),
-
-            // 음식 추가 버튼
-            ElevatedButton(
-              onPressed: _addFood,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                elevation: 4.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-              ),
-              child: Text(
-                '음식 추가',
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue',
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
             ),
             SizedBox(height: 16.0),
+
+// 음식 선택 드롭다운 (카테고리 선택 후 표시)
+            if (filteredFoods.isNotEmpty)
+              Container(
+                width: double.infinity, // 화면의 너비에 맞게 설정
+                child: DropdownButtonFormField<String>(
+                  value: selectedFood,
+                  onChanged: (value) => setState(() => selectedFood = value),
+                  items: filteredFoods.map((food) {
+                    return DropdownMenuItem(
+                      value: food,
+                      child: Text(
+                        food,
+                        overflow: TextOverflow.ellipsis, // 너무 긴 텍스트는 '...'으로 표시
+                      ),
+                    );
+                  }).toList(),
+                  hint: Text('음식 선택'), // 선택되지 않았을 때 표시될 기본 텍스트 추가
+                  decoration: InputDecoration(
+                    labelText: '음식 선택',
+                    border: OutlineInputBorder(),
+                  ),
+                  isExpanded: true, // Dropdown이 화면 너비에 맞춰 확장되도록 설정
+                ),
+              ),
+            SizedBox(height: 16.0),
+
+            // 음식 추가 및 저장 버튼을 같은 줄에 배치
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // 음식 추가 버튼
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _addFood,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                    ),
+                    child: Text(
+                      '음식 추가',
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue',
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.0),
+                // 저장 버튼
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _saveDiet,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                    ),
+                    child: Text(
+                      '저장',
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue',
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 32.0),
 
             // 추가된 음식 목록
             if (foodList.isNotEmpty) ...[
@@ -224,7 +274,7 @@ class _AddDietPageState extends State<AddDietPage> {
                 Map<String, dynamic> food = entry.value;
                 return ListTile(
                   title: Text(
-                    '${food['foodName']} - ${food['calories']}kcal',
+                    '${food['foodName']} - ${food['calories']}kcal (탄수화물: ${food['carbs']}g, 단백질: ${food['protein']}g, 지방: ${food['fat']}g)',
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       fontSize: 16.0,
@@ -242,29 +292,6 @@ class _AddDietPageState extends State<AddDietPage> {
                 );
               }).toList(),
             ],
-            SizedBox(height: 32.0),
-
-            // 저장 버튼
-            ElevatedButton(
-              onPressed: _saveDiet,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                elevation: 4.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-              ),
-              child: Text(
-                '저장',
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue',
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
           ],
         ),
       ),
