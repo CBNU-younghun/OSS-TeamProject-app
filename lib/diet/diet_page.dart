@@ -51,7 +51,7 @@ class _DietPageState extends State<DietPage> {
   void _addNewDiet(Map<String, dynamic> diet) {
     setState(() {
       diet['date'] = DateFormat('yyyy-MM-dd').format(DateTime.now()); // 식단에 추가한 날짜를 추가함
-      diets.add(diet); // diets 리스트에 새로운 식단 추가
+      diets.insert(0, diet); // diets 리스트에 새로운 식단을 맨 위에 추가
       _saveDiets(); // 변경된 diets 리스트를 저장함
     });
   }
