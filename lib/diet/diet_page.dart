@@ -7,6 +7,7 @@ import 'diet_detail_page.dart'; // 식단 상세 페이지를 위한 선언
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위한 파일 추가
 import 'package:oss_team_project_app/utils/json_loader.dart'; // JSON 로더 임포트
 import 'package:intl/intl.dart'; // 날짜 형식을 위해 사용
+import 'package:fl_chart/fl_chart.dart'; // 차트 표현을 위해 사용
 
 // DietPage는 사용자가 식단을 관리할 수 있는 화면을 제공함
 class DietPage extends StatefulWidget {
@@ -125,8 +126,27 @@ class _DietPageState extends State<DietPage> {
     return totalCalories.toInt(); // 총 칼로리를 정수로 반환함
   }
 
+  // 오늘 섭취한 영양정보를 계산하는 함수
+  Map<String, num> _calculateTodayNutrition() {
+    num carbs = 0;
+    num protein = 0;
+    num fat = 0;
+    String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    for (var diet in diets) {
+      if (diet['date'] == today) { // 오늘 날짜의 식단만 합산
+        for (var food in diet['foods']) {
+          carbs += (food['carbs'] ?? 0);
+          protein += (food['protein'] ?? 0);
+          fat += (food['fat'] ?? 0);
+        }
+      }
+    }
+    return {'carbs': carbs, 'protein': protein, 'fat': fat};
+  }
+
   @override
   Widget build(BuildContext context) {
+    final todayNutrition = _calculateTodayNutrition();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -180,6 +200,37 @@ class _DietPageState extends State<DietPage> {
                 color: Colors.black, // 글자 색상 설정
               ),
             ),
+            SizedBox(height: 16.0),
+            // 영양정보 도넛형 그래프
+            if (todayNutrition['carbs']! > 0 || todayNutrition['protein']! > 0 || todayNutrition['fat']! > 0)
+              SizedBox(
+                height: 200,
+                child: PieChart(
+                  PieChartData(
+                    sections: [
+                      PieChartSectionData(
+                        value: (todayNutrition['carbs'] ?? 0).toDouble(),
+                        title: '탄수화물',
+                        color: Colors.blue,
+                        radius: 50,
+                      ),
+                      PieChartSectionData(
+                        value: (todayNutrition['protein'] ?? 0).toDouble(),
+                        title: '단백질',
+                        color: Colors.green,
+                        radius: 50,
+                      ),
+                      PieChartSectionData(
+                        value: (todayNutrition['fat'] ?? 0).toDouble(),
+                        title: '지방',
+                        color: Colors.red,
+                        radius: 50,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
                 itemCount: diets.length, // 리스트 아이템 수 설정
