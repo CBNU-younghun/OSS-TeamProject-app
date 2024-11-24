@@ -4,6 +4,7 @@ import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공
 import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하거나 시스템과의 상호작용을 위해 사용됨
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위해 import 추가
 
+
 // ExerciseInfoPage는 운동 정보를 표시하고, 사용자가 운동을 선택하여 상세 정보를 확인할 수 있는 화면이다
 class ExerciseInfoPage extends StatefulWidget {
   @override
@@ -40,6 +41,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
       return exercises['bodyPart'].contains(selectedBodyPart);
     }).toList();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(horizontal: 18.0),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(90), // 角を丸くする
+                              borderRadius: BorderRadius.circular(90),
                             ),
                           ),
                           onPressed: () {
@@ -134,14 +136,10 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                 }).toList(),
               ),
             ),
+
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 0.0,
-                  bottom: 20.0,
-                  left: 20.0,
-                  right: 20.0,
-                ),
+                padding: const EdgeInsets.only(top: 0.0, bottom: 20.0, left: 20.0, right: 20.0,),
                 child: ListView.builder(
                 itemCount: filteredCategory.length,
                 itemBuilder: (context, index) {
@@ -159,10 +157,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                           spreadRadius: 0, // 그림자의 확대
                         ),
                       ],
-                      border: Border.all(
-                        color: const Color(0xFFDEDFE0),
-                        width: 1.0,
-                      ),
+                      border: Border.all(color: const Color(0xFFDEDFE0), width: 1.0,),
                     ),
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
@@ -190,7 +185,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                             children: [
                             // 난이도와 운동 부위를 세로로 나열합니다
                             Text(
-                              '${exercise['difficulty']}  | ${exercise['bodyPart']}',
+                              '${exercise['difficulty']}  | ${exercise['effectiveBody']}',
                               style: const TextStyle(fontSize: 14.0, color: Colors.black),
                             ),
                             ],
@@ -207,14 +202,13 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                           ),
                         );
                       },
-                    ),
-                  );
+                    ),);
                 },
               ),
               ),
             ),
           ],
-        )
+        ),
     );
   }
 }
@@ -259,21 +253,14 @@ class _ExerciseDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${exercise['name']}',
-                    style: const TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,),
                   ),
                   Text('(${exercise['englishName']})',
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                    color: Color(0xFF666666),
-                  ),
+                  style: const TextStyle(fontSize: 16.0, color: Color(0xFF666666),),
                   ),
                 ],
               ),
@@ -299,7 +286,7 @@ class _ExerciseDetailPage extends StatelessWidget {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: const Text('난이도',textAlign: TextAlign.center),
-                                  backgroundColor: Colors.white, // ポップアップの背景色を白に設定
+                                  backgroundColor: Colors.white,
                                   contentPadding: const EdgeInsets.all(21.0),
                                   content: const Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -316,14 +303,14 @@ class _ExerciseDetailPage extends StatelessWidget {
                                     ],
                                   ),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0), // 角丸の設定
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      child: const Text('閉じる',style: TextStyle(color: Colors.blue),),
+                                      child: const Text('닫다',style: TextStyle(color: Colors.blue),),
                                     ),
                                   ],
                                 );
@@ -331,14 +318,14 @@ class _ExerciseDetailPage extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            padding: const EdgeInsets.all(2.0), // ボタンの内側余白を設定
+                            padding: const EdgeInsets.all(2.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100), // ボタンの角を丸くする
+                              borderRadius: BorderRadius.circular(100),
                             ),
                             child: const Icon(
                               Icons.info_outline,
-                              size: 20.0, // アイコンサイズを設定
-                              color: Color(0xFF8B8B8B), // アイコンの色を設定
+                              size: 20.0,
+                              color: Color(0xFF8B8B8B),
                             ),
                           ),
                         ),
@@ -350,7 +337,7 @@ class _ExerciseDetailPage extends StatelessWidget {
                       children: [
                         const Text('운동 부위',style: TextStyle(fontSize: 16.0)),
                         const SizedBox(width: 50.0),
-                        Text(': ${exercise['bodyPart']}',style: const TextStyle(fontSize: 16.0)),
+                        Text(': ${exercise['effectiveBody']}',style: const TextStyle(fontSize: 16.0)),
                       ],
                     ),
                     Row(
@@ -364,20 +351,20 @@ class _ExerciseDetailPage extends StatelessWidget {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  backgroundColor: Colors.white, // ポップアップの背景色を白に設定
+                                  backgroundColor: Colors.white,
                                   contentPadding: const EdgeInsets.all(21.0),
                                   title: Text('${exercise['caloriesBurned']}'),
                                   content: const Text('소비 칼로리는 30분간 운동을 했을 때의 일반적인 평균값으로, 운동 강도, 체중, 운동 방식(세트와 반복 횟수) 등에 따라 달라지며, 개인의 체력 수준과 운동 방식에 따라 차이가 있을 수 있습니다.',
                                   style: TextStyle(fontSize: 16.0),),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0), // 角丸の設定
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      child: const Text('閉じる',style: TextStyle(color: Colors.blue),),
+                                      child: const Text('닫다',style: TextStyle(color: Colors.blue),),
                                     ),
                                   ],
                                 );
@@ -385,14 +372,14 @@ class _ExerciseDetailPage extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            padding: const EdgeInsets.all(2.0), // ボタンの内側余白を設定
+                            padding: const EdgeInsets.all(2.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100), // ボタンの角を丸くする
+                              borderRadius: BorderRadius.circular(100),
                             ),
                             child: const Icon(
                               Icons.info_outline,
-                              size: 20.0, // アイコンサイズを設定
-                              color: Color(0xFF8B8B8B), // アイコンの色を設定
+                              size: 20.0,
+                              color: Color(0xFF8B8B8B),
                             ),
                           ),
                         ),
@@ -406,10 +393,20 @@ class _ExerciseDetailPage extends StatelessWidget {
               const SizedBox(height: 24),
               // 사진
               Center(
-                child: Image.asset('assets/images/sample.jpg'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFEFEFEF),
+                      width: 1.0,
+                    ),
+                  ),
+                  child: ClipRRect(
+                    child: Image.asset('assets/images/${exercise['imageUrl']}'),
+                  ),
+                ),
               ),
               const SizedBox(height: 30),
-              // 3colums
+              // 3colum
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

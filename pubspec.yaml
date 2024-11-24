@@ -61,7 +61,10 @@ dev_dependencies:
 flutter:
   assets:
     - assets/exercise_data.json
-    - assets/images/sample.jpg
+    - assets/images/abs.jpg
+    - assets/images/arm.jpg
+    - assets/images/leg.jpg
+    - assets/images/shoulder.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

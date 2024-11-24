@@ -1,11 +1,12 @@
 [
   {
-    "name": "벤치 프레스",
+    "name": "다치 프레스",
     "englishName": "Push Up",
     "bodyPart": "가슴",
+    "effectiveBody": "가슴",
     "difficulty": "Low Level",
     "caloriesBurned": "250-350 kcal",
-    "description": "가슴 근육을 강화하는 대표적인 웨이트 트레이닝 운동입니다.",
+    "imageUrl" : "shoulder.jpg",
     "preparation": [
       "그립을 잡고 어깨 넓이로 발을 벌리고 복압에 힘을 준 상태로 발과 허리가 안정된 상태로 시작한다."
     ],
@@ -20,12 +21,13 @@
     ]
   },
   {
-    "name": "벤치 프레스",
+    "name": "가나난나치 프레스",
     "englishName": "Push Up",
     "bodyPart": "가슴",
+    "effectiveBody": "가슴",
     "difficulty": "Low Level",
     "caloriesBurned": "250-350 kcal",
-    "description": "가슴 근육을 강화하는 대표적인 웨이트 트레이닝 운동입니다.",
+    "imageUrl" : "leg.jpg",
     "preparation": [
       "그립을 잡고 어깨 넓이로 발을 벌리고 복압에 힘을 준 상태로 발과 허리가 안정된 상태로 시작한다."
     ],
