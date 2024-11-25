@@ -370,7 +370,7 @@ class _ExerciseDetailPage extends StatelessWidget {
                                 return AlertDialog(
                                   backgroundColor: Colors.white,
                                   contentPadding: const EdgeInsets.all(21.0),
-                                  title: Text('${exercise['caloriesBurned']}'),
+                                  title: Text('소비 칼로리'),
                                   content: const Text('소비 칼로리는 30분간 운동을 했을 때의 일반적인 평균값으로, 운동 강도, 체중, 운동 방식(세트와 반복 횟수) 등에 따라 달라지며, 개인의 체력 수준과 운동 방식에 따라 차이가 있을 수 있습니다.',
                                   style: TextStyle(fontSize: 16.0),),
                                   shape: RoundedRectangleBorder(
