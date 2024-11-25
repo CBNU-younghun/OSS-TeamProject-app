@@ -234,14 +234,14 @@ class _DietPageState extends State<DietPage> {
                             value: (todayNutrition['protein'] ?? 0).toDouble(),
                             title:
                             '${((todayNutrition['protein'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
-                            color: Colors.green,
+                            color: Color (0xFF87CEEB),
                             radius: 50,
                           ),
                           PieChartSectionData(
                             value: (todayNutrition['fat'] ?? 0).toDouble(),
                             title:
                             '${((todayNutrition['fat'] ?? 0) / totalNutrition * 100).toStringAsFixed(1)}%',
-                            color: Colors.red,
+                            color: Color(0xFFE6E6FA),
                             radius: 50,
                           ),
                         ],
@@ -259,9 +259,9 @@ class _DietPageState extends State<DietPage> {
                     children: [
                       _buildLegend(Colors.blue, '탄수화물'),
                       SizedBox(width: 16.0),
-                      _buildLegend(Colors.green, '단백질'),
+                      _buildLegend(Color(0xFF87CEEB), '단백질'),
                       SizedBox(width: 16.0),
-                      _buildLegend(Colors.red, '지방'),
+                      _buildLegend(Color(0xFFE6E6FA), '지방'),
                     ],
                   ),
                 ],
