@@ -168,15 +168,31 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                             // 운동명(타이틀)과 영어명을 세로로 늘어놓다
-                            Text(
-                              exercise['name'],
-                              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold,),
-                            ),
+                              Flexible(
+                                flex: 0,
+                                child: Text(
+                                  exercise['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                               const SizedBox(width: 10.0),
-                            Text(
-                              exercise['englishName'],
-                              style: const TextStyle(fontSize: 14.0, color: Colors.grey,),
-                            ),
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  exercise['englishName'],
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.grey,
+                                  ),
+                                  maxLines: 1, // 1行で収める
+                                  overflow: TextOverflow.ellipsis, // 表示しきれない場合は...を表示
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 8.0),
@@ -254,10 +270,11 @@ class _ExerciseDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${exercise['name']}',
-                    style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,),
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text('(${exercise['englishName']})',
                   style: const TextStyle(fontSize: 16.0, color: Color(0xFF666666),),
