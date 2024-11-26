@@ -270,9 +270,9 @@ class _ExerciseDetailPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${exercise['name']}',
-                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,
                     ),
                   ),
