@@ -61,6 +61,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/exercise_data.json
+    - assets/food_data_by_category/
     - assets/images/abs.jpg
     - assets/images/all-body.jpg
     - assets/images/arm.jpg
