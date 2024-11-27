@@ -1,3 +1,4 @@
+
 // 루틴 상세 페이지
 import 'dart:convert'; // JSON 데이터를 인코딩 및 디코딩하기 위해 사용
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
@@ -28,6 +29,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
   List<String> filteredExercises = []; // 선택된 운동 부위에 따른 운동 목록
   List<int> secondsOptions = List.generate(60, (index) => index + 1); // 시간 선택 옵션 (1초부터 60초까지)
   List<int> setOptions = List.generate(10, (index) => index + 1); // 세트 수 선택 옵션 (1세트부터 10세트까지)
+  List<int> repsOptions = List.generate(50,(index) => index+1); // 세트 당 운동 횟수 선택 옵션(1회부터 50회까지)
 
   @override
   void initState() {
@@ -67,11 +69,14 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     }
   }
 
+
   // 루틴을 삭제하고 이전 화면으로 돌아간다
   void _deleteRoutine() {
     widget.onDelete(); // 삭제 함수 호출
     Navigator.pop(context); // 화면 닫기
   }
+
+
 
   @override
   void dispose() {
@@ -129,7 +134,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
                 return ListTile(
                   title: Text(
-                    '${exercise['exercise']} - ${exercise['time']}초 X ${exercise['sets']}세트', // 운동 정보 표시
+                    '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회 X ${exercise['sets']}세트', // 운동 정보 표시
                     style: TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
@@ -143,7 +148,31 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 );
               }).toList(),
             ],
+
             SizedBox(height: 32.0), // 간격 추가
+            ElevatedButton(
+              onPressed: _showAddExerciseForm, // 운동 추가 폼 표시
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // 버튼 배경색
+                elevation: 4.0, // 그림자 효과
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0), // 둥근 모서리
+                ),
+                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩
+              ),
+              child: Text(
+                '운동 추가', // 버튼 텍스트
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue', // 폰트
+                  fontSize: 20.0, // 글자 크기
+                  fontWeight: FontWeight.bold, // 글자 두께
+                  color: Colors.white, // 텍스트 색상
+                ),
+              ),
+            ),
+
+
+            SizedBox(height: 16.0), // 간격 추가
             ElevatedButton(
               onPressed: _saveRoutine, // 저장 버튼 클릭 시 루틴 저장
               style: ElevatedButton.styleFrom(
@@ -185,11 +214,207 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 ),
               ),
             ),
+
           ],
         ),
       ),
     );
   }
+
+  // 운동 추가 폼 표시 메소드
+  void _showAddExerciseForm() {
+    String? selectedBodyPart; // 선택된 운동 부위
+    List<String> filteredExercises = []; // 필터링된 운동 목록
+    String? selectedExercise; // 선택된 운동
+    int? selectedTime; // 선택된 운동 시간
+    int? selectedSets; // 선택된 세트 수
+    int? selectedReps; // 선택된 세트당 운동 횟수
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom), // 키보드 높이에 맞게 패딩 조절
+              child: Padding(
+                padding: const EdgeInsets.all(16.0), // 전체 패딩
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // 운동 부위 선택
+                    DropdownButtonFormField<String>(
+                      value: selectedBodyPart, // 선택된 운동 부위
+                      items: bodyParts.map((part) => DropdownMenuItem(
+                        value: part,
+                        child: Text(
+                          part,
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedBodyPart = value; // 운동 부위 업데이트
+                          filteredExercises = allExercises
+                              .where((exercise) => exercise['bodyPart'] == selectedBodyPart) // 운동 목록 필터링
+                              .map((exercise) => exercise['name'] as String)
+                              .toList();
+                          selectedExercise = null; // 운동 초기화
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '운동 부위',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
+                    // 운동 이름 선택
+                    DropdownButtonFormField<String>(
+                      value: selectedExercise,
+                      items: filteredExercises.map((exerciseName) => DropdownMenuItem(
+                        value: exerciseName,
+                        child: Text(
+                          exerciseName,
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedExercise = value; // 운동 이름 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '운동 이름',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
+                    // 운동 시간 선택
+                    DropdownButtonFormField<int>(
+                      value: selectedTime,
+                      items: secondsOptions.map((seconds) => DropdownMenuItem(
+                        value: seconds,
+                        child: Text('$seconds 초'),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedTime = value; // 운동 시간 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '운동 시간 (초)',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
+                    DropdownButtonFormField<int>(
+                      value: selectedReps,
+                      items: repsOptions.map((reps) => DropdownMenuItem(
+                        value: reps,
+                        child: Text('$reps 회'),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedReps = value; // 세트 당 운동 횟수 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '세트 당 운동 횟수',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+
+                    // 세트 수 선택
+                    DropdownButtonFormField<int>(
+                      value: selectedSets,
+                      items: setOptions.map((sets) => DropdownMenuItem(
+                        value: sets,
+                        child: Text('$sets 세트'),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedSets = value; // 세트 수 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '세트 수',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 32.0),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        if (selectedBodyPart != null &&
+                            selectedExercise != null &&
+                            selectedTime != null &&
+                            selectedSets != null) {
+                          setState(() {
+                            exercises.add({
+                              'bodyPart': selectedBodyPart,
+                              'exercise': selectedExercise,
+                              'time': selectedTime,
+                              'sets': selectedSets,
+                            }); // 운동 추가
+                          });
+                          Navigator.pop(context); // 모달 닫기
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('모든 정보를 입력해주세요.')),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
+                      child: Text(
+                        '추가',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  } //void _showAddExerciseForm()
+
 
   // 운동 항목에 대한 편집 옵션을 보여주는 함수
   void _showEditExerciseOptions(int index) {
@@ -202,7 +427,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
             mainAxisSize: MainAxisSize.min, // 최소 크기 설정
             children: [
               ListTile(
-                leading: Icon(Icons.edit, color: Colors.blue), // 수정 아이콘
+                leading: Icon(Icons.edit, color: Colors.black), // 수정 아이콘
                 title: Text('운동 수정'), // 수정 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
@@ -210,7 +435,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.delete, color: Colors.red), // 삭제 아이콘
+                leading: Icon(Icons.delete, color: Colors.black), // 삭제 아이콘
                 title: Text('운동 삭제'), // 삭제 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
@@ -369,6 +594,41 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     SizedBox(height: 16.0),
                     // 세트 수 선택
+
+                    // 세트 당 운동 횟수 선택
+                    DropdownButtonFormField<int>(
+                      value: repsOptions.contains(exercises[index]['reps']) ? exercises[index]['reps'] : null, // 선택된 세트 당 운동 횟수 설정
+                      items: repsOptions.map((reps) => DropdownMenuItem(
+                        value: reps,
+                        child: Text(
+                          '$reps 회',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      )).toList(),
+                      onChanged: (value) {
+                        setModalState(() {
+                          exercises[index]['reps'] = value; // 세트 당 운동횟수 업데이트
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '세트 당 운동 횟수',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      hint: Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
+                    ),
+                    SizedBox(height: 16.0),
+
                     DropdownButtonFormField<int>(
                       value: setOptions.contains(exercises[index]['sets']) ? exercises[index]['sets'] : null, // 선택된 세트 수 설정
                       items: setOptions.map((sets) => DropdownMenuItem(
@@ -406,13 +666,15 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         if (selectedBodyPart != null &&
                             exercises[index]['exercise'] != null &&
                             exercises[index]['time'] != null &&
-                            exercises[index]['sets'] != null) {
+                            exercises[index]['sets'] != null &&
+                            exercises[index]['reps'] != null) {
                           setState(() {
                             exercises[index] = {
                               'exercise': exercises[index]['exercise'], // 운동 이름 업데이트
                               'bodyPart': selectedBodyPart, // 운동 부위 업데이트
                               'time': exercises[index]['time'], // 운동 시간 업데이트
                               'sets': exercises[index]['sets'], // 세트 수 업데이트
+                              'reps': exercises[index]['reps'], // 세트 당 운동 횟수 업데이트
                             };
                           });
                           Navigator.pop(context); // 모달 닫기

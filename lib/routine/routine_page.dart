@@ -45,6 +45,10 @@ class _RoutinePageState extends State<RoutinePage> {
   // 새로운 루틴을 추가하는 함수
   void _addNewRoutine(Map<String, dynamic> routine) {
     setState(() {
+      // 루틴에 createdAt 필드가 없으면 현재 시간을 추가
+      if(!routine.containsKey('createdAt')){
+        routine['createdAt'] = DateTime.now().toIso8601String(); // createdAt 필드 추가
+      }
       routines.add(routine); // 새로운 루틴을 리스트에 추가
       _saveRoutines(); // 업데이트된 리스트를 저장
     });
@@ -157,6 +161,10 @@ class _RoutinePageState extends State<RoutinePage> {
           itemCount: routines.length, // 루틴의 개수를 아이템 수로 설정
           itemBuilder: (context, index) {
             final routine = routines[index]; // 각 루틴을 가져옴
+            // 생성 시간을 DateTime 객체로 피싱
+            DateTime createdAt = DateTime.parse(routine['createdAt'] ?? DateTime.now().toIso8601String());
+            // 생성 시간을 원하는 형식으로 포맷
+            String formattedDate = "${createdAt.year}-${createdAt.month}-${createdAt.day}-${createdAt.hour}:${createdAt.minute}";
             return GestureDetector(
               onTap: () {
                 _goToRoutineDetailPage(index); // 루틴을 탭하면 상세 페이지로 이동
@@ -177,6 +185,13 @@ class _RoutinePageState extends State<RoutinePage> {
                       fontFamily: 'Roboto', // 폰트 설정
                     ),
                   ),
+                  subtitle: Text(
+                    "생성일: $formattedDate", // 생성된 날짜와 시간을 표시
+                    style: TextStyle(
+                      fontSize: 14.0, // 폰트 크기 설정
+                      color: Colors.black54,//
+                    ),
+                  ),
                 ),
               ),
             );
@@ -195,3 +210,4 @@ class _RoutinePageState extends State<RoutinePage> {
     );
   }
 }
+
