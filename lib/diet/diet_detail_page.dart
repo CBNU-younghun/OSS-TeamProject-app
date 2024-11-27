@@ -1,4 +1,3 @@
-// 식단 상세 페이지
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
 
 // DietDetailPage는 사용자가 선택한 식단의 상세 정보를 보고 수정 또는 삭제할 수 있는 페이지이다
@@ -20,8 +19,6 @@ class DietDetailPage extends StatefulWidget {
 
 class _DietDetailPageState extends State<DietDetailPage> {
   final TextEditingController nameController = TextEditingController(); // 식단 이름을 제어하는 텍스트 컨트롤러
-  String? selectedMealType; // 현재 선택된 식사 종류를 저장하는 변수
-  List<String> mealTypes = ['아침', '점심', '저녁', '간식']; // 식사 종류 옵션 리스트(임시로 아침,점심,저녁,간식을 입력해 놓았으나 추후 다른 기능으로 활용 가능)
   List<Map<String, dynamic>> foods = []; // 식단에 포함된 음식 목록을 저장하는 리스트
 
   @override
@@ -33,16 +30,14 @@ class _DietDetailPageState extends State<DietDetailPage> {
   // 초기 식단 데이터를 로드하여 상태를 설정하는 함수
   void _loadDietData() {
     nameController.text = widget.diet['name']; // 식단 이름을 텍스트 필드에 설정함
-    selectedMealType = widget.diet['mealType']; // 선택된 식사 종류를 설정함
     foods = List<Map<String, dynamic>>.from(widget.diet['foods']); // 음식 목록을 설정함
   }
 
   // 식단을 저장하는 함수
   void _saveDiet() {
-    if (nameController.text.isNotEmpty && selectedMealType != null) { // 식단 이름과 식사 종류가 입력되었는지 확인
+    if (nameController.text.isNotEmpty) { // 식단 이름이 입력되었는지 확인
       final updatedDiet = {
         'name': nameController.text, // 입력된 식단 이름
-        'mealType': selectedMealType, // 선택된 식사 종류
         'foods': foods, // 현재 음식 목록
       };
       widget.onSave(updatedDiet); // 상위 위젯의 onSave 콜백 함수 호출
@@ -203,35 +198,6 @@ class _DietDetailPageState extends State<DietDetailPage> {
               controller: nameController, // 식단 이름 텍스트 필드 컨트롤러 연결
               label: '식단 이름', // 텍스트 필드 라벨
               hintText: '식단 이름을 입력하세요', // 텍스트 필드 힌트
-            ),
-            SizedBox(height: 16.0), // 간격 추가
-            DropdownButtonFormField<String>(
-              value: selectedMealType, // 현재 선택된 식사 종류
-              items: mealTypes.map((mealType) => DropdownMenuItem(
-                value: mealType, // 각 식사 종류를 드롭다운 항목으로 설정
-                child: Text(
-                  mealType, // 식사 종류 이름 표시
-                  style: TextStyle(
-                    fontFamily: 'Roboto', // 폰트 설정
-                    fontWeight: FontWeight.w600, // 글자 두께 설정
-                    fontSize: 16.0, // 글자 크기 설정
-                  ),
-                ),
-              )).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedMealType = value; // 선택된 식사 종류 업데이트
-                });
-              },
-              decoration: InputDecoration(
-                labelText: '식사 종류', // 라벨 텍스트 설정
-                labelStyle: TextStyle(
-                  fontFamily: 'Roboto', // 폰트 설정
-                  fontWeight: FontWeight.w600, // 글자 두께 설정
-                  fontSize: 16.0, // 글자 크기 설정
-                ),
-                border: InputBorder.none, // 테두리 없음
-              ),
             ),
             SizedBox(height: 16.0), // 간격 추가
             if (foods.isNotEmpty) ...[
