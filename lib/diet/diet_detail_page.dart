@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
+import 'package:fl_chart/fl_chart.dart'; // 차트 표현을 위해 사용
+import 'package:flutter/services.dart'; // JSON 파일을 로드하기 위해 사용
+import 'dart:convert'; // JSON 데이터를 디코딩하기 위해 사용
 
 // DietDetailPage는 사용자가 선택한 식단의 상세 정보를 보고 수정 또는 삭제할 수 있는 페이지이다
 class DietDetailPage extends StatefulWidget {
@@ -201,6 +204,58 @@ class _DietDetailPageState extends State<DietDetailPage> {
             ),
             SizedBox(height: 16.0), // 간격 추가
             if (foods.isNotEmpty) ...[
+              SizedBox(
+                height: 300,
+                child: BarChart(
+                  BarChartData(
+                    alignment: BarChartAlignment.spaceBetween,
+                    barGroups: [
+                      _makeBarGroup(0, '탄수화물', _getTotalNutrient('carbs'), Colors.greenAccent),
+                      _makeBarGroup(1, '단백질', _getTotalNutrient('protein'), Colors.orangeAccent),
+                      _makeBarGroup(2, '지방', _getTotalNutrient('fat'), Colors.redAccent),
+                    ],
+                    titlesData: FlTitlesData(
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: (value, _) {
+                            switch (value.toInt()) {
+                              case 0:
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('탄수화물', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                );
+                              case 1:
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('단백질', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                );
+                              case 2:
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('지방', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                );
+                              default:
+                                return Text('');
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    gridData: FlGridData(
+                      show: false,
+                    ),
+                    barTouchData: BarTouchData(enabled: false),
+                  ),
+                ),
+              ),
+              SizedBox(height: 32.0),
               Text(
                 '추가된 음식 목록:', // 음식 목록 제목
                 style: TextStyle(
@@ -211,24 +266,28 @@ class _DietDetailPageState extends State<DietDetailPage> {
                 ),
               ),
               SizedBox(height: 8.0), // 간격 추가
-              // 음식 목록을 리스트 형태로 표시
+              // add_diet에서 추가된 음식 목록만 리스트 형태로 표시
               ...foods.asMap().entries.map((entry) {
                 int index = entry.key; // 음식의 인덱스
                 Map<String, dynamic> food = entry.value; // 음식 데이터
-                return ListTile(
-                  title: Text(
-                    '${food['foodName']} - ${food['calories']} kcal', // 음식 이름과 칼로리 표시
-                    style: TextStyle(
-                      fontFamily: 'Roboto', // 폰트 설정
-                      fontSize: 16.0, // 글자 크기 설정
-                      color: Colors.black87, // 글자 색상 설정
+                if (widget.diet['foods'].contains(food)) { // 현재 식단에 추가된 음식만 표시
+                  return ListTile(
+                    title: Text(
+                      '${food['foodName']} - ${food['calories']} kcal', // 음식 이름과 칼로리 표시
+                      style: TextStyle(
+                        fontFamily: 'Roboto', // 폰트 설정
+                        fontSize: 16.0, // 글자 크기 설정
+                        color: Colors.black87, // 글자 색상 설정
+                      ),
                     ),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
-                    onPressed: () => _showEditOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
-                  ),
-                );
+                    trailing: IconButton(
+                      icon: Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
+                      onPressed: () => _showEditOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
+                    ),
+                  );
+                } else {
+                  return SizedBox.shrink(); // 다른 음식은 표시하지 않음
+                }
               }).toList(),
             ],
             SizedBox(height: 32.0), // 간격 추가
@@ -276,6 +335,35 @@ class _DietDetailPageState extends State<DietDetailPage> {
           ],
         ),
       ),
+    );
+  }
+
+// 주어진 영양소의 총합을 계산하는 함수
+  double _getTotalNutrient(String nutrient) {
+    double total = 0;
+    for (var food in foods) {
+      total += (food[nutrient] ?? 0).toDouble(); // null 체크 후 toDouble() 호출
+    }
+    return total;
+  }
+
+  // 막대 그룹을 생성하는 함수
+  BarChartGroupData _makeBarGroup(int x, String label, double value, Color color) {
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: value,
+          color: color,
+          width: 20,
+          borderRadius: BorderRadius.circular(6),
+          backDrawRodData: BackgroundBarChartRodData(
+            show: true,
+            toY: 100,
+            color: Colors.grey[200],
+          ),
+        ),
+      ],
     );
   }
 
