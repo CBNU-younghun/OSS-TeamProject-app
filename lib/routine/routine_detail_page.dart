@@ -329,7 +329,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       value: selectedReps,
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
-                        child: Text('$reps 세트'),
+                        child: Text('$reps 회'),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
@@ -594,7 +594,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     SizedBox(height: 16.0),
                     // 세트 수 선택
-                    //************************************************************************************************
+
                     // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
                       value: repsOptions.contains(exercises[index]['reps']) ? exercises[index]['reps'] : null, // 선택된 세트 당 운동 횟수 설정
@@ -628,7 +628,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       hint: Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
                     ),
                     SizedBox(height: 16.0),
-                    //************************************************************************************************
+
                     DropdownButtonFormField<int>(
                       value: setOptions.contains(exercises[index]['sets']) ? exercises[index]['sets'] : null, // 선택된 세트 수 설정
                       items: setOptions.map((sets) => DropdownMenuItem(
