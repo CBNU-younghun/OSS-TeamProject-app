@@ -277,12 +277,17 @@ class _DietPageState extends State<DietPage> {
                       _goToDietDetailPage(index); // 식단을 탭하면 상세 페이지로 이동함
                     },
                     child: Card(
+                      color: Colors.white, // 카드 배경색을 흰색으로 설정
                       elevation: 4.0, // 카드 그림자 높이 설정
                       margin: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 16.0), // 카드 여백 설정
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0), // 카드 모서리 둥글게 설정
-                      ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0), // 카드 모서리 둥글게 설정
+                          side: BorderSide(
+                            color: Colors.black, // 테두리 색상을 검정색으로 설정
+                            width: 1.0, // 테두리 두께 설정 (숫자를 키우면 더 두꺼워짐)
+                          ),
+                        ),
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(16.0), // 리스트 타일 내부 여백 설정
                         title: Text(
