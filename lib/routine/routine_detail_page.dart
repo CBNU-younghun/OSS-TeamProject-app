@@ -269,6 +269,11 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 부위',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -297,6 +302,11 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 이름',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -318,6 +328,11 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 시간 (초)',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -338,6 +353,11 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '세트 당 운동 횟수',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
@@ -359,6 +379,11 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '세트 수',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
