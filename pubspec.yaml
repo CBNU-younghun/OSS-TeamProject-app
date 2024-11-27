@@ -62,6 +62,21 @@ flutter:
   assets:
     - assets/exercise_data.json
     - assets/food_data_by_category/
+    - assets/images/abs.jpg
+    - assets/images/all-body.jpg
+    - assets/images/arm.jpg
+    - assets/images/back.jpg
+    - assets/images/back&leg.jpg
+    - assets/images/calf.jpg
+    - assets/images/chest.jpg
+    - assets/images/chest&arm.jpg
+    - assets/images/hip.jpg
+    - assets/images/leg-b.jpg
+    - assets/images/leg-f.jpg
+    - assets/images/leg.jpg
+    - assets/images/shoulder.jpg
+    - assets/images/shoulder&arm.jpg
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -69,8 +84,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  #assets:
+  #  - images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
