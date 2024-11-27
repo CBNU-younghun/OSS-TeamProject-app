@@ -170,7 +170,9 @@ class _AddDietPageState extends State<AddDietPage> {
                 hint: Text('카테고리 선택'), // 선택되지 않았을 때 표시될 기본 텍스트 추가
                 decoration: InputDecoration(
                   labelText: '카테고리 선택', // 드롭다운 라벨
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
+                  ),
                 ),
               ),
             ),
@@ -196,7 +198,9 @@ class _AddDietPageState extends State<AddDietPage> {
                   hint: Text('음식 선택'), // 선택되지 않았을 때 표시될 기본 텍스트 추가
                   decoration: InputDecoration(
                     labelText: '음식 선택', // 드롭다운 라벨
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
+                    ),
                   ),
                   isExpanded: true, // Dropdown이 화면 너비에 맞춰 확장되도록 설정
                 ),
@@ -212,7 +216,7 @@ class _AddDietPageState extends State<AddDietPage> {
                   child: ElevatedButton(
                     onPressed: _addFood, // 음식 추가 함수 호출
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green, // 버튼 배경색
+                      backgroundColor: Colors.blueGrey, // 버튼 배경색
                       elevation: 4.0, // 버튼 그림자 깊이
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
