@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
 import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하기 위해 사용
-import 'dart:convert'; // JSON 데이터를 파싱하기 위해 사용
+import 'dart:convert'; // JSON 데이터를 불러오기 위해 사용
 
 // 식단 추가 페이지를 위한 StatefulWidget 정의
 class AddDietPage extends StatefulWidget {
@@ -58,8 +58,8 @@ class _AddDietPageState extends State<AddDietPage> {
 
       // 상태 업데이트
       setState(() {
-        foodData = cleanedData;
-        filteredFoods = foodData.map((food) => food['식품명'] as String).toSet().toList(); // 중복 제거
+        foodData = cleanedData; // 파싱된 음식 데이터를 상태에 저장
+        filteredFoods = foodData.map((food) => food['식품명'] as String).toSet().toList(); // 중복 제거 후 음식명 리스트 생성
         selectedFood = null; // 새 카테고리 선택 시 선택된 음식 초기화
       });
     } catch (e) {
@@ -88,18 +88,18 @@ class _AddDietPageState extends State<AddDietPage> {
     // 선택된 음식 데이터를 foodList에 추가
     setState(() {
       foodList.add({
-        'foodName': selectedFoodData['식품명'],
-        'calories': selectedFoodData['에너지(kcal)'],
-        'carbs': selectedFoodData['탄수화물(g)'],
-        'protein': selectedFoodData['단백질(g)'],
-        'fat': selectedFoodData['지방(g)'],
+        'foodName': selectedFoodData['식품명'], // 음식명 저장
+        'calories': selectedFoodData['에너지(kcal)'], // 칼로리 저장
+        'carbs': selectedFoodData['탄수화물(g)'], // 탄수화물 저장
+        'protein': selectedFoodData['단백질(g)'], // 단백질 저장
+        'fat': selectedFoodData['지방(g)'], // 지방 저장
       });
     });
 
     // 선택 항목 초기화
-    selectedCategory = null;
-    filteredFoods = [];
-    selectedFood = null;
+    selectedCategory = null; // 카테고리 초기화
+    filteredFoods = []; // 음식 리스트 초기화
+    selectedFood = null; // 선택된 음식 초기화
   }
 
   // 식단을 저장하는 함수
@@ -107,10 +107,10 @@ class _AddDietPageState extends State<AddDietPage> {
     if (foodList.isNotEmpty) {
       // 새로운 식단 데이터를 생성하여 Navigator를 통해 이전 화면으로 전달
       final newDiet = {
-        'name': dietNameController.text,
-        'foods': List<Map<String, dynamic>>.from(foodList),
+        'name': dietNameController.text, // 식단 이름 저장
+        'foods': List<Map<String, dynamic>>.from(foodList), // 음식 리스트 저장
       };
-      Navigator.pop(context, newDiet);
+      Navigator.pop(context, newDiet); // 이전 화면으로 데이터 전달
     } else {
       // 음식이 추가되지 않은 경우 경고 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
@@ -147,11 +147,12 @@ class _AddDietPageState extends State<AddDietPage> {
             ),
             SizedBox(height: 16.0),
 
-// 카테고리 선택 드롭다운
+            // 카테고리 선택 드롭다운
             Container(
               width: double.infinity, // 화면의 너비에 맞게 설정
               child: DropdownButtonFormField<String>(
-                value: selectedCategory,
+                value: selectedCategory, // 선택된 카테고리 값
+                dropdownColor: Colors.white, // 드롭다운 색상을 하얀색으로 설정
                 onChanged: (value) {
                   setState(() {
                     selectedCategory = value; // 선택된 카테고리 업데이트
@@ -163,7 +164,7 @@ class _AddDietPageState extends State<AddDietPage> {
                 items: categories.map((category) {
                   return DropdownMenuItem(
                     value: category,
-                    child: Text(category),
+                    child: Text(category), // 각 카테고리를 표시
                   );
                 }).toList(),
                 hint: Text('카테고리 선택'), // 선택되지 않았을 때 표시될 기본 텍스트 추가
@@ -175,13 +176,14 @@ class _AddDietPageState extends State<AddDietPage> {
             ),
             SizedBox(height: 16.0),
 
-// 음식 선택 드롭다운 (카테고리 선택 후 표시)
+            // 음식 선택 드롭다운 (카테고리 선택 후 표시)
             if (filteredFoods.isNotEmpty)
               Container(
                 width: double.infinity, // 화면의 너비에 맞게 설정
                 child: DropdownButtonFormField<String>(
-                  value: selectedFood,
-                  onChanged: (value) => setState(() => selectedFood = value),
+                  value: selectedFood, // 선택된 음식 값
+                  dropdownColor: Colors.white, // 드롭다운 색상을 하얀색으로 설정
+                  onChanged: (value) => setState(() => selectedFood = value), // 선택된 음식 업데이트
                   items: filteredFoods.map((food) {
                     return DropdownMenuItem(
                       value: food,
@@ -193,7 +195,7 @@ class _AddDietPageState extends State<AddDietPage> {
                   }).toList(),
                   hint: Text('음식 선택'), // 선택되지 않았을 때 표시될 기본 텍스트 추가
                   decoration: InputDecoration(
-                    labelText: '음식 선택',
+                    labelText: '음식 선택', // 드롭다운 라벨
                     border: OutlineInputBorder(),
                   ),
                   isExpanded: true, // Dropdown이 화면 너비에 맞춰 확장되도록 설정
@@ -203,19 +205,19 @@ class _AddDietPageState extends State<AddDietPage> {
 
             // 음식 추가 및 저장 버튼을 같은 줄에 배치
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // 버튼 간격 설정
               children: [
                 // 음식 추가 버튼
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: _addFood,
+                    onPressed: _addFood, // 음식 추가 함수 호출
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      elevation: 4.0,
+                      backgroundColor: Colors.green, // 버튼 배경색
+                      elevation: 4.0, // 버튼 그림자 깊이
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
+                        borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 수직 패딩 설정
                     ),
                     child: Text(
                       '음식 추가',
@@ -223,7 +225,7 @@ class _AddDietPageState extends State<AddDietPage> {
                         fontFamily: 'Bebas Neue',
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.white, // 텍스트 색상
                       ),
                     ),
                   ),
@@ -232,14 +234,14 @@ class _AddDietPageState extends State<AddDietPage> {
                 // 저장 버튼
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: _saveDiet,
+                    onPressed: _saveDiet, // 식단 저장 함수 호출
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      elevation: 4.0,
+                      backgroundColor: Colors.blue, // 버튼 배경색
+                      elevation: 4.0, // 버튼 그림자 깊이
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
+                        borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 수직 패딩 설정
                     ),
                     child: Text(
                       '저장',
@@ -247,7 +249,7 @@ class _AddDietPageState extends State<AddDietPage> {
                         fontFamily: 'Bebas Neue',
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.white, // 텍스트 색상
                       ),
                     ),
                   ),
@@ -264,25 +266,25 @@ class _AddDietPageState extends State<AddDietPage> {
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w600,
                   fontSize: 18.0,
-                  color: Colors.black,
+                  color: Colors.black, // 텍스트 색상
                 ),
               ),
               SizedBox(height: 8.0),
               // 각 음식 항목을 리스트로 표시
               ...foodList.asMap().entries.map((entry) {
-                int index = entry.key;
-                Map<String, dynamic> food = entry.value;
+                int index = entry.key; // 리스트에서 음식의 인덱스
+                Map<String, dynamic> food = entry.value; // 음식 데이터
                 return ListTile(
                   title: Text(
-                    '${food['foodName']} - ${food['calories']}kcal',
+                    '${food['foodName']} - ${food['calories']}kcal', // 음식명과 칼로리 표시
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       fontSize: 16.0,
-                      color: Colors.black87,
+                      color: Colors.black87, // 텍스트 색상
                     ),
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: Icon(Icons.delete), // 삭제 아이콘
                     onPressed: () {
                       setState(() {
                         foodList.removeAt(index); // 선택된 음식 삭제
@@ -303,27 +305,27 @@ class _AddDietPageState extends State<AddDietPage> {
     required TextEditingController controller,
     required String label,
     String? hintText,
-    TextInputType keyboardType = TextInputType.text,
+    TextInputType keyboardType = TextInputType.text, // 입력 타입 설정 (기본값은 텍스트)
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      padding: EdgeInsets.symmetric(horizontal: 12.0), // 텍스트 필드 패딩 설정
       decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(16.0),
+        color: Colors.grey[100], // 텍스트 필드 배경색
+        borderRadius: BorderRadius.circular(16.0), // 텍스트 필드 모서리 둥글게 설정
       ),
       child: TextField(
-        controller: controller,
+        controller: controller, // 텍스트 입력을 관리하는 컨트롤러
         decoration: InputDecoration(
-          labelText: label,
+          labelText: label, // 텍스트 필드의 라벨
           labelStyle: TextStyle(
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w600,
             fontSize: 16.0,
           ),
-          hintText: hintText,
-          border: InputBorder.none,
+          hintText: hintText, // 힌트 텍스트
+          border: InputBorder.none, // 기본 입력 경계선 제거
         ),
-        keyboardType: keyboardType,
+        keyboardType: keyboardType, // 키보드 타입 설정
       ),
     );
   }
