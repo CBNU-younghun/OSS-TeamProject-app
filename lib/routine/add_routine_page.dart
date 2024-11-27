@@ -32,7 +32,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
   Future<void> _loadExercises() async {
     String data = await rootBundle.loadString('assets/exercise_data.json'); // JSON 파일 로드
     setState(() {
-      exercises = json.decode(data); // 운동 데이터 파싱
+      exercises = List<Map<String, dynamic>>.from(json.decode(data) as List);
     });
   }
 
@@ -125,11 +125,12 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               child: DropdownButtonFormField<String>(
                 items: exercises
                     .map((exercise) => exercise['bodyPart'])
+                    .where((bodyPart) => bodyPart is String) //유효한 문자열 필터링
                     .toSet()
                     .map((bodyPart) => DropdownMenuItem<String>(
                   value: bodyPart,
                   child: Text(
-                    bodyPart,
+                    bodyPart as String,  // 명시적 타입 변환
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w600,
