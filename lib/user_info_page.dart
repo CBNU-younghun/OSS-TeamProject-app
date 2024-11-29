@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯과 머티리얼 디자인 사용을 위해 임포트
 import 'package:shared_preferences/shared_preferences.dart'; // 로컬 저장소 접근을 위해 임포트
+import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Font Awesome 아이콘 사용을 위해 임포트
+
 
 // 사용자 정보 페이지를 나타내는 StatefulWidget
 class UserInfoPage extends StatefulWidget {
