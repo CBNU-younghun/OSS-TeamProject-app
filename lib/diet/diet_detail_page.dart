@@ -690,7 +690,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.crop_square, color: color, size: 24),
+        Icon(Icons.square, color: color, size: 24),
         SizedBox(width: 4),
         Text(
           text,
@@ -699,6 +699,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
       ],
     );
   }
+
 
   // 일관된 스타일의 텍스트 필드를 생성하는 헬퍼 메소드
   Widget _buildTextField({
