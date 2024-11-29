@@ -143,6 +143,15 @@ class _UserInfoPageState extends State<UserInfoPage> {
           children: [
             // BMI 정보 표시를 최상단으로 이동
             if (bmi != null && bmiCategory != null) ...[
+              // 아이콘 표시
+              Center(
+                child: FaIcon(
+                  FontAwesomeIcons.male, // 전신 사람 아이콘
+                  size: 100,
+                  color: _getBMICategoryColor(bmiCategory!), // BMI 카테고리에 따른 색상 적용
+                ),
+              ),
+              SizedBox(height: 16.0),
               Text(
                 'BMI: ${bmi!.toStringAsFixed(1)}',
                 style: TextStyle(
