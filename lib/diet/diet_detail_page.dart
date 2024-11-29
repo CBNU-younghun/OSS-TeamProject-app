@@ -205,35 +205,36 @@ class _DietDetailPageState extends State<DietDetailPage> {
             SizedBox(height: 16.0), // 간격 추가
             if (foods.isNotEmpty) ...[
               SizedBox(
-                height: 300,
+                height: 400, // 차트 높이 증가
                 child: BarChart(
                   BarChartData(
-                    alignment: BarChartAlignment.spaceBetween,
+                    alignment: BarChartAlignment.spaceAround, // 막대 간 간격을 일정하게 설정
                     barGroups: [
-                      _makeHorizontalBarGroup(0, '탄수화물', _getTotalNutrient('carbs'), Colors.greenAccent),
-                      _makeHorizontalBarGroup(1, '단백질', _getTotalNutrient('protein'), Colors.orangeAccent),
-                      _makeHorizontalBarGroup(2, '지방', _getTotalNutrient('fat'), Colors.redAccent),
+                      _makeVerticalBarGroup(0, '탄수화물', _getTotalNutrient('carbs'), Colors.greenAccent),
+                      _makeVerticalBarGroup(1, '단백질', _getTotalNutrient('protein'), Colors.orangeAccent),
+                      _makeVerticalBarGroup(2, '지방', _getTotalNutrient('fat'), Colors.redAccent),
                     ],
                     titlesData: FlTitlesData(
-                      leftTitles: AxisTitles(
+                      bottomTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
+                          reservedSize: 22,
                           getTitlesWidget: (value, _) {
                             switch (value.toInt()) {
                               case 0:
                                 return Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text('탄수화물', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('탄수화물', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                                 );
                               case 1:
                                 return Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text('단백질', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('단백질', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                                 );
                               case 2:
                                 return Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text('지방', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text('지방', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                                 );
                               default:
                                 return Text('');
@@ -241,17 +242,58 @@ class _DietDetailPageState extends State<DietDetailPage> {
                           },
                         ),
                       ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: true),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 40,
+                          getTitlesWidget: (value, _) {
+                            return Text(
+                              value.toInt().toString(),
+                              style: TextStyle(fontSize: 12, color: Colors.black),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     borderData: FlBorderData(
-                      show: false,
+                      show: true,
+                      border: Border.all(color: Colors.grey, width: 1), // 테두리 추가
                     ),
                     gridData: FlGridData(
-                      show: false,
+                      show: true,
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey[300]!, // 그리드 선 색상 설정
+                          strokeWidth: 1,
+                        );
+                      },
                     ),
-                    barTouchData: BarTouchData(enabled: false),
+                    barTouchData: BarTouchData(
+                      enabled: true,
+                      touchTooltipData: BarTouchTooltipData(
+                        getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                          String nutrient;
+                          switch (group.x.toInt()) {
+                            case 0:
+                              nutrient = '탄수화물';
+                              break;
+                            case 1:
+                              nutrient = '단백질';
+                              break;
+                            case 2:
+                              nutrient = '지방';
+                              break;
+                            default:
+                              nutrient = '';
+                              break;
+                          }
+                          return BarTooltipItem(
+                            '$nutrient: ${rod.toY.round()}g',
+                            TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          );
+                        },
+                      ),
+                    ),
                     maxY: 100,
                   ),
                 ),
@@ -339,7 +381,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
     );
   }
 
-// 주어진 영양소의 총합을 계산하는 함수
+  // 주어진 영양소의 총합을 계산하는 함수
   double _getTotalNutrient(String nutrient) {
     double total = 0;
     for (var food in foods) {
@@ -348,8 +390,8 @@ class _DietDetailPageState extends State<DietDetailPage> {
     return total;
   }
 
-  // 가로 막대 그룹을 생성하는 함수
-  BarChartGroupData _makeHorizontalBarGroup(int x, String label, double value, Color color) {
+  // 세로 막대 그룹을 생성하는 함수
+  BarChartGroupData _makeVerticalBarGroup(int x, String label, double value, Color color) {
     return BarChartGroupData(
       x: x,
       barRods: [
