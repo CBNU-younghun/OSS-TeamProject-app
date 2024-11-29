@@ -103,6 +103,21 @@ class _UserInfoPageState extends State<UserInfoPage> {
     else
       return '비만';
   }
+  // BMI 카테고리에 따른 색상을 반환하는 함수
+  Color _getBMICategoryColor(String category) {
+    switch (category) {
+      case '저체중':
+        return Colors.grey;
+      case '정상':
+        return Colors.blue;
+      case '과체중':
+        return Colors.orange;
+      case '비만':
+        return Colors.red;
+      default:
+        return Colors.black;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
