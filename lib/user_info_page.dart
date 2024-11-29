@@ -24,7 +24,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     _loadUserInfo(); // 위젯이 처음 생성될 때 저장된 사용자 정보를 로드
   }
 
-  // 사용자 정보를 저장하는 함수.
+  // 사용자 정보를 저장하는 함수
   void _saveUserInfo() async {
     if (ageController.text.isEmpty ||
         heightController.text.isEmpty ||
@@ -45,12 +45,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
       await prefs.setDouble('height', height);
       await prefs.setDouble('weight', weight);
 
-      // BMI 계산 및 상태 업데이트
-      setState(() {
-        bmi = _calculateBMI(height, weight);
-        bmiCategory = _getBMICategory(bmi!);
-      });
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('사용자 정보가 저장되었습니다.')),
       );
@@ -70,14 +64,22 @@ class _UserInfoPageState extends State<UserInfoPage> {
       heightController.text = (prefs.getDouble('height') ?? '').toString();
       weightController.text = (prefs.getDouble('weight') ?? '').toString();
 
-      // 키와 몸무게가 유효하면 BMI를 계산하고 상태를 업데이트
-      if (heightController.text.isNotEmpty && weightController.text.isNotEmpty) {
-        double? height = double.tryParse(heightController.text);
-        double? weight = double.tryParse(weightController.text);
-        if (height != null && weight != null) {
-          bmi = _calculateBMI(height, weight);
-          bmiCategory = _getBMICategory(bmi!);
-        }
+      // BMI 계산 및 상태 업데이트
+      _updateBMI();
+    });
+  }
+
+  // BMI를 계산하고 상태를 업데이트하는 함수
+  void _updateBMI() {
+    setState(() {
+      double? height = double.tryParse(heightController.text);
+      double? weight = double.tryParse(weightController.text);
+      if (height != null && weight != null && height > 0) {
+        bmi = _calculateBMI(height, weight);
+        bmiCategory = _getBMICategory(bmi!);
+      } else {
+        bmi = null;
+        bmiCategory = null;
       }
     });
   }
@@ -112,15 +114,33 @@ class _UserInfoPageState extends State<UserInfoPage> {
             fontFamily: 'Bebas Neue', // 폰트를 설정
             fontSize: 28.0, // 폰트 크기를 설정
             fontWeight: FontWeight.w900, // 폰트를 두껍게 설정
+            color: Colors.black, // 글자 색상을 검은색으로 설정
           ),
         ),
-        iconTheme: IconThemeData(), // 아이콘 테마를 설정
+        iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상을 검은색으로 설정
       ),
       // 본문 내용을 정의
       body: Padding(
         padding: EdgeInsets.all(16.0), // 화면의 모든 면에 16.0의 여백을 줌
         child: ListView(
           children: [
+            // BMI 정보 표시를 최상단으로 이동
+            if (bmi != null && bmiCategory != null) ...[
+              Text(
+                'BMI: ${bmi!.toStringAsFixed(1)}',
+                style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '체중 분류: $bmiCategory',
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+              SizedBox(height: 32.0),
+            ],
             // 나이 입력 필드
             _buildTextField(
               controller: ageController,
@@ -133,6 +153,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
               controller: heightController,
               label: '키 (cm)',
               hintText: '키를 입력하세요',
+              onChanged: (_) => _updateBMI(), // 값 변경 시 BMI 업데이트
             ),
             SizedBox(height: 16.0),
             // 몸무게 입력 필드
@@ -140,6 +161,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
               controller: weightController,
               label: '몸무게 (kg)',
               hintText: '몸무게를 입력하세요',
+              onChanged: (_) => _updateBMI(), // 값 변경 시 BMI 업데이트
             ),
             SizedBox(height: 32.0),
             // 저장 버튼
@@ -163,23 +185,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                 ),
               ),
             ),
-            // BMI 정보 표시
-            if (bmi != null && bmiCategory != null) ...[
-              SizedBox(height: 32.0),
-              Text(
-                'BMI: ${bmi!.toStringAsFixed(1)}',
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                '체중 분류: $bmiCategory',
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-              ),
-            ]
           ],
         ),
       ),
@@ -191,6 +196,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     required TextEditingController controller, // 입력 값을 제어하는 컨트롤러
     required String label, // 필드의 레이블 텍스트
     String? hintText, // 힌트 텍스트
+    void Function(String)? onChanged, // 값 변경 시 호출되는 콜백 함수
   }) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.0), // 좌우 여백을 줌
@@ -211,6 +217,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
           border: InputBorder.none, // 기본 입력창 테두리를 제거
         ),
         keyboardType: TextInputType.number, // 숫자 입력 전용 키보드를 사용
+        onChanged: onChanged, // 값 변경 시 콜백 함수 호출
       ),
     );
   }
