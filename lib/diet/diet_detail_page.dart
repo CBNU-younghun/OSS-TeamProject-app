@@ -24,6 +24,17 @@ class _DietDetailPageState extends State<DietDetailPage> {
   final TextEditingController nameController = TextEditingController(); // 식단 이름을 제어하는 텍스트 컨트롤러
   List<Map<String, dynamic>> foods = []; // 식단에 포함된 음식 목록을 저장하는 리스트
 
+  List<String> categories = [
+    '곡류, 서류 제품', '과일류', '구이류', '국 및 탕류', '김치류', '나물·숙채류', '두류, 견과 및 종실류', '면 및 만두류', '밥류', '볶음류',
+    '빵 및 과자류', '생채·무침류', '수·조·어·육류', '유제품류 및 빙과류', '음료 및 차류', '장류, 양념류',
+    '장아찌·절임류', '전·적 및 부침류', '젓갈류', '조림류', '죽 및 스프류', '찌개 및 전골류', '찜류', '튀김류'
+  ];
+
+  List<Map<String, dynamic>> foodData = [];
+  List<String> filteredFoods = [];
+  String? selectedCategory;
+  String? selectedFood;
+
   @override
   void initState() {
     super.initState();
@@ -95,73 +106,297 @@ class _DietDetailPageState extends State<DietDetailPage> {
 
   // 음식 항목을 수정할 수 있는 폼을 보여주는 함수
   void _showEditFoodForm(int index) {
-    final TextEditingController foodNameController = TextEditingController(text: foods[index]['foodName']); // 음식 이름을 제어하는 텍스트 컨트롤러
-    final TextEditingController foodCalorieController = TextEditingController(text: foods[index]['calories'].toString()); // 음식 칼로리를 제어하는 텍스트 컨트롤러
+    // 음식 데이터 로드
+    final Map<String, dynamic> currentFood = foods[index];
+    final TextEditingController foodNameController = TextEditingController(text: currentFood['foodName']);
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능하게 설정
       builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom), // 키보드 높이에 따라 패딩 조절
-          child: Padding(
-            padding: const EdgeInsets.all(16.0), // 내부 패딩 설정
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // 컨텐츠에 맞게 크기 조절
-              children: [
-                _buildTextField(
-                  controller: foodNameController,
-                  label: '음식 이름',
-                  hintText: '음식 이름을 입력하세요',
-                ),
-                SizedBox(height: 16.0), // 텍스트 필드 간격 추가
-                _buildTextField(
-                  controller: foodCalorieController,
-                  label: '칼로리 (kcal)',
-                  hintText: '음식의 칼로리를 입력하세요',
-                  keyboardType: TextInputType.number, // 숫자 키보드 사용
-                ),
-                SizedBox(height: 32.0), // 버튼 간격 추가
-                ElevatedButton(
-                  onPressed: () {
-                    if (foodNameController.text.isNotEmpty && int.tryParse(foodCalorieController.text) != null) { // 입력 유효성 검사
-                      setState(() {
-                        foods[index] = {
-                          'foodName': foodNameController.text, // 수정된 음식 이름
-                          'calories': int.parse(foodCalorieController.text), // 수정된 음식 칼로리
-                        };
-                      });
-                      Navigator.pop(context); // 모달 닫기
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('올바른 정보를 입력해주세요.')), // 유효하지 않은 입력 시 스낵바 표시
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent, // 버튼 배경색 설정
-                    elevation: 4.0, // 버튼 그림자 설정
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom), // 키보드 높이에 따라 패딩 조절
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: ListView(
+                  padding: EdgeInsets.all(16.0),
+                  children: [
+                    Text(
+                      '음식 수정',
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-                  ),
-                  child: Text(
-                    '저장', // 버튼 텍스트
-                    style: TextStyle(
-                      fontFamily: 'Bebas Neue', // 폰트 설정
-                      fontSize: 20.0, // 폰트 크기 설정
-                      fontWeight: FontWeight.bold, // 폰트 두께 설정
-                      color: Colors.white, // 텍스트 색상 설정
+                    SizedBox(height: 16.0),
+                    // 카테고리 선택 드롭다운
+                    DropdownButtonFormField<String>(
+                      value: selectedCategory,
+                      dropdownColor: Colors.white,
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedCategory = value;
+                          if (value != null) {
+                            _loadFoodDataByCategory(value);
+                          }
+                        });
+                      },
+                      items: categories.map((category) {
+                        return DropdownMenuItem(
+                          value: category,
+                          child: Text(category),
+                        );
+                      }).toList(),
+                      hint: Text('카테고리 선택'),
+                      decoration: InputDecoration(
+                        labelText: '카테고리 선택',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 16.0),
+                    // 음식 선택 드롭다운
+                    if (filteredFoods.isNotEmpty)
+                      DropdownButtonFormField<String>(
+                        value: selectedFood,
+                        dropdownColor: Colors.white,
+                        onChanged: (value) => setModalState(() => selectedFood = value),
+                        items: filteredFoods.map((food) {
+                          return DropdownMenuItem(
+                            value: food,
+                            child: Text(
+                              food,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          );
+                        }).toList(),
+                        hint: Text('음식 선택'),
+                        decoration: InputDecoration(
+                          labelText: '음식 선택',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                        ),
+                        isExpanded: true,
+                      ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (selectedFood == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('음식을 선택해주세요.')),
+                          );
+                          return;
+                        }
+                        // 선택된 음식 데이터를 가져와서 foods 리스트에 업데이트
+                        final selectedFoodData = foodData.firstWhere(
+                              (food) => food['foodName'] == selectedFood,
+                        );
+                        setState(() {
+                          foods[index] = {
+                            'foodName': selectedFoodData['foodName'],
+                            'calories': selectedFoodData['calories'],
+                            'carbs': selectedFoodData['carbs'],
+                            'protein': selectedFoodData['protein'],
+                            'fat': selectedFoodData['fat'],
+                          };
+                        });
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
+                      child: Text(
+                        '저장',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );
+  }
+
+  // 음식 추가 폼을 보여주는 함수
+  void _showAddFoodForm() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: ListView(
+                  padding: EdgeInsets.all(16.0),
+                  children: [
+                    Text(
+                      '음식 추가',
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    // 카테고리 선택 드롭다운
+                    DropdownButtonFormField<String>(
+                      value: selectedCategory,
+                      dropdownColor: Colors.white,
+                      onChanged: (value) {
+                        setModalState(() {
+                          selectedCategory = value;
+                          if (value != null) {
+                            _loadFoodDataByCategory(value);
+                          }
+                        });
+                      },
+                      items: categories.map((category) {
+                        return DropdownMenuItem(
+                          value: category,
+                          child: Text(category),
+                        );
+                      }).toList(),
+                      hint: Text('카테고리 선택'),
+                      decoration: InputDecoration(
+                        labelText: '카테고리 선택',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    // 음식 선택 드롭다운
+                    if (filteredFoods.isNotEmpty)
+                      DropdownButtonFormField<String>(
+                        value: selectedFood,
+                        dropdownColor: Colors.white,
+                        onChanged: (value) => setModalState(() => selectedFood = value),
+                        items: filteredFoods.map((food) {
+                          return DropdownMenuItem(
+                            value: food,
+                            child: Text(
+                              food,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          );
+                        }).toList(),
+                        hint: Text('음식 선택'),
+                        decoration: InputDecoration(
+                          labelText: '음식 선택',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                        ),
+                        isExpanded: true,
+                      ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (selectedFood == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('음식을 선택해주세요.')),
+                          );
+                          return;
+                        }
+                        // 선택된 음식 데이터를 가져와서 foods 리스트에 추가
+                        final selectedFoodData = foodData.firstWhere(
+                              (food) => food['foodName'] == selectedFood,
+                        );
+                        setState(() {
+                          foods.add({
+                            'foodName': selectedFoodData['foodName'],
+                            'calories': selectedFoodData['calories'],
+                            'carbs': selectedFoodData['carbs'],
+                            'protein': selectedFoodData['protein'],
+                            'fat': selectedFoodData['fat'],
+                          });
+                        });
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey,
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      ),
+                      child: Text(
+                        '음식 추가',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // 카테고리에 따른 음식 데이터 로드 함수
+  Future<void> _loadFoodDataByCategory(String category) async {
+    try {
+      // JSON 파일 경로 설정
+      String fileName = 'assets/food_data_by_category/${category}.json';
+
+      // JSON 파일 읽기
+      String jsonString = await rootBundle.loadString(fileName);
+
+      // JSON 문자열을 파싱하여 리스트로 변환
+      List<dynamic> jsonResponse = json.decode(jsonString);
+
+      // 불필요한 "records/" 접두어 제거 후 정리
+      List<Map<String, dynamic>> cleanedData = jsonResponse.map((item) {
+        return {
+          'foodName': item['records/식품명'],
+          'calories': item['records/에너지(kcal)'],
+          'carbs': item['records/탄수화물(g)'],
+          'protein': item['records/단백질(g)'],
+          'fat': item['records/지방(g)'],
+        };
+      }).toList();
+
+      // 상태 업데이트
+      setState(() {
+        foodData = cleanedData;
+        filteredFoods = foodData.map((food) => food['foodName'] as String).toSet().toList();
+        selectedFood = null;
+      });
+    } catch (e) {
+      // 오류 발생 시 스낵바로 알림 표시
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('음식 데이터를 불러오는 중 오류가 발생했습니다: ${e.toString()}')),
+      );
+    }
   }
 
   @override
@@ -181,6 +416,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
             fontFamily: 'Bebas Neue', // 폰트 적용
             fontSize: 28.0, // 폰트 크기 설정
             fontWeight: FontWeight.w900, // 폰트 두께 설정
+            color: Colors.black, // 글자 색상 설정
           ),
         ),
         iconTheme: IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정
@@ -203,6 +439,27 @@ class _DietDetailPageState extends State<DietDetailPage> {
               hintText: '식단 이름을 입력하세요', // 텍스트 필드 힌트
             ),
             SizedBox(height: 16.0), // 간격 추가
+            ElevatedButton(
+              onPressed: _showAddFoodForm, // 음식 추가 버튼 클릭 시 함수 호출
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // 버튼 배경색 설정
+                elevation: 4.0, // 버튼 그림자 설정
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+                ),
+                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
+              ),
+              child: Text(
+                '음식 추가', // 버튼 텍스트
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue', // 폰트 설정
+                  fontSize: 20.0, // 폰트 크기 설정
+                  fontWeight: FontWeight.bold, // 폰트 두께 설정
+                  color: Colors.white, // 텍스트 색상 설정
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0),
             if (foods.isNotEmpty) ...[
               SizedBox(
                 height: 400, // 차트 높이 증가
@@ -309,28 +566,23 @@ class _DietDetailPageState extends State<DietDetailPage> {
                 ),
               ),
               SizedBox(height: 8.0), // 간격 추가
-              // add_diet에서 추가된 음식 목록만 리스트 형태로 표시
               ...foods.asMap().entries.map((entry) {
                 int index = entry.key; // 음식의 인덱스
                 Map<String, dynamic> food = entry.value; // 음식 데이터
-                if (widget.diet['foods'].contains(food)) { // 현재 식단에 추가된 음식만 표시
-                  return ListTile(
-                    title: Text(
-                      '${food['foodName']} - ${food['calories']} kcal', // 음식 이름과 칼로리 표시
-                      style: TextStyle(
-                        fontFamily: 'Roboto', // 폰트 설정
-                        fontSize: 16.0, // 글자 크기 설정
-                        color: Colors.black87, // 글자 색상 설정
-                      ),
+                return ListTile(
+                  title: Text(
+                    '${food['foodName']} - ${food['calories']} kcal', // 음식 이름과 칼로리 표시
+                    style: TextStyle(
+                      fontFamily: 'Roboto', // 폰트 설정
+                      fontSize: 16.0, // 글자 크기 설정
+                      color: Colors.black87, // 글자 색상 설정
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
-                      onPressed: () => _showEditOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
-                    ),
-                  );
-                } else {
-                  return SizedBox.shrink(); // 다른 음식은 표시하지 않음
-                }
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
+                    onPressed: () => _showEditOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
+                  ),
+                );
               }).toList(),
             ],
             SizedBox(height: 32.0), // 간격 추가
@@ -385,7 +637,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
   double _getTotalNutrient(String nutrient) {
     double total = 0;
     for (var food in foods) {
-      total += (food[nutrient] ?? 0).toDouble(); // null 체크 후 toDouble() 호출
+      total += (food[nutrient] != null && food[nutrient] != '-') ? double.parse(food[nutrient]) : 0.0;
     }
     return total;
   }
