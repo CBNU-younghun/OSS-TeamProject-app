@@ -472,14 +472,14 @@ class _DietDetailPageState extends State<DietDetailPage> {
         padding: EdgeInsets.all(16.0), // 전체 패딩 설정
         child: ListView(
           children: [
-            Text(
+            /*Text(
               '식단 이름:', // 식단 이름 레이블
               style: TextStyle(
                 fontFamily: 'Roboto', // 폰트 설정
                 fontSize: 18.0, // 글자 크기 설정
                 fontWeight: FontWeight.bold, // 글자 두께 설정
               ),
-            ),
+            ),*/
             _buildTextField(
               controller: nameController, // 식단 이름 텍스트 필드 컨트롤러 연결
               label: '식단 이름', // 텍스트 필드 라벨
@@ -510,7 +510,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
                       ),
                       leftTitles: AxisTitles(
                         sideTitles: SideTitles(
-                          showTitles: true,
+                          showTitles: false, // Y축 타이틀 숨기기
                           reservedSize: 40,
                           getTitlesWidget: (value, _) {
                             return Text(
