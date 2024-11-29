@@ -434,6 +434,12 @@ class _DietDetailPageState extends State<DietDetailPage> {
           ),
         ),
         iconTheme: IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add, color: Colors.black), // '+' 아이콘 추가
+            onPressed: _showAddFoodForm, // 아이콘 클릭 시 음식 추가 폼 표시
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0), // 전체 패딩 설정
@@ -453,27 +459,6 @@ class _DietDetailPageState extends State<DietDetailPage> {
               hintText: '식단 이름을 입력하세요', // 텍스트 필드 힌트
             ),
             SizedBox(height: 16.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _showAddFoodForm, // 음식 추가 버튼 클릭 시 함수 호출
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // 버튼 배경색 설정
-                elevation: 4.0, // 버튼 그림자 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '음식 추가', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상 설정
-                ),
-              ),
-            ),
-            SizedBox(height: 16.0),
             if (foods.isNotEmpty) ...[
               SizedBox(
                 height: 400, // 차트 높이 증가
