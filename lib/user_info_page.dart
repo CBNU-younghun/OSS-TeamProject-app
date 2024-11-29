@@ -2,7 +2,6 @@ import 'package:flutter/material.dart'; // Flutter의 기본 위젯과 머티리
 import 'package:shared_preferences/shared_preferences.dart'; // 로컬 저장소 접근을 위해 임포트
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Font Awesome 아이콘 사용을 위해 임포트
 
-
 // 사용자 정보 페이지를 나타내는 StatefulWidget
 class UserInfoPage extends StatefulWidget {
   @override
@@ -103,6 +102,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     else
       return '비만';
   }
+
   // BMI 카테고리에 따른 색상을 반환하는 함수
   Color _getBMICategoryColor(String category) {
     switch (category) {
@@ -143,26 +143,32 @@ class _UserInfoPageState extends State<UserInfoPage> {
           children: [
             // BMI 정보 표시를 최상단으로 이동
             if (bmi != null && bmiCategory != null) ...[
-              // 아이콘 표시
               Center(
-                child: FaIcon(
-                  FontAwesomeIcons.male, // 전신 사람 아이콘
-                  size: 100,
-                  color: _getBMICategoryColor(bmiCategory!), // BMI 카테고리에 따른 색상 적용
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'BMI: ${bmi!.toStringAsFixed(1)}',
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                '체중 분류: $bmiCategory',
-                style: TextStyle(
-                  fontSize: 20.0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // 아이콘 표시
+                    FaIcon(
+                      FontAwesomeIcons.male, // 전신 사람 아이콘
+                      size: 100,
+                      color: _getBMICategoryColor(bmiCategory!), // BMI 카테고리에 따른 색상 적용
+                    ),
+                    SizedBox(height: 16.0),
+                    Text(
+                      'BMI: ${bmi!.toStringAsFixed(1)}',
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '체중 분류: $bmiCategory',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 32.0),
