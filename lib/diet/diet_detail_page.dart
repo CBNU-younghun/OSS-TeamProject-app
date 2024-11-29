@@ -378,10 +378,10 @@ class _DietDetailPageState extends State<DietDetailPage> {
       List<Map<String, dynamic>> cleanedData = jsonResponse.map((item) {
         return {
           'foodName': item['records/식품명'],
-          'calories': item['records/에너지(kcal)'],
-          'carbs': item['records/탄수화물(g)'],
-          'protein': item['records/단백질(g)'],
-          'fat': item['records/지방(g)'],
+          'calories': _parseDynamicToDouble(item['records/에너지(kcal)']),
+          'carbs': _parseDynamicToDouble(item['records/탄수화물(g)']),
+          'protein': _parseDynamicToDouble(item['records/단백질(g)']),
+          'fat': _parseDynamicToDouble(item['records/지방(g)']),
         };
       }).toList();
 
@@ -397,6 +397,20 @@ class _DietDetailPageState extends State<DietDetailPage> {
         SnackBar(content: Text('음식 데이터를 불러오는 중 오류가 발생했습니다: ${e.toString()}')),
       );
     }
+  }
+
+  // dynamic 값을 double로 변환하는 함수
+  double _parseDynamicToDouble(dynamic value) {
+    if (value == null || value == '-' || value == '') {
+      return 0.0;
+    }
+    if (value is num) {
+      return value.toDouble();
+    }
+    if (value is String) {
+      return double.tryParse(value.replaceAll(',', '')) ?? 0.0;
+    }
+    return 0.0;
   }
 
   @override
@@ -637,7 +651,14 @@ class _DietDetailPageState extends State<DietDetailPage> {
   double _getTotalNutrient(String nutrient) {
     double total = 0;
     for (var food in foods) {
-      total += (food[nutrient] != null && food[nutrient] != '-') ? double.parse(food[nutrient]) : 0.0;
+      var value = food[nutrient];
+      if (value != null && value != '-') {
+        if (value is num) {
+          total += value.toDouble();
+        } else if (value is String) {
+          total += double.tryParse(value) ?? 0.0;
+        }
+      }
     }
     return total;
   }
