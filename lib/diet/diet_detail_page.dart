@@ -413,6 +413,33 @@ class _DietDetailPageState extends State<DietDetailPage> {
     return 0.0;
   }
 
+  // 최대 영양소 값을 계산하는 함수
+  double _getMaxNutrientValue() {
+    double maxValue = 0;
+    List<String> nutrients = ['carbs', 'protein', 'fat'];
+    for (var nutrient in nutrients) {
+      double total = _getTotalNutrient(nutrient);
+      if (total > maxValue) {
+        maxValue = total;
+      }
+    }
+    return maxValue;
+  }
+
+  // 영양소에 해당하는 아이콘을 반환하는 함수
+  Widget _getNutrientIcon(int index) {
+    switch (index) {
+      case 0:
+        return Icon(Icons.crop_square, color: Colors.greenAccent, size: 24);
+      case 1:
+        return Icon(Icons.crop_square, color: Colors.orangeAccent, size: 24);
+      case 2:
+        return Icon(Icons.crop_square, color: Colors.redAccent, size: 24);
+      default:
+        return SizedBox.shrink();
+    }
+  }
+
   @override
   void dispose() {
     nameController.dispose(); // 텍스트 컨트롤러 해제
@@ -465,37 +492,17 @@ class _DietDetailPageState extends State<DietDetailPage> {
                 child: BarChart(
                   BarChartData(
                     alignment: BarChartAlignment.spaceAround, // 막대 간 간격을 일정하게 설정
+                    maxY: (_getMaxNutrientValue() * 1.2).ceilToDouble(), // 최대값 동적 설정
                     barGroups: [
-                      _makeVerticalBarGroup(0, '탄수화물', _getTotalNutrient('carbs'), Colors.greenAccent),
-                      _makeVerticalBarGroup(1, '단백질', _getTotalNutrient('protein'), Colors.orangeAccent),
-                      _makeVerticalBarGroup(2, '지방', _getTotalNutrient('fat'), Colors.redAccent),
+                      _makeVerticalBarGroup(0, _getTotalNutrient('carbs'), Colors.greenAccent),
+                      _makeVerticalBarGroup(1, _getTotalNutrient('protein'), Colors.orangeAccent),
+                      _makeVerticalBarGroup(2, _getTotalNutrient('fat'), Colors.redAccent),
                     ],
                     titlesData: FlTitlesData(
                       bottomTitles: AxisTitles(
                         sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 22,
-                          getTitlesWidget: (value, _) {
-                            switch (value.toInt()) {
-                              case 0:
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text('탄수화물', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                                );
-                              case 1:
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text('단백질', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                                );
-                              case 2:
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text('지방', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                                );
-                              default:
-                                return Text('');
-                            }
-                          },
+                          showTitles: false, // 하단 타이틀 숨김
+                          reservedSize: 36,
                         ),
                       ),
                       leftTitles: AxisTitles(
@@ -550,9 +557,18 @@ class _DietDetailPageState extends State<DietDetailPage> {
                         },
                       ),
                     ),
-                    maxY: 100,
                   ),
                 ),
+              ),
+              // 범례 추가 부분
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildLegendItem(Colors.greenAccent, '탄수화물'),
+                  _buildLegendItem(Colors.orangeAccent, '단백질'),
+                  _buildLegendItem(Colors.redAccent, '지방'),
+                ],
               ),
               SizedBox(height: 32.0),
               Text(
@@ -648,8 +664,8 @@ class _DietDetailPageState extends State<DietDetailPage> {
     return total;
   }
 
-  // 세로 막대 그룹을 생성하는 함수
-  BarChartGroupData _makeVerticalBarGroup(int x, String label, double value, Color color) {
+  // 세로 막대 그룹을 생성하는 함수 수정
+  BarChartGroupData _makeVerticalBarGroup(int x, double value, Color color) {
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -660,12 +676,27 @@ class _DietDetailPageState extends State<DietDetailPage> {
           borderRadius: BorderRadius.circular(6),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 100,
+            toY: (_getMaxNutrientValue() * 1.2).ceilToDouble(),
             color: Colors.grey[200],
           ),
         ),
       ],
       barsSpace: 16,
+    );
+  }
+
+  // 범례 아이템을 생성하는 함수 추가
+  Widget _buildLegendItem(Color color, String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.crop_square, color: color, size: 24),
+        SizedBox(width: 4),
+        Text(
+          text,
+          style: TextStyle(fontSize: 14),
+        ),
+      ],
     );
   }
 
