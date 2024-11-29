@@ -1,4 +1,3 @@
-//사용자 정보 설정 페이지
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯과 머티리얼 디자인 사용을 위해 임포트
 import 'package:shared_preferences/shared_preferences.dart'; // 로컬 저장소 접근을 위해 임포트
 
@@ -15,16 +14,51 @@ class _UserInfoPageState extends State<UserInfoPage> {
   final TextEditingController heightController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
 
+  // BMI와 체중 분류를 저장하는 변수
+  double? bmi;
+  String? bmiCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo(); // 위젯이 처음 생성될 때 저장된 사용자 정보를 로드
+  }
+
   // 사용자 정보를 저장하는 함수.
   void _saveUserInfo() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance(); // SharedPreferences 인스턴스를 가져옴
-    await prefs.setInt('age', int.parse(ageController.text)); // 나이를 저장
-    await prefs.setDouble('height', double.parse(heightController.text)); // 키를 저장
-    await prefs.setDouble('weight', double.parse(weightController.text)); // 몸무게를 저장
-    // 정보가 저장되었다는 메시지를 화면에 표시
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('사용자 정보가 저장되었습니다.')),
-    );
+    if (ageController.text.isEmpty ||
+        heightController.text.isEmpty ||
+        weightController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('모든 항목을 입력해주세요.')),
+      );
+      return;
+    }
+
+    try {
+      int age = int.parse(ageController.text);
+      double height = double.parse(heightController.text);
+      double weight = double.parse(weightController.text);
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('age', age);
+      await prefs.setDouble('height', height);
+      await prefs.setDouble('weight', weight);
+
+      // BMI 계산 및 상태 업데이트
+      setState(() {
+        bmi = _calculateBMI(height, weight);
+        bmiCategory = _getBMICategory(bmi!);
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('사용자 정보가 저장되었습니다.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('올바른 숫자를 입력해주세요.')),
+      );
+    }
   }
 
   // 저장된 사용자 정보를 로드하는 함수
@@ -35,13 +69,35 @@ class _UserInfoPageState extends State<UserInfoPage> {
       ageController.text = (prefs.getInt('age') ?? '').toString();
       heightController.text = (prefs.getDouble('height') ?? '').toString();
       weightController.text = (prefs.getDouble('weight') ?? '').toString();
+
+      // 키와 몸무게가 유효하면 BMI를 계산하고 상태를 업데이트
+      if (heightController.text.isNotEmpty && weightController.text.isNotEmpty) {
+        double? height = double.tryParse(heightController.text);
+        double? weight = double.tryParse(weightController.text);
+        if (height != null && weight != null) {
+          bmi = _calculateBMI(height, weight);
+          bmiCategory = _getBMICategory(bmi!);
+        }
+      }
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUserInfo(); // 위젯이 처음 생성될 때 저장된 사용자 정보를 로드
+  // BMI를 계산하는 함수
+  double _calculateBMI(double heightCm, double weightKg) {
+    double heightM = heightCm / 100;
+    return weightKg / (heightM * heightM);
+  }
+
+  // BMI에 따른 카테고리를 반환하는 함수
+  String _getBMICategory(double bmi) {
+    if (bmi < 18.5)
+      return '저체중';
+    else if (bmi < 25)
+      return '정상';
+    else if (bmi < 30)
+      return '과체중';
+    else
+      return '비만';
   }
 
   @override
@@ -107,6 +163,23 @@ class _UserInfoPageState extends State<UserInfoPage> {
                 ),
               ),
             ),
+            // BMI 정보 표시
+            if (bmi != null && bmiCategory != null) ...[
+              SizedBox(height: 32.0),
+              Text(
+                'BMI: ${bmi!.toStringAsFixed(1)}',
+                style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '체중 분류: $bmiCategory',
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+            ]
           ],
         ),
       ),
