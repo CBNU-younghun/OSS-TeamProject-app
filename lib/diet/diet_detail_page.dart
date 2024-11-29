@@ -499,6 +499,9 @@ class _DietDetailPageState extends State<DietDetailPage> {
                       _makeVerticalBarGroup(2, _getTotalNutrient('fat'), Colors.redAccent),
                     ],
                     titlesData: FlTitlesData(
+                      topTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false), // 상단 타이틀 숨기기
+                      ),
                       bottomTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: false, // 하단 타이틀 숨김
