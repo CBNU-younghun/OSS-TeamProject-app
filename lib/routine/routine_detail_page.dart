@@ -324,7 +324,8 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
-                          ),),
+                          ),
+                        ),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
@@ -354,7 +355,8 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
-                          ),),
+                          ),
+                        ),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
@@ -380,7 +382,13 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       value: selectedSets,
                       items: setOptions.map((sets) => DropdownMenuItem(
                         value: sets,
-                        child: Text('$sets 세트'),
+                        child: Text('$sets 세트',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
