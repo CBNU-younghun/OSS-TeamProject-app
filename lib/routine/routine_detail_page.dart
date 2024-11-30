@@ -422,6 +422,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                               'exercise': selectedExercise,
                               'time': selectedTime,
                               'sets': selectedSets,
+                              'reps': selectedReps,
                             }); // 운동 추가
                           });
                           Navigator.pop(context); // 모달 닫기
