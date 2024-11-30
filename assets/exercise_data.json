@@ -170,10 +170,10 @@
     ]
   },
   {
-    "name": "덤벨 플라이",
-    "englishName": "Dumbbell Fly",
-    "bodyPart": "가슴",
-    "effectiveBody": "가슴(안쪽)",
+    "name": "덤벨 컬",
+    "englishName": "Dumbbell Curl",
+    "bodyPart": "팔",
+    "effectiveBody": "팔(이두근)",
     "difficulty": "Medium Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "arm.jpg",
