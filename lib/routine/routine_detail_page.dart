@@ -670,7 +670,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
+                      hint: Text('세트 당 운동횟수를 선택하세요'), // 힌트 텍스트 추가
                     ),
                     SizedBox(height: 16.0),
 
