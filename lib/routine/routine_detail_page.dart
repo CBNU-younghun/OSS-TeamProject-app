@@ -414,7 +414,8 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         if (selectedBodyPart != null &&
                             selectedExercise != null &&
                             selectedTime != null &&
-                            selectedSets != null) {
+                            selectedSets != null &&
+                            selectedReps != null) {
                           setState(() {
                             exercises.add({
                               'bodyPart': selectedBodyPart,
