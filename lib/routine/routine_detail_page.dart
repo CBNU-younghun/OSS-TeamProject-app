@@ -319,7 +319,12 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       value: selectedTime,
                       items: secondsOptions.map((seconds) => DropdownMenuItem(
                         value: seconds,
-                        child: Text('$seconds 초'),
+                        child: Text('$seconds 초',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
