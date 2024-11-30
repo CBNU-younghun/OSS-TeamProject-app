@@ -349,7 +349,12 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       value: selectedReps,
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
-                        child: Text('$reps 회'),
+                        child: Text('$reps 회',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
