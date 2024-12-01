@@ -240,6 +240,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: Colors.white, // 모달 창의 배경색을 흰색으로 설정
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setModalState) {
