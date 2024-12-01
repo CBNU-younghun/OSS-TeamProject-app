@@ -73,6 +73,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
   void _showEditOptions(int index) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white, // 모달 창의 배경색을 흰색으로 설정
       builder: (context) {
         return Container(
           padding: EdgeInsets.all(16.0), // 컨테이너 패딩 설정
@@ -113,6 +114,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능하게 설정
+      backgroundColor: Colors.white, // 모달 창의 배경색을 흰색으로 설정
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setModalState) {
