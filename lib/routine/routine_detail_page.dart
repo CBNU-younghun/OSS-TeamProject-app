@@ -319,7 +319,13 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       value: selectedTime,
                       items: secondsOptions.map((seconds) => DropdownMenuItem(
                         value: seconds,
-                        child: Text('$seconds 초'),
+                        child: Text('$seconds 초',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
@@ -344,7 +350,13 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       value: selectedReps,
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
-                        child: Text('$reps 회'),
+                        child: Text('$reps 회',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
@@ -370,7 +382,13 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       value: selectedSets,
                       items: setOptions.map((sets) => DropdownMenuItem(
                         value: sets,
-                        child: Text('$sets 세트'),
+                        child: Text('$sets 세트',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                          ),
+                        ),
                       )).toList(),
                       onChanged: (value) {
                         setModalState(() {
@@ -396,13 +414,15 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         if (selectedBodyPart != null &&
                             selectedExercise != null &&
                             selectedTime != null &&
-                            selectedSets != null) {
+                            selectedSets != null &&
+                            selectedReps != null) {
                           setState(() {
                             exercises.add({
                               'bodyPart': selectedBodyPart,
                               'exercise': selectedExercise,
                               'time': selectedTime,
                               'sets': selectedSets,
+                              'reps': selectedReps,
                             }); // 운동 추가
                           });
                           Navigator.pop(context); // 모달 닫기
@@ -650,7 +670,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
+                      hint: Text('세트 당 운동횟수를 선택하세요'), // 힌트 텍스트 추가
                     ),
                     SizedBox(height: 16.0),
 
