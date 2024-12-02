@@ -193,7 +193,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     selectedExercise = value;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '운동 종류',
                   labelStyle: TextStyle(
                     fontFamily: 'Roboto',
