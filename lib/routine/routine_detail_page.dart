@@ -521,6 +521,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                   children: [
                     // 운동 부위 선택
                     DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white, // 부위 선택 폼 색상 흰색으로 설정
                       value: bodyParts.contains(selectedBodyPart) ? selectedBodyPart : null, // 선택된 운동 부위 설정
                       items: bodyParts.map((part) => DropdownMenuItem(
                         value: part,
