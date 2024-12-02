@@ -104,7 +104,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0), // 전체 패딩 설정
+        padding: const EdgeInsets.all(16.0), // 전체 패딩 설정
         child: exercises.isEmpty
             ? Center(child: CircularProgressIndicator()) // 운동 데이터를 로딩 중일 때
             : ListView(
