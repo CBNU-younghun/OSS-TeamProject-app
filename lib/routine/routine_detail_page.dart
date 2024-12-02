@@ -249,7 +249,6 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         });
                       },
                       decoration: InputDecoration(
-
                         labelText: '운동 부위',
                         labelStyle: TextStyle(
                           fontFamily: 'Roboto',
@@ -265,6 +264,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
                     // 운동 이름 선택
                     DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white,  // 운동 이름 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedExercise,
                       items: filteredExercises.map((exerciseName) => DropdownMenuItem(
                         value: exerciseName,
