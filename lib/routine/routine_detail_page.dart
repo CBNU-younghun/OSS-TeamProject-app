@@ -464,6 +464,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
   // 운동 항목에 대한 편집 옵션을 보여주는 함수
   void _showEditExerciseOptions(int index) {
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 앱바 배경색 설정
       context: context,
       builder: (context) {
         return Container(
