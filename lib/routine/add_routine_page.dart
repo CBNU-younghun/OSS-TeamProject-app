@@ -114,7 +114,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               controller: routineNameController,
               label: '루틴 이름',
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             // 운동 부위 선택 필드
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.0),
