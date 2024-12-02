@@ -464,7 +464,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
   // 운동 항목에 대한 편집 옵션을 보여주는 함수
   void _showEditExerciseOptions(int index) {
     showModalBottomSheet(
-      backgroundColor: Colors.white, // 앱바 배경색 설정
+      backgroundColor: Colors.white, // 운동 편집 폼 배경색 설정
       context: context,
       builder: (context) {
         return Container(
@@ -520,6 +520,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     TextEditingController(text: exercises[index]['sets'].toString()); // 세트 수 컨트롤러 설정
 
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 수정 폼 배경색 설정
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능하게 설정
       builder: (context) {
