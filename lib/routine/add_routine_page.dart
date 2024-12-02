@@ -93,7 +93,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
       appBar: AppBar(
         backgroundColor: Colors.white, // 앱바 배경색 설정
         iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상 설정
-        title: Text(
+        title: const Text(
           '루틴 추가', // 앱바 제목
           style: TextStyle(
             fontFamily: 'Bebas Neue', // 폰트 설정
