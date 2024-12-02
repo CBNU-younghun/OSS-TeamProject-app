@@ -234,7 +234,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     selectedTime = value;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '운동 시간 (초)',
                   labelStyle: TextStyle(
                     fontFamily: 'Roboto',
