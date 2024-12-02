@@ -538,7 +538,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: part,
                         child: Text(
                           part,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
