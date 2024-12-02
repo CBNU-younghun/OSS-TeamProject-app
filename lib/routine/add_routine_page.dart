@@ -256,6 +256,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<int>(
+                dropdownColor: Colors.white, // 세트 당 운동횟수 선택 폼 드롭다운 색상 흰색으로 설정
                 value: selectedReps,
                 items: repsOptions.map((reps)  => DropdownMenuItem(
                   value: reps, // 각 세트 당 운동횟수 값을 드롭다운 항목으로 설정
