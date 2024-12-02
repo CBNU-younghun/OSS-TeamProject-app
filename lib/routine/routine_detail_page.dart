@@ -443,6 +443,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
   // 운동 항목에 대한 편집 옵션을 보여주는 함수
   void _showEditExerciseOptions(int index) {
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 편집 폼 배경색 설정
       context: context,
       builder: (context) {
         return Container(
@@ -498,6 +499,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     TextEditingController(text: exercises[index]['sets'].toString()); // 세트 수 컨트롤러 설정
 
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 수정 폼 배경색 설정
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능하게 설정
       builder: (context) {
@@ -517,7 +519,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: part,
                         child: Text(
                           part,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -538,7 +540,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 부위',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -557,7 +559,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: exerciseName,
                         child: Text(
                           exerciseName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
