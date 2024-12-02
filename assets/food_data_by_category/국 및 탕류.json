@@ -1,0 +1,1418 @@
+[
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"콩나물국_콩나물만",
+        "records\/에너지(kcal)":7,
+        "records\/탄수화물(g)":0.95,
+        "records\/단백질(g)":0.79,
+        "records\/지방(g)":0.22
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_배추",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":2.22,
+        "records\/단백질(g)":1.33,
+        "records\/지방(g)":0.47
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시금치",
+        "records\/에너지(kcal)":14,
+        "records\/탄수화물(g)":2.11,
+        "records\/단백질(g)":1.18,
+        "records\/지방(g)":0.33
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시래기",
+        "records\/에너지(kcal)":13,
+        "records\/탄수화물(g)":1.89,
+        "records\/단백질(g)":0.92,
+        "records\/지방(g)":0.3
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_아욱",
+        "records\/에너지(kcal)":19,
+        "records\/탄수화물(g)":2.9,
+        "records\/단백질(g)":1.51,
+        "records\/지방(g)":0.4
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_얼갈이배추",
+        "records\/에너지(kcal)":11,
+        "records\/탄수화물(g)":1.57,
+        "records\/단백질(g)":0.87,
+        "records\/지방(g)":0.29
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_유부",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":1.53,
+        "records\/단백질(g)":1.76,
+        "records\/지방(g)":1.33
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"들깨국",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":1.66,
+        "records\/단백질(g)":0.63,
+        "records\/지방(g)":0.76
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"무국",
+        "records\/에너지(kcal)":7,
+        "records\/탄수화물(g)":1.28,
+        "records\/단백질(g)":0.26,
+        "records\/지방(g)":0.17
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미소된장국",
+        "records\/에너지(kcal)":21,
+        "records\/탄수화물(g)":2.04,
+        "records\/단백질(g)":1.58,
+        "records\/지방(g)":0.83
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_소고기",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":0.7,
+        "records\/단백질(g)":1.45,
+        "records\/지방(g)":1.05
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_홍합",
+        "records\/에너지(kcal)":9,
+        "records\/탄수화물(g)":0.85,
+        "records\/단백질(g)":1.11,
+        "records\/지방(g)":0.25
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역냉국_오이_고추",
+        "records\/에너지(kcal)":14,
+        "records\/탄수화물(g)":3.11,
+        "records\/단백질(g)":0.6,
+        "records\/지방(g)":0.19
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"북어국_콩나물",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":0.99,
+        "records\/단백질(g)":1.85,
+        "records\/지방(g)":0.47
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"설렁탕",
+        "records\/에너지(kcal)":37,
+        "records\/탄수화물(g)":4.08,
+        "records\/단백질(g)":2.1,
+        "records\/지방(g)":1.24
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"소고기육개장",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":1.49,
+        "records\/단백질(g)":1.91,
+        "records\/지방(g)":1.41
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"어묵국(어묵탕)_고춧가루 제외",
+        "records\/에너지(kcal)":21,
+        "records\/탄수화물(g)":2.92,
+        "records\/단백질(g)":1.4,
+        "records\/지방(g)":0.48
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"오이냉국",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":3.59,
+        "records\/단백질(g)":0.57,
+        "records\/지방(g)":0.21
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"오징어국",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":1.6,
+        "records\/단백질(g)":3.71,
+        "records\/지방(g)":0.39
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"감자국",
+        "records\/에너지(kcal)":21,
+        "records\/탄수화물(g)":4.59,
+        "records\/단백질(g)":0.85,
+        "records\/지방(g)":0.1
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"김치국_김치",
+        "records\/에너지(kcal)":12,
+        "records\/탄수화물(g)":2.15,
+        "records\/단백질(g)":0.67,
+        "records\/지방(g)":0.15
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"김치국_김치_두부",
+        "records\/에너지(kcal)":18,
+        "records\/탄수화물(g)":1.86,
+        "records\/단백질(g)":1.52,
+        "records\/지방(g)":0.59
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"달걀국",
+        "records\/에너지(kcal)":19,
+        "records\/탄수화물(g)":0.87,
+        "records\/단백질(g)":1.67,
+        "records\/지방(g)":0.9
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭고기육개장",
+        "records\/에너지(kcal)":28,
+        "records\/탄수화물(g)":1.52,
+        "records\/단백질(g)":2.64,
+        "records\/지방(g)":1.32
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭곰탕",
+        "records\/에너지(kcal)":48,
+        "records\/탄수화물(g)":3.32,
+        "records\/단백질(g)":4.3,
+        "records\/지방(g)":1.83
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_근대",
+        "records\/에너지(kcal)":12,
+        "records\/탄수화물(g)":1.65,
+        "records\/단백질(g)":0.93,
+        "records\/지방(g)":0.29
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_두부",
+        "records\/에너지(kcal)":26,
+        "records\/탄수화물(g)":2.14,
+        "records\/단백질(g)":2.29,
+        "records\/지방(g)":0.99
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"오징어국",
+        "records\/에너지(kcal)":24,
+        "records\/탄수화물(g)":1.63,
+        "records\/단백질(g)":3.6,
+        "records\/지방(g)":0.4
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"유부국",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":1.13,
+        "records\/단백질(g)":1.08,
+        "records\/지방(g)":1.02
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"콩나물국_콩나물_소고기",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":1.75,
+        "records\/단백질(g)":2.51,
+        "records\/지방(g)":1.66
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"콩나물국_콩나물만",
+        "records\/에너지(kcal)":7,
+        "records\/탄수화물(g)":1.01,
+        "records\/단백질(g)":0.85,
+        "records\/지방(g)":0.23
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭고기육개장",
+        "records\/에너지(kcal)":43,
+        "records\/탄수화물(g)":1.96,
+        "records\/단백질(g)":4.35,
+        "records\/지방(g)":2.06
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭곰탕",
+        "records\/에너지(kcal)":59,
+        "records\/탄수화물(g)":4.06,
+        "records\/단백질(g)":5.18,
+        "records\/지방(g)":2.36
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_근대",
+        "records\/에너지(kcal)":14,
+        "records\/탄수화물(g)":1.92,
+        "records\/단백질(g)":1.02,
+        "records\/지방(g)":0.36
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_미역",
+        "records\/에너지(kcal)":16,
+        "records\/탄수화물(g)":1.72,
+        "records\/단백질(g)":1.35,
+        "records\/지방(g)":0.61
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시금치",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":2.2,
+        "records\/단백질(g)":1.18,
+        "records\/지방(g)":0.33
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시래기",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":2.39,
+        "records\/단백질(g)":1.14,
+        "records\/지방(g)":0.5
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_아욱",
+        "records\/에너지(kcal)":16,
+        "records\/탄수화물(g)":2.46,
+        "records\/단백질(g)":1.18,
+        "records\/지방(g)":0.33
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_얼갈이배추",
+        "records\/에너지(kcal)":14,
+        "records\/탄수화물(g)":1.76,
+        "records\/단백질(g)":1.02,
+        "records\/지방(g)":0.42
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_유부",
+        "records\/에너지(kcal)":26,
+        "records\/탄수화물(g)":2.03,
+        "records\/단백질(g)":1.72,
+        "records\/지방(g)":1.3
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"들깨국",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":1.68,
+        "records\/단백질(g)":0.68,
+        "records\/지방(g)":0.77
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미소된장국",
+        "records\/에너지(kcal)":26,
+        "records\/탄수화물(g)":2.35,
+        "records\/단백질(g)":1.99,
+        "records\/지방(g)":1.18
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_들깨",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":1.29,
+        "records\/단백질(g)":0.75,
+        "records\/지방(g)":1.21
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_소고기",
+        "records\/에너지(kcal)":23,
+        "records\/탄수화물(g)":0.67,
+        "records\/단백질(g)":1.84,
+        "records\/지방(g)":1.54
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"북어국_무",
+        "records\/에너지(kcal)":18,
+        "records\/탄수화물(g)":1.07,
+        "records\/단백질(g)":2.23,
+        "records\/지방(g)":0.48
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"북어국_콩나물",
+        "records\/에너지(kcal)":18,
+        "records\/탄수화물(g)":1.09,
+        "records\/단백질(g)":2.42,
+        "records\/지방(g)":0.52
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"삼계탕",
+        "records\/에너지(kcal)":80,
+        "records\/탄수화물(g)":3.54,
+        "records\/단백질(g)":7.32,
+        "records\/지방(g)":3.85
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"소고기육개장",
+        "records\/에너지(kcal)":32,
+        "records\/탄수화물(g)":2.09,
+        "records\/단백질(g)":2.59,
+        "records\/지방(g)":1.68
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"어묵국(어묵탕)_고춧가루",
+        "records\/에너지(kcal)":30,
+        "records\/탄수화물(g)":4.31,
+        "records\/단백질(g)":1.93,
+        "records\/지방(g)":0.69
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"김치국_김치_콩나물",
+        "records\/에너지(kcal)":12,
+        "records\/탄수화물(g)":1.65,
+        "records\/단백질(g)":1.09,
+        "records\/지방(g)":0.31
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"달걀국",
+        "records\/에너지(kcal)":22,
+        "records\/탄수화물(g)":1.12,
+        "records\/단백질(g)":2.07,
+        "records\/지방(g)":0.98
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"설렁탕",
+        "records\/에너지(kcal)":41,
+        "records\/탄수화물(g)":4.43,
+        "records\/단백질(g)":2.65,
+        "records\/지방(g)":1.24
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"소고기육개장",
+        "records\/에너지(kcal)":26,
+        "records\/탄수화물(g)":1.38,
+        "records\/단백질(g)":2.07,
+        "records\/지방(g)":1.46
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"어묵국(어묵탕)_고춧가루 제외",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":3.44,
+        "records\/단백질(g)":1.69,
+        "records\/지방(g)":0.58
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"오징어국",
+        "records\/에너지(kcal)":22,
+        "records\/탄수화물(g)":1.41,
+        "records\/단백질(g)":3.39,
+        "records\/지방(g)":0.35
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"콩나물국_콩나물",
+        "records\/에너지(kcal)":7,
+        "records\/탄수화물(g)":1.01,
+        "records\/단백질(g)":0.83,
+        "records\/지방(g)":0.2
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"콩나물국_콩나물_소고기",
+        "records\/에너지(kcal)":29,
+        "records\/탄수화물(g)":1.53,
+        "records\/단백질(g)":2.31,
+        "records\/지방(g)":1.63
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"달걀국",
+        "records\/에너지(kcal)":16,
+        "records\/탄수화물(g)":1.01,
+        "records\/단백질(g)":1.53,
+        "records\/지방(g)":0.68
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭고기육개장",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":1.28,
+        "records\/단백질(g)":3.26,
+        "records\/지방(g)":1.51
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭곰탕",
+        "records\/에너지(kcal)":48,
+        "records\/탄수화물(g)":2.73,
+        "records\/단백질(g)":4.6,
+        "records\/지방(g)":1.98
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_근대",
+        "records\/에너지(kcal)":12,
+        "records\/탄수화물(g)":1.71,
+        "records\/단백질(g)":0.9,
+        "records\/지방(g)":0.34
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_냉이_두부",
+        "records\/에너지(kcal)":20,
+        "records\/탄수화물(g)":2.0,
+        "records\/단백질(g)":1.82,
+        "records\/지방(g)":0.63
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_미역",
+        "records\/에너지(kcal)":12,
+        "records\/탄수화물(g)":1.43,
+        "records\/단백질(g)":1.21,
+        "records\/지방(g)":0.42
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시금치",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":2.45,
+        "records\/단백질(g)":1.14,
+        "records\/지방(g)":0.32
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시래기",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":2.33,
+        "records\/단백질(g)":1.09,
+        "records\/지방(g)":0.6
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_아욱",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":2.47,
+        "records\/단백질(g)":1.07,
+        "records\/지방(g)":0.26
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_얼갈이배추",
+        "records\/에너지(kcal)":13,
+        "records\/탄수화물(g)":1.72,
+        "records\/단백질(g)":0.94,
+        "records\/지방(g)":0.45
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_유부",
+        "records\/에너지(kcal)":22,
+        "records\/탄수화물(g)":1.5,
+        "records\/단백질(g)":1.46,
+        "records\/지방(g)":1.23
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_호박잎",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":2.54,
+        "records\/단백질(g)":1.33,
+        "records\/지방(g)":0.37
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"들깨국",
+        "records\/에너지(kcal)":14,
+        "records\/탄수화물(g)":1.42,
+        "records\/단백질(g)":0.58,
+        "records\/지방(g)":0.76
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미소된장국",
+        "records\/에너지(kcal)":23,
+        "records\/탄수화물(g)":2.12,
+        "records\/단백질(g)":1.85,
+        "records\/지방(g)":0.92
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_바지락",
+        "records\/에너지(kcal)":8,
+        "records\/탄수화물(g)":1.11,
+        "records\/단백질(g)":0.9,
+        "records\/지방(g)":0.16
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_소고기",
+        "records\/에너지(kcal)":23,
+        "records\/탄수화물(g)":1.28,
+        "records\/단백질(g)":1.69,
+        "records\/지방(g)":1.38
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"북어국_콩나물",
+        "records\/에너지(kcal)":14,
+        "records\/탄수화물(g)":0.96,
+        "records\/단백질(g)":2.02,
+        "records\/지방(g)":0.37
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"삼계탕",
+        "records\/에너지(kcal)":77,
+        "records\/탄수화물(g)":5.0,
+        "records\/단백질(g)":6.7,
+        "records\/지방(g)":3.17
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"갈비탕",
+        "records\/에너지(kcal)":39,
+        "records\/탄수화물(g)":2.71,
+        "records\/단백질(g)":2.19,
+        "records\/지방(g)":2.13
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"김치국_김치_콩나물",
+        "records\/에너지(kcal)":10,
+        "records\/탄수화물(g)":1.38,
+        "records\/단백질(g)":0.94,
+        "records\/지방(g)":0.27
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭백숙",
+        "records\/에너지(kcal)":56,
+        "records\/탄수화물(g)":4.49,
+        "records\/단백질(g)":4.23,
+        "records\/지방(g)":2.11
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"삼계탕",
+        "records\/에너지(kcal)":88,
+        "records\/탄수화물(g)":5.64,
+        "records\/단백질(g)":7.42,
+        "records\/지방(g)":3.75
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"갈비탕_소금제외",
+        "records\/에너지(kcal)":89,
+        "records\/탄수화물(g)":4.21,
+        "records\/단백질(g)":5.5,
+        "records\/지방(g)":5.44
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭고기육개장",
+        "records\/에너지(kcal)":39,
+        "records\/탄수화물(g)":2.5,
+        "records\/단백질(g)":4.96,
+        "records\/지방(g)":1.07
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭곰탕",
+        "records\/에너지(kcal)":50,
+        "records\/탄수화물(g)":1.71,
+        "records\/단백질(g)":6.35,
+        "records\/지방(g)":1.8
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"어묵국(어묵탕)_간편조리세트_프리미엄 이자카야어묵탕",
+        "records\/에너지(kcal)":69,
+        "records\/탄수화물(g)":11.01,
+        "records\/단백질(g)":3.48,
+        "records\/지방(g)":1.26
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"어탕",
+        "records\/에너지(kcal)":57,
+        "records\/탄수화물(g)":1.21,
+        "records\/단백질(g)":8.47,
+        "records\/지방(g)":2.06
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"연포탕",
+        "records\/에너지(kcal)":54,
+        "records\/탄수화물(g)":2.02,
+        "records\/단백질(g)":9.49,
+        "records\/지방(g)":0.9
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"오이냉국",
+        "records\/에너지(kcal)":19,
+        "records\/탄수화물(g)":3.92,
+        "records\/단백질(g)":0.5,
+        "records\/지방(g)":0.09
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"올갱이국",
+        "records\/에너지(kcal)":24,
+        "records\/탄수화물(g)":2.17,
+        "records\/단백질(g)":2.28,
+        "records\/지방(g)":0.7
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"전복탕",
+        "records\/에너지(kcal)":33,
+        "records\/탄수화물(g)":2.63,
+        "records\/단백질(g)":4.47,
+        "records\/지방(g)":0.5
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"조개국_바지락",
+        "records\/에너지(kcal)":29,
+        "records\/탄수화물(g)":1.84,
+        "records\/단백질(g)":4.0,
+        "records\/지방(g)":0.56
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"지리탕_대구",
+        "records\/에너지(kcal)":44,
+        "records\/탄수화물(g)":1.65,
+        "records\/단백질(g)":6.93,
+        "records\/지방(g)":1.03
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"지리탕_복",
+        "records\/에너지(kcal)":39,
+        "records\/탄수화물(g)":1.72,
+        "records\/단백질(g)":6.95,
+        "records\/지방(g)":0.45
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"초당순두부",
+        "records\/에너지(kcal)":58,
+        "records\/탄수화물(g)":1.76,
+        "records\/단백질(g)":5.46,
+        "records\/지방(g)":3.24
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"해장국_뼈다귀",
+        "records\/에너지(kcal)":71,
+        "records\/탄수화물(g)":2.34,
+        "records\/단백질(g)":7.46,
+        "records\/지방(g)":3.57
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"해장국_선지",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":1.67,
+        "records\/단백질(g)":4.93,
+        "records\/지방(g)":0.54
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"해장국_우거지",
+        "records\/에너지(kcal)":26,
+        "records\/탄수화물(g)":2.25,
+        "records\/단백질(g)":1.98,
+        "records\/지방(g)":0.98
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"홍합탕_홍합만",
+        "records\/에너지(kcal)":29,
+        "records\/탄수화물(g)":2.28,
+        "records\/단백질(g)":3.68,
+        "records\/지방(g)":0.57
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"황태해장국",
+        "records\/에너지(kcal)":30,
+        "records\/탄수화물(g)":0.95,
+        "records\/단백질(g)":4.08,
+        "records\/지방(g)":1.13
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"무국물",
+        "records\/에너지(kcal)":3,
+        "records\/탄수화물(g)":0.55,
+        "records\/단백질(g)":0.16,
+        "records\/지방(g)":0.0
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"달걀국",
+        "records\/에너지(kcal)":39,
+        "records\/탄수화물(g)":1.12,
+        "records\/단백질(g)":3.25,
+        "records\/지방(g)":2.38
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_감자",
+        "records\/에너지(kcal)":40,
+        "records\/탄수화물(g)":6.11,
+        "records\/단백질(g)":1.63,
+        "records\/지방(g)":1.04
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_무",
+        "records\/에너지(kcal)":23,
+        "records\/탄수화물(g)":3.27,
+        "records\/단백질(g)":1.36,
+        "records\/지방(g)":0.53
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시금치",
+        "records\/에너지(kcal)":21,
+        "records\/탄수화물(g)":1.54,
+        "records\/단백질(g)":1.69,
+        "records\/지방(g)":0.84
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시래기",
+        "records\/에너지(kcal)":22,
+        "records\/탄수화물(g)":2.44,
+        "records\/단백질(g)":1.49,
+        "records\/지방(g)":0.69
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_우렁",
+        "records\/에너지(kcal)":49,
+        "records\/탄수화물(g)":3.84,
+        "records\/단백질(g)":4.92,
+        "records\/지방(g)":1.54
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"매생이국",
+        "records\/에너지(kcal)":24,
+        "records\/탄수화물(g)":2.68,
+        "records\/단백질(g)":2.0,
+        "records\/지방(g)":0.56
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"무국_소고기",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":1.95,
+        "records\/단백질(g)":3.55,
+        "records\/지방(g)":1.0
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"묵말이_도토리묵",
+        "records\/에너지(kcal)":36,
+        "records\/탄수화물(g)":6.9,
+        "records\/단백질(g)":0.52,
+        "records\/지방(g)":0.65
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미소된장국",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":1.87,
+        "records\/단백질(g)":1.87,
+        "records\/지방(g)":1.2
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_굴",
+        "records\/에너지(kcal)":17,
+        "records\/탄수화물(g)":1.37,
+        "records\/단백질(g)":1.43,
+        "records\/지방(g)":0.64
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_바지락",
+        "records\/에너지(kcal)":9,
+        "records\/탄수화물(g)":0.95,
+        "records\/단백질(g)":0.89,
+        "records\/지방(g)":0.22
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_북어",
+        "records\/에너지(kcal)":19,
+        "records\/탄수화물(g)":1.04,
+        "records\/단백질(g)":2.46,
+        "records\/지방(g)":0.56
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_참치",
+        "records\/에너지(kcal)":19,
+        "records\/탄수화물(g)":0.9,
+        "records\/단백질(g)":2.62,
+        "records\/지방(g)":0.57
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_홍합",
+        "records\/에너지(kcal)":26,
+        "records\/탄수화물(g)":1.78,
+        "records\/단백질(g)":3.03,
+        "records\/지방(g)":0.72
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"새우탕_간편조리세트_전복민물새우탕",
+        "records\/에너지(kcal)":56,
+        "records\/탄수화물(g)":10.07,
+        "records\/단백질(g)":2.85,
+        "records\/지방(g)":0.45
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"소탕",
+        "records\/에너지(kcal)":58,
+        "records\/탄수화물(g)":1.27,
+        "records\/단백질(g)":5.1,
+        "records\/지방(g)":3.57
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"순대국",
+        "records\/에너지(kcal)":68,
+        "records\/탄수화물(g)":2.16,
+        "records\/단백질(g)":5.44,
+        "records\/지방(g)":4.13
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"아구탕",
+        "records\/에너지(kcal)":41,
+        "records\/탄수화물(g)":2.13,
+        "records\/단백질(g)":6.3,
+        "records\/지방(g)":0.82
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"감자국",
+        "records\/에너지(kcal)":32,
+        "records\/탄수화물(g)":4.94,
+        "records\/단백질(g)":1.19,
+        "records\/지방(g)":0.79
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"게국지",
+        "records\/에너지(kcal)":38,
+        "records\/탄수화물(g)":2.88,
+        "records\/단백질(g)":4.08,
+        "records\/지방(g)":1.1
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"곰치국",
+        "records\/에너지(kcal)":42,
+        "records\/탄수화물(g)":2.39,
+        "records\/단백질(g)":5.43,
+        "records\/지방(g)":1.18
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"곰탕",
+        "records\/에너지(kcal)":61,
+        "records\/탄수화물(g)":6.03,
+        "records\/단백질(g)":6.47,
+        "records\/지방(g)":1.23
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"김치국",
+        "records\/에너지(kcal)":20,
+        "records\/탄수화물(g)":2.33,
+        "records\/단백질(g)":1.2,
+        "records\/지방(g)":0.62
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"낙지탕",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":1.73,
+        "records\/단백질(g)":4.9,
+        "records\/지방(g)":0.53
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"어묵국(어묵탕)_츠쿠네 어묵탕",
+        "records\/에너지(kcal)":63,
+        "records\/탄수화물(g)":null,
+        "records\/단백질(g)":5.2,
+        "records\/지방(g)":null
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"재첩국",
+        "records\/에너지(kcal)":23,
+        "records\/탄수화물(g)":4.54,
+        "records\/단백질(g)":0.67,
+        "records\/지방(g)":0.29
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"조개국",
+        "records\/에너지(kcal)":16,
+        "records\/탄수화물(g)":0.25,
+        "records\/단백질(g)":1.67,
+        "records\/지방(g)":0.89
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"콩나물국",
+        "records\/에너지(kcal)":6,
+        "records\/탄수화물(g)":0.61,
+        "records\/단백질(g)":0.74,
+        "records\/지방(g)":0.09
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"토란국",
+        "records\/에너지(kcal)":16,
+        "records\/탄수화물(g)":2.61,
+        "records\/단백질(g)":1.0,
+        "records\/지방(g)":0.12
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"해장국_뼈다귀",
+        "records\/에너지(kcal)":26,
+        "records\/탄수화물(g)":1.06,
+        "records\/단백질(g)":3.19,
+        "records\/지방(g)":0.97
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"해장국_선지",
+        "records\/에너지(kcal)":29,
+        "records\/탄수화물(g)":1.23,
+        "records\/단백질(g)":3.86,
+        "records\/지방(g)":0.96
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"무국_소고기",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":1.1,
+        "records\/단백질(g)":1.33,
+        "records\/지방(g)":0.64
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"무국_홍합",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":0.86,
+        "records\/단백질(g)":0.79,
+        "records\/지방(g)":2.03
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"묵국_메밀묵",
+        "records\/에너지(kcal)":22,
+        "records\/탄수화물(g)":3.57,
+        "records\/단백질(g)":1.0,
+        "records\/지방(g)":0.4
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국",
+        "records\/에너지(kcal)":12,
+        "records\/탄수화물(g)":0.87,
+        "records\/단백질(g)":0.65,
+        "records\/지방(g)":0.61
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_대합",
+        "records\/에너지(kcal)":11,
+        "records\/탄수화물(g)":0.56,
+        "records\/단백질(g)":1.23,
+        "records\/지방(g)":0.45
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_새우",
+        "records\/에너지(kcal)":16,
+        "records\/탄수화물(g)":1.83,
+        "records\/단백질(g)":1.09,
+        "records\/지방(g)":0.46
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"미역국_소고기",
+        "records\/에너지(kcal)":13,
+        "records\/탄수화물(g)":0.82,
+        "records\/단백질(g)":1.86,
+        "records\/지방(g)":0.26
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"배추국_소고기",
+        "records\/에너지(kcal)":16,
+        "records\/탄수화물(g)":1.14,
+        "records\/단백질(g)":1.84,
+        "records\/지방(g)":0.41
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"북어국",
+        "records\/에너지(kcal)":28,
+        "records\/탄수화물(g)":0.84,
+        "records\/단백질(g)":3.89,
+        "records\/지방(g)":0.98
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"사골국",
+        "records\/에너지(kcal)":55,
+        "records\/탄수화물(g)":2.81,
+        "records\/단백질(g)":5.56,
+        "records\/지방(g)":2.42
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"삼계탕",
+        "records\/에너지(kcal)":101,
+        "records\/탄수화물(g)":3.84,
+        "records\/단백질(g)":10.68,
+        "records\/지방(g)":4.8
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"새우탕",
+        "records\/에너지(kcal)":33,
+        "records\/탄수화물(g)":2.0,
+        "records\/단백질(g)":5.17,
+        "records\/지방(g)":0.44
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"설렁탕",
+        "records\/에너지(kcal)":24,
+        "records\/탄수화물(g)":0.36,
+        "records\/단백질(g)":4.26,
+        "records\/지방(g)":0.58
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"순대국",
+        "records\/에너지(kcal)":85,
+        "records\/탄수화물(g)":14.95,
+        "records\/단백질(g)":2.35,
+        "records\/지방(g)":1.75
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"어묵국(어묵탕)",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":3.83,
+        "records\/단백질(g)":1.49,
+        "records\/지방(g)":1.03
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"오징어국",
+        "records\/에너지(kcal)":18,
+        "records\/탄수화물(g)":0.73,
+        "records\/단백질(g)":2.22,
+        "records\/지방(g)":0.73
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"육개장",
+        "records\/에너지(kcal)":30,
+        "records\/탄수화물(g)":1.49,
+        "records\/단백질(g)":3.68,
+        "records\/지방(g)":0.99
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"육개장_닭고기",
+        "records\/에너지(kcal)":20,
+        "records\/탄수화물(g)":1.41,
+        "records\/단백질(g)":2.74,
+        "records\/지방(g)":0.42
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"장어탕",
+        "records\/에너지(kcal)":67,
+        "records\/탄수화물(g)":3.68,
+        "records\/단백질(g)":4.32,
+        "records\/지방(g)":3.91
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"냉국_미역_오이",
+        "records\/에너지(kcal)":6,
+        "records\/탄수화물(g)":0.85,
+        "records\/단백질(g)":0.37,
+        "records\/지방(g)":0.15
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"달걀국",
+        "records\/에너지(kcal)":13,
+        "records\/탄수화물(g)":0.69,
+        "records\/단백질(g)":0.93,
+        "records\/지방(g)":0.74
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"달걀탕_순두부",
+        "records\/에너지(kcal)":29,
+        "records\/탄수화물(g)":0.94,
+        "records\/단백질(g)":1.78,
+        "records\/지방(g)":2.04
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"닭곰탕",
+        "records\/에너지(kcal)":51,
+        "records\/탄수화물(g)":2.0,
+        "records\/단백질(g)":7.51,
+        "records\/지방(g)":1.42
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"도가니탕",
+        "records\/에너지(kcal)":40,
+        "records\/탄수화물(g)":0.82,
+        "records\/단백질(g)":8.35,
+        "records\/지방(g)":0.33
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_감자",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":3.7,
+        "records\/단백질(g)":1.09,
+        "records\/지방(g)":0.6
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_냉이",
+        "records\/에너지(kcal)":22,
+        "records\/탄수화물(g)":2.2,
+        "records\/단백질(g)":1.71,
+        "records\/지방(g)":0.66
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_미역",
+        "records\/에너지(kcal)":24,
+        "records\/탄수화물(g)":2.28,
+        "records\/단백질(g)":1.56,
+        "records\/지방(g)":0.97
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_배추",
+        "records\/에너지(kcal)":20,
+        "records\/탄수화물(g)":2.58,
+        "records\/단백질(g)":1.46,
+        "records\/지방(g)":0.4
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시금치",
+        "records\/에너지(kcal)":9,
+        "records\/탄수화물(g)":0.98,
+        "records\/단백질(g)":1.02,
+        "records\/지방(g)":0.17
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_시래기",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":2.03,
+        "records\/단백질(g)":1.31,
+        "records\/지방(g)":0.22
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_쑥",
+        "records\/에너지(kcal)":15,
+        "records\/탄수화물(g)":1.52,
+        "records\/단백질(g)":1.22,
+        "records\/지방(g)":0.47
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_아욱",
+        "records\/에너지(kcal)":20,
+        "records\/탄수화물(g)":1.59,
+        "records\/단백질(g)":2.28,
+        "records\/지방(g)":0.56
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_얼갈이배추",
+        "records\/에너지(kcal)":9,
+        "records\/탄수화물(g)":0.85,
+        "records\/단백질(g)":0.5,
+        "records\/지방(g)":0.41
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_우거지",
+        "records\/에너지(kcal)":20,
+        "records\/탄수화물(g)":0.82,
+        "records\/단백질(g)":2.77,
+        "records\/지방(g)":0.59
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_콩나물",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":2.62,
+        "records\/단백질(g)":2.58,
+        "records\/지방(g)":1.11
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_해물",
+        "records\/에너지(kcal)":28,
+        "records\/탄수화물(g)":2.68,
+        "records\/단백질(g)":2.1,
+        "records\/지방(g)":0.98
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_호박",
+        "records\/에너지(kcal)":31,
+        "records\/탄수화물(g)":1.41,
+        "records\/단백질(g)":3.34,
+        "records\/지방(g)":1.31
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"된장국_호박잎",
+        "records\/에너지(kcal)":7,
+        "records\/탄수화물(g)":0.54,
+        "records\/단백질(g)":0.4,
+        "records\/지방(g)":0.32
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"갈비탕",
+        "records\/에너지(kcal)":54,
+        "records\/탄수화물(g)":0.4,
+        "records\/단백질(g)":8.51,
+        "records\/지방(g)":2.06
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"감자국",
+        "records\/에너지(kcal)":21,
+        "records\/탄수화물(g)":3.67,
+        "records\/단백질(g)":0.9,
+        "records\/지방(g)":0.26
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"곰탕",
+        "records\/에너지(kcal)":24,
+        "records\/탄수화물(g)":0.11,
+        "records\/단백질(g)":3.43,
+        "records\/지방(g)":1.12
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"곰탕_우거지",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":2.6,
+        "records\/단백질(g)":2.37,
+        "records\/지방(g)":0.6
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"굴국_무",
+        "records\/에너지(kcal)":25,
+        "records\/탄수화물(g)":2.93,
+        "records\/단백질(g)":2.41,
+        "records\/지방(g)":0.36
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"김치국",
+        "records\/에너지(kcal)":23,
+        "records\/탄수화물(g)":2.63,
+        "records\/단백질(g)":1.34,
+        "records\/지방(g)":0.76
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"김치국_콩나물",
+        "records\/에너지(kcal)":12,
+        "records\/탄수화물(g)":1.15,
+        "records\/단백질(g)":0.82,
+        "records\/지방(g)":0.47
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"내장탕",
+        "records\/에너지(kcal)":71,
+        "records\/탄수화물(g)":1.68,
+        "records\/단백질(g)":5.82,
+        "records\/지방(g)":4.52
+    },
+    {
+        "records\/식품대분류명":"국 및 탕류",
+        "records\/식품명":"냉국_미역",
+        "records\/에너지(kcal)":37,
+        "records\/탄수화물(g)":7.51,
+        "records\/단백질(g)":0.19,
+        "records\/지방(g)":0.67
+    }
+]
