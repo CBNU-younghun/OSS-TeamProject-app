@@ -170,6 +170,7 @@ class _RoutinePageState extends State<RoutinePage> {
                 _goToRoutineDetailPage(index); // 루틴을 탭하면 상세 페이지로 이동
               },
               child: Card(
+                color: Colors.white,
                 elevation: 4.0, // 그림자 효과를 추가
                 margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 shape: RoundedRectangleBorder(
