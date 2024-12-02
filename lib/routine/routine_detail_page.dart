@@ -231,6 +231,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     int? selectedReps; // 선택된 세트당 운동 횟수
 
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 추가 폼 배경 색상 흰색으로 설정
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능
       builder: (context) {
