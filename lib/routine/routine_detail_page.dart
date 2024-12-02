@@ -559,7 +559,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 부위',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
