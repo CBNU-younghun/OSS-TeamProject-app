@@ -698,7 +698,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       ),
                       hint: Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
                     ),
-                    SizedBox(height: 32.0),
+                    const SizedBox(height: 32.0),
                     ElevatedButton(
                       onPressed: () {
                         if (selectedBodyPart != null &&

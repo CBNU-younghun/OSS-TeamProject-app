@@ -54,7 +54,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('운동 정보와 시간을 올바르게 입력해주세요.')), // 오류 메시지 표시
+        SnackBar(content: Text('운동 정보와 시간을 올바르게 입력해주세요.')), // 오류 메시지 표시
       );
     }
   }
