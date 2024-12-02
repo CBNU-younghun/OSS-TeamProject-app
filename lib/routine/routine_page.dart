@@ -194,7 +194,7 @@ class _RoutinePageState extends State<RoutinePage> {
                   ),
                   // 오른쪽에 삭제 아이콘 버튼 추가
                   trailing:  IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                     color: Colors.black,
                     onPressed: () {
                       _removeRoutine(index); // 삭제 함수 호출
