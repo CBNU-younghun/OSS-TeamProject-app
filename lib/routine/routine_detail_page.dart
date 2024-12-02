@@ -194,27 +194,6 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
               ),
             ),
             SizedBox(height: 16.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _deleteRoutine, // 삭제 버튼 클릭 시 루틴 삭제
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey, // 버튼 배경색 설정
-                elevation: 4.0, // 그림자 효과 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '삭제', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상 설정
-                ),
-              ),
-            ),
-
           ],
         ),
       ),
