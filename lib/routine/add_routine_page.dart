@@ -205,7 +205,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // 운동 시간 선택 필드
             Container(
