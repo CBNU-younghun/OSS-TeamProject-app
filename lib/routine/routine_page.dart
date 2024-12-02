@@ -170,11 +170,15 @@ class _RoutinePageState extends State<RoutinePage> {
                 _goToRoutineDetailPage(index); // 루틴을 탭하면 상세 페이지로 이동
               },
               child: Card(
-                color: Colors.white,
+                color: Colors.white, // 추가된 루틴 폼 배경 색상 흰색으로 설정
                 elevation: 4.0, // 그림자 효과를 추가
                 margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0), // 카드의 모서리를 둥글게 설정
+                  side: const BorderSide(
+                    color: Colors.black, // 테두리 색상을 검정색으로 설정
+                    width: 1.0, // 테두리 두께 설정
+                  ),
                 ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(16.0), // 콘텐츠의 여백을 설정
