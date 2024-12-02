@@ -521,7 +521,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                   children: [
                     // 운동 부위 선택
                     DropdownButtonFormField<String>(
-                      dropdownColor: Colors.white, // 부위 선택 폼 색상 흰색으로 설정
+                      dropdownColor: Colors.white, // 운동 부위 선택 폼 색상 흰색으로 설정
                       value: bodyParts.contains(selectedBodyPart) ? selectedBodyPart : null, // 선택된 운동 부위 설정
                       items: bodyParts.map((part) => DropdownMenuItem(
                         value: part,
@@ -562,6 +562,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     SizedBox(height: 16.0),
                     // 운동 종류 선택 (운동 부위에 따라 필터링된 목록)
                     DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white, // 운동 이름 선택 폼 색상 흰색으로 설정
                       value: filteredExercises.contains(selectedExercise) ? selectedExercise : null, // 선택된 운동 설정
                       items: filteredExercises.map((exerciseName) => DropdownMenuItem(
                         value: exerciseName,
