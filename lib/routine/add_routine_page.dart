@@ -123,6 +123,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<String>(
+                dropdownColor: Colors.white, // 운동 부위 선택 드롭다운 폼 색상 흰색으로 설정
                 items: exercises
                     .map((exercise) => exercise['bodyPart'])
                     .where((bodyPart) => bodyPart is String) //유효한 문자열 필터링
