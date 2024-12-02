@@ -172,6 +172,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<Map<String, dynamic>>(
+                dropdownColor: Colors.white, // 운동 이름 선택 드롭다운 폼 색상 흰색으로 설정
                 value: selectedExercise,
                 items: filteredExercises.map((exercise) {
                   return DropdownMenuItem<Map<String, dynamic>>(
