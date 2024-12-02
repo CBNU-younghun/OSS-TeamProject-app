@@ -215,6 +215,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<int>(
+                dropdownColor: Colors.white, // 운동 시간 선택 드롭다운 폼 색상 흰색으로 설정
                 value: selectedTime,
                 items: secondsOptions.map((seconds) => DropdownMenuItem(
                   value: seconds, // 각 시간 값을 드롭다운 항목으로 설정
