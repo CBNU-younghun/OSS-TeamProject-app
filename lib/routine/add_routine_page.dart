@@ -132,7 +132,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                   value: bodyPart,
                   child: Text(
                     bodyPart as String,  // 명시적 타입 변환
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w600,
                       fontSize: 16.0,
