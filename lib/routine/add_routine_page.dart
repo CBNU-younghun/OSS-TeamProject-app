@@ -221,7 +221,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                   value: seconds, // 각 시간 값을 드롭다운 항목으로 설정
                   child: Text(
                     '$seconds 초', // 시간 표시
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontWeight: FontWeight.w600, // 글자 두께 설정
                       fontSize: 16.0, // 글자 크기 설정
