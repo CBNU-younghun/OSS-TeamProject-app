@@ -179,7 +179,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     value: exercise,
                     child: Text(
                       exercise['name'],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w600,
                         fontSize: 16.0,
