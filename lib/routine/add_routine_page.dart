@@ -76,7 +76,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
       Navigator.pop(context, newRoutine); // 새 루틴을 이전 화면으로 전달하며 닫기
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('루틴 이름과 최소 하나의 운동을 추가해주세요.')), // 오류 메시지 표시
+        const SnackBar(content: Text('루틴 이름과 최소 하나의 운동을 추가해주세요.')), // 오류 메시지 표시
       );
     }
   }
@@ -92,8 +92,8 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white, // 앱바 배경색 설정
-        iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상 설정
-        title: Text(
+        iconTheme: const IconThemeData(color: Colors.black), // 아이콘 색상 설정
+        title: const Text(
           '루틴 추가', // 앱바 제목
           style: TextStyle(
             fontFamily: 'Bebas Neue', // 폰트 설정
@@ -104,7 +104,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0), // 전체 패딩 설정
+        padding: const EdgeInsets.all(16.0), // 전체 패딩 설정
         child: exercises.isEmpty
             ? Center(child: CircularProgressIndicator()) // 운동 데이터를 로딩 중일 때
             : ListView(
@@ -114,10 +114,10 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               controller: routineNameController,
               label: '루틴 이름',
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             // 운동 부위 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(16.0),
@@ -132,7 +132,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                   value: bodyPart,
                   child: Text(
                     bodyPart as String,  // 명시적 타입 변환
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w600,
                       fontSize: 16.0,
@@ -150,7 +150,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     selectedExercise = null; // 운동 초기화
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '운동 부위',
                   labelStyle: TextStyle(
                     fontFamily: 'Roboto',
@@ -162,11 +162,11 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // 운동 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(16.0),
@@ -179,7 +179,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     value: exercise,
                     child: Text(
                       exercise['name'],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w600,
                         fontSize: 16.0,
@@ -193,7 +193,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     selectedExercise = value;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '운동 종류',
                   labelStyle: TextStyle(
                     fontFamily: 'Roboto',
@@ -205,11 +205,11 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
 
             // 운동 시간 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(16.0),
@@ -221,7 +221,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                   value: seconds, // 각 시간 값을 드롭다운 항목으로 설정
                   child: Text(
                     '$seconds 초', // 시간 표시
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontWeight: FontWeight.w600, // 글자 두께 설정
                       fontSize: 16.0, // 글자 크기 설정
@@ -234,7 +234,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     selectedTime = value;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '운동 시간 (초)',
                   labelStyle: TextStyle(
                     fontFamily: 'Roboto',
