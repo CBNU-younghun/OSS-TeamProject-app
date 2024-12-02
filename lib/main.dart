@@ -6,8 +6,7 @@ import 'diet/diet_page.dart'; // 식단 관리 페이지 임포트
 import 'routine/routine_page.dart'; // 루틴 관리 페이지 임포트
 import 'exercise/exercise_info_page.dart'; // 운동 정보 페이지 임포트
 import 'user_info_page.dart'; // 사용자 정보 페이지 임포트
-import 'splash_screen.dart'; // 스플래시 스크린 파일을 임포트
-
+import 'splash_screen.dart'; // 스플래시 스크린 임포트
 
 // 앱의 시작점
 void main() {
@@ -29,7 +28,7 @@ class HealthManagementApp extends StatelessWidget {
         defaultTextColor: Colors.black, // 기본 텍스트 색상
       ),
       themeMode: ThemeMode.light, // 항상 라이트 모드 사용
-      home: SplashScreen(),
+      home: SplashScreen(), // 앱 시작 시 SplashScreen 위젯 표시
       debugShowCheckedModeBanner: false, // 디버그 배너 숨김
     );
   }
