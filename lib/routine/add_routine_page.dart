@@ -150,7 +150,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     selectedExercise = null; // 운동 초기화
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '운동 부위',
                   labelStyle: TextStyle(
                     fontFamily: 'Roboto',
