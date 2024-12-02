@@ -297,6 +297,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<int>(
+                dropdownColor: Colors.white, // 세트 수 선택 드롭다운 폼 색상 흰색으로 설정
                 value: selectedSets,
                 items: setOptions.map((sets) => DropdownMenuItem(
                   value: sets, // 각 세트 수 값을 드롭다운 항목으로 설정
