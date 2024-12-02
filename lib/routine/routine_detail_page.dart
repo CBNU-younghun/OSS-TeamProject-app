@@ -194,27 +194,6 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
               ),
             ),
             SizedBox(height: 16.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _deleteRoutine, // 삭제 버튼 클릭 시 루틴 삭제
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey, // 버튼 배경색 설정
-                elevation: 4.0, // 그림자 효과 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '삭제', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상 설정
-                ),
-              ),
-            ),
-
           ],
         ),
       ),
@@ -231,6 +210,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     int? selectedReps; // 선택된 세트당 운동 횟수
 
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 추가 폼 배경 색상 흰색으로 설정
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능
       builder: (context) {
@@ -464,6 +444,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
   // 운동 항목에 대한 편집 옵션을 보여주는 함수
   void _showEditExerciseOptions(int index) {
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 편집 폼 배경색 설정
       context: context,
       builder: (context) {
         return Container(
@@ -519,6 +500,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     TextEditingController(text: exercises[index]['sets'].toString()); // 세트 수 컨트롤러 설정
 
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 수정 폼 배경색 설정
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능하게 설정
       builder: (context) {
@@ -538,7 +520,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: part,
                         child: Text(
                           part,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -559,7 +541,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 부위',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -578,7 +560,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: exerciseName,
                         child: Text(
                           exerciseName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,

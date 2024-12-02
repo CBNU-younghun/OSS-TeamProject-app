@@ -2,6 +2,7 @@
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
     <CLASSES>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
@@ -40,6 +41,8 @@
 >>>>>>> aaf8e768ed06b68a8cbca8bbff4e328c01ec5253
 =======
 >>>>>>> main
+=======
+>>>>>>> 8aa1dd090d3bd1e92d277b9186991eff6d72dc3e
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/flutter_local_notifications-18.0.1" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider_android-2.2.12" />
@@ -54,10 +57,13 @@
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/path_provider-2.1.5" />
       <root url="file://$PROJECT_DIR$/../.pub-cache/hosted/pub.dev/shared_preferences_linux-2.4.1" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> younghun
 >>>>>>> 71493a3d60aeb92561e169d23ef408e65596b646
 >>>>>>> main
+=======
+>>>>>>> 8aa1dd090d3bd1e92d277b9186991eff6d72dc3e
     </CLASSES>
     <JAVADOC />
     <SOURCES />
