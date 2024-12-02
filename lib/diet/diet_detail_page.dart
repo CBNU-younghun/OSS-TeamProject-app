@@ -1,5 +1,7 @@
-// 식단 상세 페이지
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지
+import 'package:fl_chart/fl_chart.dart'; // 차트 표현을 위해 사용
+import 'package:flutter/services.dart'; // JSON 파일을 로드하기 위해 사용
+import 'dart:convert'; // JSON 데이터를 디코딩하기 위해 사용
 
 // DietDetailPage는 사용자가 선택한 식단의 상세 정보를 보고 수정 또는 삭제할 수 있는 페이지이다
 class DietDetailPage extends StatefulWidget {
@@ -20,8 +22,6 @@ class DietDetailPage extends StatefulWidget {
 
 class _DietDetailPageState extends State<DietDetailPage> {
   final TextEditingController nameController = TextEditingController(); // 식단 이름을 제어하는 텍스트 컨트롤러
-  String? selectedMealType; // 현재 선택된 식사 종류를 저장하는 변수
-  List<String> mealTypes = ['아침', '점심', '저녁', '간식']; // 식사 종류 옵션 리스트(임시로 아침,점심,저녁,간식을 입력해 놓았으나 추후 다른 기능으로 활용 가능)
   List<Map<String, dynamic>> foods = []; // 식단에 포함된 음식 목록을 저장하는 리스트
 
   @override
@@ -33,16 +33,14 @@ class _DietDetailPageState extends State<DietDetailPage> {
   // 초기 식단 데이터를 로드하여 상태를 설정하는 함수
   void _loadDietData() {
     nameController.text = widget.diet['name']; // 식단 이름을 텍스트 필드에 설정함
-    selectedMealType = widget.diet['mealType']; // 선택된 식사 종류를 설정함
     foods = List<Map<String, dynamic>>.from(widget.diet['foods']); // 음식 목록을 설정함
   }
 
   // 식단을 저장하는 함수
   void _saveDiet() {
-    if (nameController.text.isNotEmpty && selectedMealType != null) { // 식단 이름과 식사 종류가 입력되었는지 확인
+    if (nameController.text.isNotEmpty) { // 식단 이름이 입력되었는지 확인
       final updatedDiet = {
         'name': nameController.text, // 입력된 식단 이름
-        'mealType': selectedMealType, // 선택된 식사 종류
         'foods': foods, // 현재 음식 목록
       };
       widget.onSave(updatedDiet); // 상위 위젯의 onSave 콜백 함수 호출
@@ -205,36 +203,60 @@ class _DietDetailPageState extends State<DietDetailPage> {
               hintText: '식단 이름을 입력하세요', // 텍스트 필드 힌트
             ),
             SizedBox(height: 16.0), // 간격 추가
-            DropdownButtonFormField<String>(
-              value: selectedMealType, // 현재 선택된 식사 종류
-              items: mealTypes.map((mealType) => DropdownMenuItem(
-                value: mealType, // 각 식사 종류를 드롭다운 항목으로 설정
-                child: Text(
-                  mealType, // 식사 종류 이름 표시
-                  style: TextStyle(
-                    fontFamily: 'Roboto', // 폰트 설정
-                    fontWeight: FontWeight.w600, // 글자 두께 설정
-                    fontSize: 16.0, // 글자 크기 설정
+            if (foods.isNotEmpty) ...[
+              SizedBox(
+                height: 300,
+                child: BarChart(
+                  BarChartData(
+                    alignment: BarChartAlignment.spaceBetween,
+                    barGroups: [
+                      _makeHorizontalBarGroup(0, '탄수화물', _getTotalNutrient('carbs'), Colors.greenAccent),
+                      _makeHorizontalBarGroup(1, '단백질', _getTotalNutrient('protein'), Colors.orangeAccent),
+                      _makeHorizontalBarGroup(2, '지방', _getTotalNutrient('fat'), Colors.redAccent),
+                    ],
+                    titlesData: FlTitlesData(
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: (value, _) {
+                            switch (value.toInt()) {
+                              case 0:
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text('탄수화물', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                );
+                              case 1:
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text('단백질', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                );
+                              case 2:
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Text('지방', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                );
+                              default:
+                                return Text('');
+                            }
+                          },
+                        ),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: true),
+                      ),
+                    ),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    gridData: FlGridData(
+                      show: false,
+                    ),
+                    barTouchData: BarTouchData(enabled: false),
+                    maxY: 100,
                   ),
                 ),
-              )).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedMealType = value; // 선택된 식사 종류 업데이트
-                });
-              },
-              decoration: InputDecoration(
-                labelText: '식사 종류', // 라벨 텍스트 설정
-                labelStyle: TextStyle(
-                  fontFamily: 'Roboto', // 폰트 설정
-                  fontWeight: FontWeight.w600, // 글자 두께 설정
-                  fontSize: 16.0, // 글자 크기 설정
-                ),
-                border: InputBorder.none, // 테두리 없음
               ),
-            ),
-            SizedBox(height: 16.0), // 간격 추가
-            if (foods.isNotEmpty) ...[
+              SizedBox(height: 32.0),
               Text(
                 '추가된 음식 목록:', // 음식 목록 제목
                 style: TextStyle(
@@ -245,24 +267,28 @@ class _DietDetailPageState extends State<DietDetailPage> {
                 ),
               ),
               SizedBox(height: 8.0), // 간격 추가
-              // 음식 목록을 리스트 형태로 표시
+              // add_diet에서 추가된 음식 목록만 리스트 형태로 표시
               ...foods.asMap().entries.map((entry) {
                 int index = entry.key; // 음식의 인덱스
                 Map<String, dynamic> food = entry.value; // 음식 데이터
-                return ListTile(
-                  title: Text(
-                    '${food['foodName']} - ${food['calories']} kcal', // 음식 이름과 칼로리 표시
-                    style: TextStyle(
-                      fontFamily: 'Roboto', // 폰트 설정
-                      fontSize: 16.0, // 글자 크기 설정
-                      color: Colors.black87, // 글자 색상 설정
+                if (widget.diet['foods'].contains(food)) { // 현재 식단에 추가된 음식만 표시
+                  return ListTile(
+                    title: Text(
+                      '${food['foodName']} - ${food['calories']} kcal', // 음식 이름과 칼로리 표시
+                      style: TextStyle(
+                        fontFamily: 'Roboto', // 폰트 설정
+                        fontSize: 16.0, // 글자 크기 설정
+                        color: Colors.black87, // 글자 색상 설정
+                      ),
                     ),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
-                    onPressed: () => _showEditOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
-                  ),
-                );
+                    trailing: IconButton(
+                      icon: Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
+                      onPressed: () => _showEditOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
+                    ),
+                  );
+                } else {
+                  return SizedBox.shrink(); // 다른 음식은 표시하지 않음
+                }
               }).toList(),
             ],
             SizedBox(height: 32.0), // 간격 추가
@@ -310,6 +336,36 @@ class _DietDetailPageState extends State<DietDetailPage> {
           ],
         ),
       ),
+    );
+  }
+
+// 주어진 영양소의 총합을 계산하는 함수
+  double _getTotalNutrient(String nutrient) {
+    double total = 0;
+    for (var food in foods) {
+      total += (food[nutrient] ?? 0).toDouble(); // null 체크 후 toDouble() 호출
+    }
+    return total;
+  }
+
+  // 가로 막대 그룹을 생성하는 함수
+  BarChartGroupData _makeHorizontalBarGroup(int x, String label, double value, Color color) {
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: value,
+          color: color,
+          width: 20,
+          borderRadius: BorderRadius.circular(6),
+          backDrawRodData: BackgroundBarChartRodData(
+            show: true,
+            toY: 100,
+            color: Colors.grey[200],
+          ),
+        ),
+      ],
+      barsSpace: 16,
     );
   }
 
