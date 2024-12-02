@@ -633,6 +633,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
                     // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white, // 세트 당 운동횟수 선택 폼 색상 흰색으로 설정
                       value: repsOptions.contains(exercises[index]['reps']) ? exercises[index]['reps'] : null, // 선택된 세트 당 운동 횟수 설정
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
@@ -664,8 +665,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       hint: Text('세트 당 운동횟수를 선택하세요'), // 힌트 텍스트 추가
                     ),
                     SizedBox(height: 16.0),
-
+                    // 세트 수 선택 드롭다운 폼
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white, // 세트 수 선택 폼 색상 흰색으로 설정
                       value: setOptions.contains(exercises[index]['sets']) ? exercises[index]['sets'] : null, // 선택된 세트 수 설정
                       items: setOptions.map((sets) => DropdownMenuItem(
                         value: sets,
