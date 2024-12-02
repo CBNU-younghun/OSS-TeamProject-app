@@ -364,6 +364,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
                     // 세트 수 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white,  // 세트 수 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedSets,
                       items: setOptions.map((sets) => DropdownMenuItem(
                         value: sets,
