@@ -117,7 +117,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
             const SizedBox(height: 16.0),
             // 운동 부위 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(16.0),
