@@ -29,7 +29,7 @@ class HealthManagementApp extends StatelessWidget {
         defaultTextColor: Colors.black, // 기본 텍스트 색상
       ),
       themeMode: ThemeMode.light, // 항상 라이트 모드 사용
-      home: SplashScreen(), 
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false, // 디버그 배너 숨김
     );
   }
