@@ -1,10 +1,10 @@
-//메인 페이지
+// 메인 페이지
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯과 머티리얼 디자인 사용
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart'; // 뉴모픽 디자인 사용
 import 'package:shared_preferences/shared_preferences.dart'; // 로컬 저장소 접근을 위한 패키지
 import 'diet/diet_page.dart'; // 식단 관리 페이지 임포트
 import 'routine/routine_page.dart'; // 루틴 관리 페이지 임포트
-import 'package:oss_team_project_app/exercise/exercise_info_page.dart'; // 운동 정보 페이지 임포트
+import 'exercise/exercise_info_page.dart'; // 운동 정보 페이지 임포트
 import 'user_info_page.dart'; // 사용자 정보 페이지 임포트
 
 // 앱의 시작점
@@ -203,25 +203,36 @@ class HomePage extends StatefulWidget {
 // HomePage의 상태를 관리하는 클래스
 class _HomePageState extends State<HomePage> {
   MenuOption _selectedOption = MenuOption.Diet; // 현재 선택된 메뉴 옵션, 기본값은 식단
+  late PageController _pageController; // 페이지 컨트롤러 추가
 
-  // 선택된 메뉴에 따라 해당 페이지를 반환하는 함수
-  Widget _getSelectedPage() {
-    switch (_selectedOption) {
-      case MenuOption.Diet:
-        return DietPage(); // 식단 관리 페이지 반환
-      case MenuOption.Routine:
-        return RoutinePage(); // 루틴 관리 페이지 반환
-      case MenuOption.ExerciseInfo:
-        return ExerciseInfoPage(); // 운동 정보 페이지 반환
-      default:
-        return Container(); // 기본적으로 빈 컨테이너 반환
-    }
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _selectedOption.index); // 초기 페이지 설정
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose(); // 페이지 컨트롤러 해제
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _getSelectedPage(), // 선택된 페이지를 화면에 표시
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (int index) {
+          setState(() {
+            _selectedOption = MenuOption.values[index]; // 페이지 변경 시 선택된 메뉴 업데이트
+          });
+        },
+        children: [
+          DietPage(), // 식단 관리 페이지
+          RoutinePage(), // 루틴 관리 페이지
+          ExerciseInfoPage(), // 운동 정보 페이지
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: NeumorphicTheme.baseColor(context), // 바탕색 설정
         selectedItemColor: NeumorphicTheme.isUsingDark(context)
@@ -233,6 +244,11 @@ class _HomePageState extends State<HomePage> {
         onTap: (int index) {
           setState(() {
             _selectedOption = MenuOption.values[index]; // 선택된 메뉴 옵션 변경
+            _pageController.animateToPage(
+              index,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            ); // 페이지 이동 애니메이션 추가
           });
         },
         items: [
