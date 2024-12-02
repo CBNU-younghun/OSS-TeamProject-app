@@ -142,7 +142,7 @@ class _RoutinePageState extends State<RoutinePage> {
       ),
       // 본문 영역을 정의
       body: routines.isEmpty
-          ? Center(
+          ? const Center(
         // 루틴이 없을 경우 표시할 내용
         child: Text(
           '등록된 루틴이 없습니다.',
