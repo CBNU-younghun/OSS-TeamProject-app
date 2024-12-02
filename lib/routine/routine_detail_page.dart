@@ -329,7 +329,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     SizedBox(height: 16.0),
 
+                    // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white,  // 세트 당 운동횟수 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedReps,
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
