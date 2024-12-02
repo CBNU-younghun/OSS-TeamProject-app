@@ -76,7 +76,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
       Navigator.pop(context, newRoutine); // 새 루틴을 이전 화면으로 전달하며 닫기
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('루틴 이름과 최소 하나의 운동을 추가해주세요.')), // 오류 메시지 표시
+        const SnackBar(content: Text('루틴 이름과 최소 하나의 운동을 추가해주세요.')), // 오류 메시지 표시
       );
     }
   }
