@@ -597,6 +597,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     SizedBox(height: 16.0),
                     // 운동 시간 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white, // 운동 시간 선택 폼 색상 흰색으로 설정
                       value: secondsOptions.contains(exercises[index]['time']) ? exercises[index]['time'] : null, // 선택된 시간 설정
                       items: secondsOptions.map((seconds) => DropdownMenuItem(
                         value: seconds,
