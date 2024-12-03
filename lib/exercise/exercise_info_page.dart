@@ -122,7 +122,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                     color: Color(0xFFB9B9BB),
                   ),
                     border: OutlineInputBorder(
-                      borderSide: BorderSide.none, // 枠線を非表示
+                      borderSide: BorderSide.none,
                     ),
                   filled: true,
                   fillColor:  Color(0xFFF4F4F4),
