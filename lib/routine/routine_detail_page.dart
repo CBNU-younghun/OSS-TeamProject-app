@@ -497,6 +497,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
           title: Text('삭제 확인'), // 대화 상자 제목
           content: Text('정말 삭제하시겠습니까?'), // 대화 상자 내용
           actions: [
