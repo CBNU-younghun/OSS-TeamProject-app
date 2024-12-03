@@ -98,6 +98,16 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
           ),
         ),
         iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상 설정
+        actions: [
+          // 루틴을 삭제하는 아이콘 버튼 추가
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.black,
+            onPressed: () {
+              _deleteRoutine(); // 삭제 함수 호출
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0), // 전체 패딩 설정
