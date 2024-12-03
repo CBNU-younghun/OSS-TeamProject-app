@@ -23,7 +23,7 @@ class RoutineDetailPage extends StatefulWidget {
 class _RoutineDetailPageState extends State<RoutineDetailPage> {
   final TextEditingController nameController = TextEditingController(); // 루틴 이름을 입력하는 컨트롤러
   String? selectedBodyPart; // 선택된 운동 부위
-  List<String> bodyParts = ['가슴', '하체', '팔', '등', '어깨', '유산소','복근']; // 운동 부위 옵션 리스트 (운동 정보 페이지와 일치)
+  List<String> bodyParts = ['가슴', '하체', '팔', '등', '어깨', '복근', '유산소']; // 운동 부위 옵션 리스트 (운동 정보 페이지와 일치)
   List<Map<String, dynamic>> exercises = []; // 루틴에 포함된 운동 목록
   List<Map<String, dynamic>> allExercises = []; // 모든 운동 데이터 목록
   List<String> filteredExercises = []; // 선택된 운동 부위에 따른 운동 목록
