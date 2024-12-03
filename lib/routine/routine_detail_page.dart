@@ -98,6 +98,16 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
           ),
         ),
         iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상 설정
+        actions: [
+          // 루틴을 삭제하는 아이콘 버튼 추가
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.black,
+            onPressed: () {
+              _deleteRoutine(); // 삭제 함수 호출
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0), // 전체 패딩 설정
@@ -471,9 +481,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 title: Text('운동 삭제'), // 삭제 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
-                  setState(() {
-                    exercises.removeAt(index); // 해당 운동 삭제
-                  });
+                  _showDeleteConfirmationDialog(index); // 삭제 확인 다이얼로그 표시
                 },
               ),
             ],
@@ -482,6 +490,37 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
       },
     );
   }
+
+// 운동 삭제 확인 다이얼로그를 보여주는 함수
+  void _showDeleteConfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('삭제 확인'), // 대화 상자 제목
+          content: Text('정말 삭제하시겠습니까?'), // 대화 상자 내용
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 대화 상자 닫기
+              },
+              child: Text('취소'), // 취소 버튼
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  exercises.removeAt(index); // 해당 운동 삭제
+                });
+                Navigator.of(context).pop(); // 대화 상자 닫기
+              },
+              child: Text('삭제'), // 삭제 버튼
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   // 운동 항목을 수정할 수 있는 폼을 보여주는 함수
   void _showEditExerciseForm(int index) {
