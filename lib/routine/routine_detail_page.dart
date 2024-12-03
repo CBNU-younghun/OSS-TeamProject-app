@@ -506,14 +506,31 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
           )
           ),
           backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
-          title: Text('삭제 확인'), // 대화 상자 제목
-          content: Text('정말 삭제하시겠습니까?'), // 대화 상자 내용
+          title: Text('삭제 확인',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+            ),
+          ), // 대화 상자 제목
+          content: Text('정말 삭제하시겠습니까?',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 16.0,
+            ),
+          ), // 대화 상자 내용
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('취소'), // 취소 버튼
+              child: Text('취소',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Roboto',
+                  fontSize: 14.0
+                ),
+              ), // 취소 버튼
             ),
             TextButton(
               onPressed: () {
@@ -522,7 +539,12 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 });
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('삭제'), // 삭제 버튼
+              child: Text('삭제',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Roboto',
+                    fontSize: 14.0
+                ),), // 삭제 버튼
             ),
           ],
         );
