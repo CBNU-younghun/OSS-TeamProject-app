@@ -498,6 +498,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           elevation: 4.0, // 그림자 효과 추가
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0) // 모서리 둥글게 설정
+          ),
           backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
           title: Text('삭제 확인'), // 대화 상자 제목
           content: Text('정말 삭제하시겠습니까?'), // 대화 상자 내용
