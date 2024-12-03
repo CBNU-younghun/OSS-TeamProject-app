@@ -15,6 +15,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   List<Map<String, dynamic>> exercises = []; // 전체 운동 목록을 저장하는 리스트이다
   String? selectedBodyPart; // 현재 선택된 운동 부위를 저장하는 변수이다
   List<Map<String, dynamic>> filteredExercises = []; // 선택된 부위에 해당하는 운동 목록을 저장하는 리스트이다
+  String searchQuery = ""; //검색 쿼리(사용자 입력)를 저장하기 위한 변수
 
   // 로컬 JSON 파일에서 운동 데이터를 로드하는 함수이다
   Future<void> _loadExercises() async {
@@ -35,11 +36,26 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
   List<Map<String, dynamic>> get filteredCategory {
     if (selectedBodyPart == null) {
+      if (searchQuery.isNotEmpty) {
+        return exercises.where((exercise) {
+          return exercise['name'].toLowerCase().contains(searchQuery);
+        }).toList();
+      }
       return exercises;
     }
-    return exercises.where((exercises) {
-      return exercises['bodyPart'].contains(selectedBodyPart);
+    // 카테고리가 선택되어 있는 경우
+    final categoryFiltered = exercises.where((exercise) {
+      return exercise['bodyPart'] == selectedBodyPart; // 카테고리 필터링
     }).toList();
+
+    // 검색 쿼리가 입력되어 있는 경우 추가로 압축
+    if (searchQuery.isNotEmpty) {
+      return categoryFiltered.where((exercise) {
+        return exercise['name'].toLowerCase().contains(searchQuery);
+      }).toList();
+    }
+
+    return categoryFiltered;
   }
 
 
@@ -86,7 +102,43 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
             child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
             : Column(
           children: [
-            //카테고리 buttom
+
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 20.0,
+                left: 20.0,
+                right: 20.0,
+                bottom: 0.0,
+              ),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: "Search",
+                  hintStyle: TextStyle(
+                    color: Color(0xFFB9B9BB),
+                    //fontSize: 16.0,
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Color(0xFFB9B9BB),
+                  ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none, // 枠線を非表示
+                    ),
+                  filled: true,
+                  fillColor:  Color(0xFFF4F4F4),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 16.0,
+                  )
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value.toLowerCase();
+                  });
+                },
+              ),
+            ),
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -135,94 +187,109 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                   );
                 }).toList(),
               ),
-            ),
-
+            ), //카테고리 buttom
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(top: 0.0, bottom: 20.0, left: 20.0, right: 20.0,),
-                child: ListView.builder(
-                itemCount: filteredCategory.length,
-                itemBuilder: (context, index) {
-                  final exercise = filteredCategory[index];
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2), // 그림자의 빛깔
+                padding: const EdgeInsets.only(
+                  top: 0.0,
+                  bottom: 20.0,
+                  left: 20.0,
+                  right: 20.0,
+                ),
+                child: filteredCategory.isNotEmpty
+                    ? ListView.builder(
+                  itemCount: filteredCategory.length,
+                  itemBuilder: (context, index) {
+                    final exercise = filteredCategory[index];
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2), // 그림자의 빛깔
                             offset: const Offset(0, 1.5), // 그림자위치(오른쪽 0px, 아래 1.5px)
-                          blurRadius: 2.0, // 흐림의 반지름
-                          spreadRadius: 0, // 그림자의 확대
-                        ),
-                      ],
-                      border: Border.all(color: const Color(0xFFDEDFE0), width: 1.0,),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                            // 운동명(타이틀)과 영어명을 세로로 늘어놓다
-                              Flexible(
-                                flex: 0,
-                                child: Text(
-                                  exercise['name'],
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(width: 10.0),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  exercise['englishName'],
-                                  style: const TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey,
-                                  ),
-                                  maxLines: 1, // 1行で収める
-                                  overflow: TextOverflow.ellipsis, // 表示しきれない場合は...を表示
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                            // 난이도와 운동 부위를 세로로 나열합니다
-                            Text(
-                              '${exercise['difficulty']}  | ${exercise['effectiveBody']}',
-                              style: const TextStyle(fontSize: 14.0, color: Colors.black),
-                            ),
-                            ],
+                            blurRadius: 2.0, // 흐림의 반지름
+                            spreadRadius: 0, // 그림자의 확대
                           ),
                         ],
+                        border: Border.all(
+                          color: const Color(0xFFDEDFE0),
+                          width: 1.0,
+                        ),
                       ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                _ExerciseDetailPage(exercise: exercise),
-                            fullscreenDialog: true, // 전체 화면 다이얼로그로 표시함
-                          ),
-                        );
-                      },
-                    ),);
-                },
+                      child: ListTile(
+                        contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // 운동명(타이틀)과 영어명을 세로로 늘어놓다
+                                Flexible(
+                                  flex: 0,
+                                  child: Text(
+                                    exercise['name'],
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 10.0),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    exercise['englishName'],
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey,
+                                    ),
+                                    maxLines: 1, // 1行で収める
+                                    overflow: TextOverflow.ellipsis, // 表示しきれない場合は...を表示
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // 난이도와 운동 부위를 세로로 나열합니다
+                                Text(
+                                  '${exercise['difficulty']}  | ${exercise['effectiveBody']}',
+                                  style: const TextStyle(fontSize: 14.0, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => _ExerciseDetailPage(exercise: exercise),
+                              fullscreenDialog: true, // 전체 화면 다이얼로그로 표시함
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )
+                    : const Center(
+                  child: Text(
+                    '해당 데이터가 없습니다.',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                ),
               ),
-              ),
-            ),
+            )
           ],
         ),
     );
