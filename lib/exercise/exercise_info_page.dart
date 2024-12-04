@@ -38,7 +38,9 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     if (selectedBodyPart == null) {
       if (searchQuery.isNotEmpty) {
         return exercises.where((exercise) {
-          return exercise['name'].toLowerCase().contains(searchQuery);
+          return exercise['name'].toLowerCase().contains(searchQuery)||
+                 exercise['englishName'].toLowerCase().contains(searchQuery)||
+                 exercise['difficulty'].toLowerCase().contains(searchQuery);
         }).toList();
       }
       return exercises;
@@ -51,13 +53,14 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     // 검색 쿼리가 입력되어 있는 경우 추가로 압축
     if (searchQuery.isNotEmpty) {
       return categoryFiltered.where((exercise) {
-        return exercise['name'].toLowerCase().contains(searchQuery);
+        return exercise['name'].toLowerCase().contains(searchQuery)||
+               exercise['englishName'].toLowerCase().contains(searchQuery)||
+                exercise['difficulty'].toLowerCase().contains(searchQuery);
       }).toList();
     }
 
     return categoryFiltered;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +105,6 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
             child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
             : Column(
           children: [
-
             Padding(
               padding: const EdgeInsets.only(
                 top: 20.0,
@@ -297,6 +299,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
 }
 
 // ExerciseDetailPage는 선택된 운동의 상세 정보를 표시하는 페이지이다
+
 class _ExerciseDetailPage extends StatelessWidget {
   final Map<String, dynamic> exercise; // 상세 정보를 표시할 운동 데이터
 
