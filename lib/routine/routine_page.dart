@@ -113,7 +113,7 @@ class _RoutinePageState extends State<RoutinePage> {
     return Scaffold(
       // 상단의 앱바를 정의
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           '루틴 관리', // 앱의 제목을 설정
           style: TextStyle(
             fontFamily: 'Bebas Neue', // 폰트 설정
@@ -123,7 +123,7 @@ class _RoutinePageState extends State<RoutinePage> {
           ),
         ),
         backgroundColor: Colors.white, // 앱바 배경색 설정
-        iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상 설정
+        iconTheme: const IconThemeData(color: Colors.black), // 아이콘 색상 설정
         actions: [
           // 사용자 정보 페이지로 이동하는 아이콘 버튼을 추가
           IconButton(
@@ -192,7 +192,7 @@ class _RoutinePageState extends State<RoutinePage> {
                   ),
                   subtitle: Text(
                     "생성일: $formattedDate", // 생성된 날짜와 시간을 표시
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14.0, // 폰트 크기 설정
                       color: Colors.black54,//
                     ),
@@ -232,20 +232,20 @@ class _RoutinePageState extends State<RoutinePage> {
           elevation: 4.0, // 그림자 효과 추가
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
-              side: BorderSide(
+              side: const BorderSide(
                 color: Colors.black,  // 테두리 색 검정으로 설정
                 width: 1.0,
               )
           ),
           backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
-          title: Text('삭제 확인',
+          title: const Text('삭제 확인',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w600,
               fontSize: 20.0,
             ),
           ), // 대화 상자 제목
-          content: Text('정말 삭제하시겠습니까?',
+          content: const Text('정말 삭제하시겠습니까?',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 16.0,
@@ -256,7 +256,7 @@ class _RoutinePageState extends State<RoutinePage> {
               onPressed: () {
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('취소',
+              child: const Text('취소',
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'Roboto',
@@ -271,7 +271,7 @@ class _RoutinePageState extends State<RoutinePage> {
                 });
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('삭제',
+              child: const Text('삭제',
                 style: TextStyle(
                     color: Colors.red,
                     fontFamily: 'Roboto',
