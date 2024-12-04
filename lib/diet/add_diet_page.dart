@@ -216,7 +216,7 @@ class _AddDietPageState extends State<AddDietPage> {
                   child: ElevatedButton(
                     onPressed: _addFood, // 음식 추가 함수 호출
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey, // 버튼 배경색
+                      backgroundColor: Colors.green, // 버튼 배경색
                       elevation: 4.0, // 버튼 그림자 깊이
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
