@@ -152,17 +152,21 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
             ],
 
             SizedBox(height: 32.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _showAddExerciseForm, // 운동 추가 폼 표시
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // 버튼 배경색
-                elevation: 4.0, // 그림자 효과
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 둥근 모서리
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩
-              ),
-              child: Text(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: _showAddExerciseForm, // 운동 추가 폼 표시
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // 버튼 배경색
+                    elevation: 4.0, // 그림자 효과
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0), // 둥근 모서리
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩
+                  ),
+                  child: Text(
                 '운동 추가', // 버튼 텍스트
                 style: TextStyle(
                   fontFamily: 'Bebas Neue', // 폰트
@@ -172,28 +176,32 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 ),
               ),
             ),
-
-
-            SizedBox(height: 16.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _saveRoutine, // 저장 버튼 클릭 시 루틴 저장
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // 버튼 배경색 설정
-                elevation: 4.0, // 그림자 효과 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
               ),
-              child: Text(
-                '저장', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue',
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white, // 텍스트 색상 설정
+
+            SizedBox(width: 16.0), // 간격 추가
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: _saveRoutine, // 저장 버튼 클릭 시 루틴 저장
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue, // 버튼 배경색 설정
+                    elevation: 4.0, // 그림자 효과 설정
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
+                  ),
+                  child: Text(
+                    '저장', // 버튼 텍스트
+                    style: TextStyle(
+                      fontFamily: 'Bebas Neue',
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // 텍스트 색상 설정
+                    ),
+                  ),
                 ),
               ),
+            ],
             ),
             SizedBox(height: 16.0), // 간격 추가
           ],
