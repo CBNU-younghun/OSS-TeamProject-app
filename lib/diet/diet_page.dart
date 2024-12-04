@@ -189,6 +189,7 @@ class _DietPageState extends State<DietPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('삭제 확인'),
+          backgroundColor: Colors.white,
           content: Text('해당 식단을 삭제하시겠습니까?'),
           actions: [
             TextButton(
