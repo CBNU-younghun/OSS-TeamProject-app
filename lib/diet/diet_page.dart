@@ -149,6 +149,34 @@ class _DietPageState extends State<DietPage> {
     return {'carbs': carbs, 'protein': protein, 'fat': fat};
   }
 
+  // 삭제 확인 다이얼로그 표시 함수
+  void _showDeleteConfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('삭제 확인'),
+          content: Text('해당 식단을 삭제하시겠습니까?'),
+          actions: [
+            TextButton(
+              child: Text('취소'),
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+            ),
+            TextButton(
+              child: Text('삭제', style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+                _removeDiet(index); // 식단 삭제
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final todayNutrition = _calculateTodayNutrition();
