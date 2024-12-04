@@ -115,21 +115,21 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                   hintText: "Search",
                   hintStyle: TextStyle(
                     color: Color(0xFFB9B9BB),
+                    //fontSize: 16.0,
                   ),
                   prefixIcon: Icon(
                     Icons.search,
                     color: Color(0xFFB9B9BB),
                   ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                    ),
                   filled: true,
                   fillColor:  Color(0xFFF4F4F4),
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 8.0,
                     horizontal: 16.0,
-                  ),
+                  )
                 ),
                 onChanged: (value) {
                   setState(() {
