@@ -7,7 +7,7 @@ class AddDietPage extends StatefulWidget {
   @override
   _AddDietPageState createState() => _AddDietPageState();
 }
-//test
+
 // 식단 추가 페이지의 상태 관리 클래스
 class _AddDietPageState extends State<AddDietPage> {
   // 입력된 식단 이름을 관리하는 컨트롤러
