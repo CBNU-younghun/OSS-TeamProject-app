@@ -149,6 +149,39 @@ class _DietPageState extends State<DietPage> {
     return {'carbs': carbs, 'protein': protein, 'fat': fat};
   }
 
+  // 식단 옵션 메뉴를 표시하는 함수
+  void _showDietOptions(int index) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.info, color: Colors.blue),
+                title: Text('식단 상세 정보'),
+                onTap: () {
+                  Navigator.of(context).pop(); // 모달 닫기
+                  _goToDietDetailPage(index); // 상세 페이지로 이동
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.delete, color: Colors.red),
+                title: Text('식단 삭제'),
+                onTap: () {
+                  Navigator.of(context).pop(); // 모달 닫기
+                  _showDeleteConfirmationDialog(index); // 삭제 확인 다이얼로그 표시
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   // 삭제 확인 다이얼로그 표시 함수
   void _showDeleteConfirmationDialog(int index) {
     showDialog(
