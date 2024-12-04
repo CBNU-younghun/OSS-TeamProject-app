@@ -67,7 +67,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
             '운동 정보', // 선택된 부위가 없으면 '운동 정보' 제목을, 있으면 해당 부위 이름을 표시함
             style: TextStyle(
               fontFamily: 'Roboto', // 폰트 적용
-              fontSize: 21.0, // 폰트 크기 설정
+              fontSize: 28.0, // 폰트 크기 설정
               fontWeight: FontWeight.w900, // 폰트 두께 설정
               color: Colors.black, // 폰트 색상 설정
             ),
@@ -115,21 +115,21 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                   hintText: "Search",
                   hintStyle: TextStyle(
                     color: Color(0xFFB9B9BB),
-                    //fontSize: 16.0,
                   ),
                   prefixIcon: Icon(
                     Icons.search,
                     color: Color(0xFFB9B9BB),
                   ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+
                   filled: true,
                   fillColor:  Color(0xFFF4F4F4),
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 8.0,
                     horizontal: 16.0,
-                  )
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -215,7 +215,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                           ),
                         ],
                         border: Border.all(
-                          color: const Color(0xFFDEDFE0),
+                          color: Colors.black,
                           width: 1.0,
                         ),
                       ),
@@ -310,7 +310,7 @@ class _ExerciseDetailPage extends StatelessWidget {
           '실천 방법',
           style: TextStyle(
             fontFamily: 'Roboto', // 폰트 적용함
-            fontSize: 21.0,
+            fontSize: 28.0,
             fontWeight: FontWeight.w900, // 폰트 두께 설정함
             color: Colors.black, // 폰트 색상 설정함
           ),
