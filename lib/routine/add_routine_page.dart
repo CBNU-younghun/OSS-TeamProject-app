@@ -113,6 +113,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
             _buildTextField(
               controller: routineNameController,
               label: '루틴 이름',
+              hintText: '루틴 이름을 입력하세요',
             ),
             SizedBox(height: 16.0),
             // 운동 부위 선택 필드
@@ -427,6 +428,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
   Widget _buildTextField({
     required TextEditingController controller, // 입력을 제어하는 컨트롤러
     required String label, // 라벨 텍스트
+    String? hintText,
     TextInputType keyboardType = TextInputType.text, // 키보드 타입 설정
   }) {
     return Container(
@@ -445,6 +447,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
             fontSize: 16.0, // 글자 크기 설정
             color: Colors.black87, // 글자 색상 설정
           ),
+          hintText: hintText,
           border: InputBorder.none, // 테두리 없음
         ),
         keyboardType: keyboardType, // 키보드 타입 설정
