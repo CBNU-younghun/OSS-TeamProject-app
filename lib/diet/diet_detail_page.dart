@@ -338,7 +338,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
                         Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey,
+                        backgroundColor: Colors.green,
                         elevation: 4.0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -433,11 +433,11 @@ class _DietDetailPageState extends State<DietDetailPage> {
   Widget _getNutrientIcon(int index) {
     switch (index) {
       case 0:
-        return Icon(Icons.crop_square, color: Colors.greenAccent, size: 24);
+        return Icon(Icons.crop_square, color: Colors.blue, size: 24);
       case 1:
-        return Icon(Icons.crop_square, color: Colors.orangeAccent, size: 24);
+        return Icon(Icons.crop_square, color: Color(0xFF87CEEB), size: 24);
       case 2:
-        return Icon(Icons.crop_square, color: Colors.redAccent, size: 24);
+        return Icon(Icons.crop_square, color: Color(0xFFE6E6FA), size: 24);
       default:
         return SizedBox.shrink();
     }
@@ -498,8 +498,8 @@ class _DietDetailPageState extends State<DietDetailPage> {
                     maxY: (_getMaxNutrientValue() * 1.2).ceilToDouble(), // 최대값 동적 설정
                     barGroups: [
                       _makeVerticalBarGroup(0, _getTotalNutrient('carbs'), Colors.blue),
-                      _makeVerticalBarGroup(1, _getTotalNutrient('protein'),Color(0xFF87CEEB),),
-                      _makeVerticalBarGroup(2, _getTotalNutrient('fat'),  Color(0xFFE6E6FA),),
+                      _makeVerticalBarGroup(1, _getTotalNutrient('protein'),Color(0xFF87CEEB)),
+                      _makeVerticalBarGroup(2, _getTotalNutrient('fat'),  Color(0xFFE6E6FA)),
                     ],
                     titlesData: FlTitlesData(
                       topTitles: AxisTitles(
