@@ -168,7 +168,7 @@ class _DietPageState extends State<DietPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.delete, color: Colors.red),
+                leading: Icon(Icons.delete),
                 title: Text('식단 삭제'),
                 onTap: () {
                   Navigator.of(context).pop(); // 모달 닫기
