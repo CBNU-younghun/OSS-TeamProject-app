@@ -188,7 +188,13 @@ class _DietPageState extends State<DietPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('삭제 확인'),
+          title: Text('삭제 확인',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+            ),
+          ), // 대화 상자 제목
           backgroundColor: Colors.white,
           content: Text('해당 식단을 삭제하시겠습니까?'),
           actions: [
