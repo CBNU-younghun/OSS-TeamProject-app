@@ -89,7 +89,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.delete, color: Colors.red), // 삭제 아이콘
+                leading: Icon(Icons.delete), // 삭제 아이콘
                 title: Text('음식 삭제'), // 삭제 옵션 텍스트
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기

@@ -149,6 +149,68 @@ class _DietPageState extends State<DietPage> {
     return {'carbs': carbs, 'protein': protein, 'fat': fat};
   }
 
+  // 식단 옵션 메뉴를 표시하는 함수
+  void _showDietOptions(int index) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.info, color: Colors.blue),
+                title: Text('식단 상세 정보'),
+                onTap: () {
+                  Navigator.of(context).pop(); // 모달 닫기
+                  _goToDietDetailPage(index); // 상세 페이지로 이동
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.delete),
+                title: Text('식단 삭제'),
+                onTap: () {
+                  Navigator.of(context).pop(); // 모달 닫기
+                  _showDeleteConfirmationDialog(index); // 삭제 확인 다이얼로그 표시
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // 삭제 확인 다이얼로그 표시 함수
+  void _showDeleteConfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('삭제 확인'),
+          backgroundColor: Colors.white,
+          content: Text('해당 식단을 삭제하시겠습니까?'),
+          actions: [
+            TextButton(
+              child: Text('취소', style: TextStyle(color: Colors.black)),
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+            ),
+            TextButton(
+              child: Text('삭제', style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+                _removeDiet(index); // 식단 삭제
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final todayNutrition = _calculateTodayNutrition();
@@ -278,6 +340,11 @@ class _DietPageState extends State<DietPage> {
               onTap: () {
                 _goToDietDetailPage(index); // 식단을 탭하면 상세 페이지로 이동함
               },
+
+              onLongPress: () {
+                _showDietOptions(index); // 식단 옵션 메뉴 표시
+              },
+
               child: Card(
                 color: Colors.white, // 카드 배경색을 흰색으로 설정
                 elevation: 4.0, // 카드 그림자 높이 설정
