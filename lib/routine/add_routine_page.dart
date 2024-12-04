@@ -329,29 +329,57 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               ),
             ),
             SizedBox(height: 16.0),
-
-            ElevatedButton(
-              onPressed: _addExercise,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // 버튼 배경색 설정
-                elevation: 4.0, // 그림자 효과 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // 버튼 간격 설정
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _addExercise,
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // 버튼 배경색 설정
+                      elevation: 4.0, // 그림자 효과 설정
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
+                      ),
+                      child: Text(
+                        '운동 추가',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue', // 폰트 설정
+                          fontSize: 20.0, // 글자 크기 설정
+                          fontWeight: FontWeight.bold, // 글자 두께 설정
+                          color: Colors.white, // 텍스트 색상 설정
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16.0),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _addRoutine, // 루틴 저장 버튼 클릭 시 루틴 저장 함수 호출
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, // 버튼 배경색 설정
+                      elevation: 4.0, // 그림자 효과 설정
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
+                    ),
+                    child: Text(
+                      '루틴 저장', // 버튼 텍스트
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue', // 폰트 설정
+                        fontSize: 20.0, // 글자 크기 설정
+                        fontWeight: FontWeight.bold, // 글자 두께 설정
+                        color: Colors.white, // 텍스트 색상 설정
+                      ),
+                    ),
+                  ),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '운동 추가',
-                 style: TextStyle(
-                   fontFamily: 'Bebas Neue', // 폰트 설정
-                   fontSize: 20.0, // 글자 크기 설정
-                   fontWeight: FontWeight.bold, // 글자 두께 설정
-                   color: Colors.white, // 텍스트 색상 설정
-                 ),
-              ),
+              ],
             ),
-            SizedBox(height: 16.0),
-
+            SizedBox(height: 32.0),
             if (addedExercises.isNotEmpty) ...[
               Text(
                 '추가된 운동 목록', // 추가된 운동 목록 제목
@@ -383,27 +411,6 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 );
               }).toList(),
             ],
-            SizedBox(height: 32.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _addRoutine, // 루틴 저장 버튼 클릭 시 루틴 저장 함수 호출
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // 버튼 배경색 설정
-                elevation: 4.0, // 그림자 효과 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '루틴 저장', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 글자 크기 설정
-                  fontWeight: FontWeight.bold, // 글자 두께 설정
-                  color: Colors.white, // 텍스트 색상 설정
-                ),
-              ),
-            ),
           ],
         ),
       ),
