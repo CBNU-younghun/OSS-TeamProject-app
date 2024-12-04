@@ -23,7 +23,7 @@ class RoutineDetailPage extends StatefulWidget {
 class _RoutineDetailPageState extends State<RoutineDetailPage> {
   final TextEditingController nameController = TextEditingController(); // 루틴 이름을 입력하는 컨트롤러
   String? selectedBodyPart; // 선택된 운동 부위
-  List<String> bodyParts = ['가슴', '하체', '팔', '등', '어깨', '유산소']; // 운동 부위 옵션 리스트 (운동 정보 페이지와 일치)
+  List<String> bodyParts = ['가슴', '하체', '팔', '등', '어깨', '복근', '유산소']; // 운동 부위 옵션 리스트 (운동 정보 페이지와 일치)
   List<Map<String, dynamic>> exercises = []; // 루틴에 포함된 운동 목록
   List<Map<String, dynamic>> allExercises = []; // 모든 운동 데이터 목록
   List<String> filteredExercises = []; // 선택된 운동 부위에 따른 운동 목록
@@ -98,6 +98,16 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
           ),
         ),
         iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상 설정
+        actions: [
+          // 루틴을 삭제하는 아이콘 버튼 추가
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.black,
+            onPressed: () {
+              _deleteRoutine(); // 삭제 함수 호출
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0), // 전체 패딩 설정
@@ -194,27 +204,6 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
               ),
             ),
             SizedBox(height: 16.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _deleteRoutine, // 삭제 버튼 클릭 시 루틴 삭제
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey, // 버튼 배경색 설정
-                elevation: 4.0, // 그림자 효과 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '삭제', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상 설정
-                ),
-              ),
-            ),
-
           ],
         ),
       ),
@@ -231,6 +220,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     int? selectedReps; // 선택된 세트당 운동 횟수
 
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 추가 폼 배경 색상 흰색으로 설정
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능
       builder: (context) {
@@ -245,6 +235,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                   children: [
                     // 운동 부위 선택
                     DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white,  // 운동 부위 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedBodyPart, // 선택된 운동 부위
                       items: bodyParts.map((part) => DropdownMenuItem(
                         value: part,
@@ -283,6 +274,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
                     // 운동 이름 선택
                     DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white,  // 운동 이름 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedExercise,
                       items: filteredExercises.map((exerciseName) => DropdownMenuItem(
                         value: exerciseName,
@@ -316,6 +308,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
                     // 운동 시간 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white,  // 운동 시간 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedTime,
                       items: secondsOptions.map((seconds) => DropdownMenuItem(
                         value: seconds,
@@ -346,7 +339,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     SizedBox(height: 16.0),
 
+                    // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white,  // 세트 당 운동횟수 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedReps,
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
@@ -379,6 +374,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
                     // 세트 수 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white,  // 세트 수 선택 드롭다운 폼 색상 흰색으로 설정
                       value: selectedSets,
                       items: setOptions.map((sets) => DropdownMenuItem(
                         value: sets,
@@ -464,6 +460,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
   // 운동 항목에 대한 편집 옵션을 보여주는 함수
   void _showEditExerciseOptions(int index) {
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 편집 폼 배경색 설정
       context: context,
       builder: (context) {
         return Container(
@@ -484,9 +481,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 title: Text('운동 삭제'), // 삭제 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
-                  setState(() {
-                    exercises.removeAt(index); // 해당 운동 삭제
-                  });
+                  _showDeleteConfirmationDialog(index); // 삭제 확인 다이얼로그 표시
                 },
               ),
             ],
@@ -495,6 +490,68 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
       },
     );
   }
+
+// 운동 삭제 확인 다이얼로그를 보여주는 함수
+  void _showDeleteConfirmationDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          elevation: 4.0, // 그림자 효과 추가
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
+            side: BorderSide(
+              color: Colors.black,  // 테두리 색 검정으로 설정
+              width: 1.0,
+          )
+          ),
+          backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
+          title: Text('삭제 확인',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+            ),
+          ), // 대화 상자 제목
+          content: Text('정말 삭제하시겠습니까?',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 16.0,
+            ),
+          ), // 대화 상자 내용
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 대화 상자 닫기
+              },
+              child: Text('취소',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Roboto',
+                  fontSize: 14.0
+                ),
+              ), // 취소 버튼
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  exercises.removeAt(index); // 해당 운동 삭제
+                });
+                Navigator.of(context).pop(); // 대화 상자 닫기
+              },
+              child: Text('삭제',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Roboto',
+                    fontSize: 14.0
+                ),), // 삭제 버튼
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   // 운동 항목을 수정할 수 있는 폼을 보여주는 함수
   void _showEditExerciseForm(int index) {
@@ -519,6 +576,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     TextEditingController(text: exercises[index]['sets'].toString()); // 세트 수 컨트롤러 설정
 
     showModalBottomSheet(
+      backgroundColor: Colors.white, // 운동 수정 폼 배경색 설정
       context: context,
       isScrollControlled: true, // 키보드가 올라올 때 스크롤 가능하게 설정
       builder: (context) {
@@ -533,12 +591,13 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                   children: [
                     // 운동 부위 선택
                     DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white, // 운동 부위 선택 폼 색상 흰색으로 설정
                       value: bodyParts.contains(selectedBodyPart) ? selectedBodyPart : null, // 선택된 운동 부위 설정
                       items: bodyParts.map((part) => DropdownMenuItem(
                         value: part,
                         child: Text(
                           part,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -559,7 +618,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 부위',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -573,12 +632,13 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     SizedBox(height: 16.0),
                     // 운동 종류 선택 (운동 부위에 따라 필터링된 목록)
                     DropdownButtonFormField<String>(
+                      dropdownColor: Colors.white, // 운동 이름 선택 폼 색상 흰색으로 설정
                       value: filteredExercises.contains(selectedExercise) ? selectedExercise : null, // 선택된 운동 설정
                       items: filteredExercises.map((exerciseName) => DropdownMenuItem(
                         value: exerciseName,
                         child: Text(
                           exerciseName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -607,6 +667,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     SizedBox(height: 16.0),
                     // 운동 시간 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white, // 운동 시간 선택 폼 색상 흰색으로 설정
                       value: secondsOptions.contains(exercises[index]['time']) ? exercises[index]['time'] : null, // 선택된 시간 설정
                       items: secondsOptions.map((seconds) => DropdownMenuItem(
                         value: seconds,
@@ -642,6 +703,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
                     // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white, // 세트 당 운동횟수 선택 폼 색상 흰색으로 설정
                       value: repsOptions.contains(exercises[index]['reps']) ? exercises[index]['reps'] : null, // 선택된 세트 당 운동 횟수 설정
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
@@ -673,8 +735,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       hint: Text('세트 당 운동횟수를 선택하세요'), // 힌트 텍스트 추가
                     ),
                     SizedBox(height: 16.0),
-
+                    // 세트 수 선택 드롭다운 폼
                     DropdownButtonFormField<int>(
+                      dropdownColor: Colors.white, // 세트 수 선택 폼 색상 흰색으로 설정
                       value: setOptions.contains(exercises[index]['sets']) ? exercises[index]['sets'] : null, // 선택된 세트 수 설정
                       items: setOptions.map((sets) => DropdownMenuItem(
                         value: sets,

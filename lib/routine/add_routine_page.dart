@@ -123,6 +123,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<String>(
+                dropdownColor: Colors.white, // 운동 부위 선택 드롭다운 폼 색상 흰색으로 설정
                 items: exercises
                     .map((exercise) => exercise['bodyPart'])
                     .where((bodyPart) => bodyPart is String) //유효한 문자열 필터링
@@ -171,6 +172,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<Map<String, dynamic>>(
+                dropdownColor: Colors.white, // 운동 이름 선택 드롭다운 폼 색상 흰색으로 설정
                 value: selectedExercise,
                 items: filteredExercises.map((exercise) {
                   return DropdownMenuItem<Map<String, dynamic>>(
@@ -213,6 +215,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<int>(
+                dropdownColor: Colors.white, // 운동 시간 선택 드롭다운 폼 색상 흰색으로 설정
                 value: selectedTime,
                 items: secondsOptions.map((seconds) => DropdownMenuItem(
                   value: seconds, // 각 시간 값을 드롭다운 항목으로 설정
@@ -253,6 +256,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<int>(
+                dropdownColor: Colors.white, // 세트 당 운동횟수 선택 폼 드롭다운 색상 흰색으로 설정
                 value: selectedReps,
                 items: repsOptions.map((reps)  => DropdownMenuItem(
                   value: reps, // 각 세트 당 운동횟수 값을 드롭다운 항목으로 설정
@@ -293,12 +297,13 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: DropdownButtonFormField<int>(
+                dropdownColor: Colors.white, // 세트 수 선택 드롭다운 폼 색상 흰색으로 설정
                 value: selectedSets,
                 items: setOptions.map((sets) => DropdownMenuItem(
                   value: sets, // 각 세트 수 값을 드롭다운 항목으로 설정
                   child: Text(
                     '$sets 세트', // 세트 수 표시
-                    style: TextStyle(
+                    style:  TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontWeight: FontWeight.w600, // 글자 두께 설정
                       fontSize: 16.0, // 글자 크기 설정

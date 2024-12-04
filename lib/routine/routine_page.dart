@@ -142,7 +142,7 @@ class _RoutinePageState extends State<RoutinePage> {
       ),
       // 본문 영역을 정의
       body: routines.isEmpty
-          ? Center(
+          ? const Center(
         // 루틴이 없을 경우 표시할 내용
         child: Text(
           '등록된 루틴이 없습니다.',
@@ -170,10 +170,15 @@ class _RoutinePageState extends State<RoutinePage> {
                 _goToRoutineDetailPage(index); // 루틴을 탭하면 상세 페이지로 이동
               },
               child: Card(
+                color: Colors.white, // 추가된 루틴 폼 배경 색상 흰색으로 설정
                 elevation: 4.0, // 그림자 효과를 추가
                 margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0), // 카드의 모서리를 둥글게 설정
+                  side: const BorderSide(
+                    color: Colors.black, // 테두리 색상을 검정색으로 설정
+                    width: 1.0, // 테두리 두께 설정
+                  ),
                 ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(16.0), // 콘텐츠의 여백을 설정
@@ -194,10 +199,10 @@ class _RoutinePageState extends State<RoutinePage> {
                   ),
                   // 오른쪽에 삭제 아이콘 버튼 추가
                   trailing:  IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                     color: Colors.black,
                     onPressed: () {
-                      _removeRoutine(index); // 삭제 함수 호출
+                      _showDeleteRoutineDialog(index); // 삭제 함수 호출
                     },
                   ),
                 ),
@@ -215,6 +220,67 @@ class _RoutinePageState extends State<RoutinePage> {
           color: Colors.white, // 아이콘 색상 설정
         ),
       ),
+    );
+  }
+
+  // 운동 삭제 확인 다이얼로그를 보여주는 함수
+  void _showDeleteRoutineDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          elevation: 4.0, // 그림자 효과 추가
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
+              side: BorderSide(
+                color: Colors.black,  // 테두리 색 검정으로 설정
+                width: 1.0,
+              )
+          ),
+          backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
+          title: Text('삭제 확인',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+            ),
+          ), // 대화 상자 제목
+          content: Text('정말 삭제하시겠습니까?',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 16.0,
+            ),
+          ), // 대화 상자 내용
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 대화 상자 닫기
+              },
+              child: Text('취소',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Roboto',
+                    fontSize: 14.0
+                ),
+              ), // 취소 버튼
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _removeRoutine(index); // 삭제 함수 호출
+                });
+                Navigator.of(context).pop(); // 대화 상자 닫기
+              },
+              child: Text('삭제',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Roboto',
+                    fontSize: 14.0
+                ),), // 삭제 버튼
+            ),
+          ],
+        );
+      },
     );
   }
 }
