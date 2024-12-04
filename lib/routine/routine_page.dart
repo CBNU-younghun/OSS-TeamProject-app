@@ -202,7 +202,7 @@ class _RoutinePageState extends State<RoutinePage> {
                     icon: const Icon(Icons.delete),
                     color: Colors.black,
                     onPressed: () {
-                      _showDeleteRoutineDialog(index); // 삭제 함수 호출
+                      _showDeleteRoutineDialog(index); // 삭제 확인 다이얼로그 출력
                     },
                   ),
                 ),
@@ -223,7 +223,7 @@ class _RoutinePageState extends State<RoutinePage> {
     );
   }
 
-  // 운동 삭제 확인 다이얼로그를 보여주는 함수
+  // 루틴 삭제 확인 다이얼로그를 보여주는 함수
   void _showDeleteRoutineDialog(int index) {
     showDialog(
       context: context,
