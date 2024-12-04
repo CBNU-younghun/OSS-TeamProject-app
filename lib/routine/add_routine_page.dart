@@ -119,9 +119,9 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(16.0),
+                color: Colors.white,
               ),
+              width: double.infinity,
               child: DropdownButtonFormField<String>(
                 dropdownColor: Colors.white, // 운동 부위 선택 드롭다운 폼 색상 흰색으로 설정
                 items: exercises
@@ -141,6 +141,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                   ),
                 ))
                     .toList(),
+                hint: Text('운동 부위 선택'),
                 onChanged: (value) {
                   setState(() {
                     filteredExercises = exercises
@@ -158,7 +159,9 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     fontSize: 16.0,
                     color: Colors.black87,
                   ),
-                  border: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
                 ),
               ),
             ),
