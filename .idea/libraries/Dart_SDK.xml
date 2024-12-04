@@ -2,6 +2,7 @@
   <library name="Dart SDK">
     <CLASSES>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <root url="file://$PROJECT_DIR$/../Downloads/flutter/bin/cache/dart-sdk/lib/async" />
       <root url="file://$PROJECT_DIR$/../Downloads/flutter/bin/cache/dart-sdk/lib/cli" />
       <root url="file://$PROJECT_DIR$/../Downloads/flutter/bin/cache/dart-sdk/lib/collection" />
@@ -46,6 +47,29 @@
       <root url="file://$PROJECT_DIR$/../../../../../Flutter-Dev/flutter_windows_3.24.5-stable/flutter/bin/cache/dart-sdk/lib/web_audio" />
       <root url="file://$PROJECT_DIR$/../../../../../Flutter-Dev/flutter_windows_3.24.5-stable/flutter/bin/cache/dart-sdk/lib/web_gl" />
 >>>>>>> fa17a196bd972f0017da8bbd25e0678d26e3f7db
+=======
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/async" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/cli" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/collection" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/convert" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/core" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/developer" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/ffi" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/html" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/indexed_db" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/io" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/isolate" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/js" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/js_interop" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/js_interop_unsafe" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/js_util" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/math" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/mirrors" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/svg" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/typed_data" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/web_audio" />
+      <root url="file://$USER_HOME$/Desktop/FLUTTER/flutter_windows_3.24.4-stable/flutter/bin/cache/dart-sdk/lib/web_gl" />
+>>>>>>> bbe151bbf11b043b2e0a91a84b005bede360d7f3
     </CLASSES>
     <JAVADOC />
     <SOURCES />
