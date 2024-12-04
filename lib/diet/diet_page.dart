@@ -193,7 +193,7 @@ class _DietPageState extends State<DietPage> {
           content: Text('해당 식단을 삭제하시겠습니까?'),
           actions: [
             TextButton(
-              child: Text('취소'),
+              child: Text('취소', style: TextStyle(color: Colors.black)),
               onPressed: () {
                 Navigator.of(context).pop(); // 다이얼로그 닫기
               },
