@@ -466,8 +466,8 @@ class _DietDetailPageState extends State<DietDetailPage> {
         iconTheme: IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정
         actions: [
           IconButton(
-            icon: Icon(Icons.add, color: Colors.black), // '+' 아이콘 추가
-            onPressed: _showAddFoodForm, // 아이콘 클릭 시 음식 추가 폼 표시
+            icon: Icon(Icons.delete, color: Colors.black), // 쓰레기통 아이콘 추가
+            onPressed: _deleteDiet, // 아이콘 클릭 시 삭제 함수 호출
           ),
         ],
       ),
@@ -497,9 +497,9 @@ class _DietDetailPageState extends State<DietDetailPage> {
                     alignment: BarChartAlignment.spaceAround, // 막대 간 간격을 일정하게 설정
                     maxY: (_getMaxNutrientValue() * 1.2).ceilToDouble(), // 최대값 동적 설정
                     barGroups: [
-                      _makeVerticalBarGroup(0, _getTotalNutrient('carbs'), Colors.greenAccent),
-                      _makeVerticalBarGroup(1, _getTotalNutrient('protein'), Colors.orangeAccent),
-                      _makeVerticalBarGroup(2, _getTotalNutrient('fat'), Colors.redAccent),
+                      _makeVerticalBarGroup(0, _getTotalNutrient('carbs'), Colors.blue),
+                      _makeVerticalBarGroup(1, _getTotalNutrient('protein'),Color(0xFF87CEEB),),
+                      _makeVerticalBarGroup(2, _getTotalNutrient('fat'),  Color(0xFFE6E6FA),),
                     ],
                     titlesData: FlTitlesData(
                       topTitles: AxisTitles(
@@ -571,9 +571,9 @@ class _DietDetailPageState extends State<DietDetailPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildLegendItem(Colors.greenAccent, '탄수화물'),
-                  _buildLegendItem(Colors.orangeAccent, '단백질'),
-                  _buildLegendItem(Colors.redAccent, '지방'),
+                  _buildLegendItem(Colors.blue, '탄수화물'),
+                  _buildLegendItem(Color(0xFF87CEEB), '단백질'),
+                  _buildLegendItem(Color(0xFFE6E6FA), '지방'),
                 ],
               ),
               SizedBox(height: 32.0),
@@ -611,10 +611,10 @@ class _DietDetailPageState extends State<DietDetailPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween, // 버튼 간격 설정
               children: [
-                // 삭제 버튼 (왼쪽)
+                // 음식 추가 버튼 (왼쪽)
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: _deleteDiet, // 식단 삭제 함수 호출
+                    onPressed: _showAddFoodForm, // 음식 추가 폼 호출
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green, // 버튼 배경색
                       elevation: 4.0, // 버튼 그림자 깊이
@@ -624,7 +624,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
                       padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 수직 패딩 설정
                     ),
                     child: Text(
-                      '삭제',
+                      '음식 추가',
                       style: TextStyle(
                         fontFamily: 'Bebas Neue',
                         fontSize: 20.0,
@@ -634,7 +634,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 16.0), // 삭제와 저장 버튼 간의 간격
+                SizedBox(width: 16.0), // 음식 추가와 저장 버튼 간의 간격
                 // 저장 버튼 (오른쪽)
                 Expanded(
                   child: ElevatedButton(
@@ -660,7 +660,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
                 ),
               ],
             ),
-            SizedBox(height: 32.0), // 버튼 아래에 추가적인 간격
+
           ],
         ),
       ),
