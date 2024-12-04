@@ -118,7 +118,6 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
             SizedBox(height: 16.0),
             // 운동 부위 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -170,7 +169,6 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
 
             // 운동 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -216,7 +214,6 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
 
             // 운동 시간 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -260,7 +257,6 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
 
             // 세트당 운동횟수 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -304,7 +300,6 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
 
             // 세트 수 선택 필드
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
