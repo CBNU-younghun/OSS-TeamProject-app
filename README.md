@@ -19,8 +19,8 @@ App은 사용자의 건강 데이터를 기록하고 분석합니다. 이 앱은
  - Flutter SDK를 설치합니다: [Flutter 설치 가이드](https://flutter.dev/docs/get-started)
 2. 레포지토리 복제
    ```bash
-   git clone https://github.com/username/myhealthapp.git
-   cd myhealthapp
+   git clone https://CBNU-younghun@github.com/CBNU-younghun/OSS-TeamProject-app.git
+   cd OSS-TeamProject-app
    
 # 기능
 - 사용자 데이터 입력: 나이, 키, 체중 저장
