@@ -391,6 +391,14 @@ class _DietPageState extends State<DietPage> {
                       color: Colors.black54, // 글자 색상 설정
                     ),
                   ),
+                  // 삭제 버튼 추가
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: Colors.black, // 삭제 아이콘 색상
+                    onPressed: () {
+                      _showDeleteConfirmationDialog(index); // 삭제 확인 다이얼로그 호출
+                    },
+                  ),
                 ),
               ),
             );
