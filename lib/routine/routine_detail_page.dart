@@ -541,7 +541,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
               },
               child: Text('삭제',
                 style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.red,
                     fontFamily: 'Roboto',
                     fontSize: 14.0
                 ),), // 삭제 버튼
