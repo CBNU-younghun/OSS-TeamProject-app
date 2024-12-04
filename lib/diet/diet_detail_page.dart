@@ -607,47 +607,60 @@ class _DietDetailPageState extends State<DietDetailPage> {
               }).toList(),
             ],
             SizedBox(height: 32.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _saveDiet, // 저장 버튼 클릭 시 식단 저장 함수 호출
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // 버튼 배경색 설정
-                elevation: 4.0, // 버튼 그림자 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+            // 삭제 및 저장 버튼을 같은 줄에 배치 (왼쪽 음식 추가, 오른쪽 저장)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // 버튼 간격 설정
+              children: [
+                // 삭제 버튼 (왼쪽)
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _deleteDiet, // 식단 삭제 함수 호출
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green, // 버튼 배경색
+                      elevation: 4.0, // 버튼 그림자 깊이
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 수직 패딩 설정
+                    ),
+                    child: Text(
+                      '삭제',
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue',
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // 텍스트 색상
+                      ),
+                    ),
+                  ),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '저장', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상 설정
+                SizedBox(width: 16.0), // 삭제와 저장 버튼 간의 간격
+                // 저장 버튼 (오른쪽)
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _saveDiet, // 식단 저장 함수 호출
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, // 버튼 배경색
+                      elevation: 4.0, // 버튼 그림자 깊이
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 수직 패딩 설정
+                    ),
+                    child: Text(
+                      '저장',
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue',
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // 텍스트 색상
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-            SizedBox(height: 16.0), // 간격 추가
-            ElevatedButton(
-              onPressed: _deleteDiet, // 삭제 버튼 클릭 시 식단 삭제 함수 호출
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey, // 버튼 배경색 설정
-                elevation: 4.0, // 버튼 그림자 설정
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
-              ),
-              child: Text(
-                '삭제', // 버튼 텍스트
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트 설정
-                  fontSize: 20.0, // 폰트 크기 설정
-                  fontWeight: FontWeight.bold, // 폰트 두께 설정
-                  color: Colors.white, // 텍스트 색상 설정
-                ),
-              ),
-            ),
+            SizedBox(height: 32.0), // 버튼 아래에 추가적인 간격
           ],
         ),
       ),
