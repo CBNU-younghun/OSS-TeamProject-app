@@ -64,7 +64,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     } else {
       // 유효하지 않은 입력 처리
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('올바른 정보를 입력해주세요.')), // 오류 메시지 표시
+        const SnackBar(content: Text('올바른 정보를 입력해주세요.')), // 오류 메시지 표시
       );
     }
   }
@@ -89,7 +89,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white, // 앱바 배경색 설정
-        title: Text(
+        title: const Text(
           '루틴 상세', // 앱바 제목
           style: TextStyle(
             fontFamily: 'Bebas Neue', // 폰트 설정
@@ -97,7 +97,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
             fontWeight: FontWeight.w900, // 글자 두께 설정
           ),
         ),
-        iconTheme: IconThemeData(color: Colors.black), // 아이콘 색상 설정
+        iconTheme: const IconThemeData(color: Colors.black), // 아이콘 색상 설정
         actions: [
           // 루틴을 삭제하는 아이콘 버튼 추가
           IconButton(
@@ -110,7 +110,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0), // 전체 패딩 설정
+        padding: const EdgeInsets.all(16.0), // 전체 패딩 설정
         child: ListView(
           children: [
             _buildTextField(
@@ -118,9 +118,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
               label: '루틴 이름', // 텍스트 필드 라벨
               hintText: '루틴 이름을 입력하세요', // 텍스트 필드 힌트
             ),
-            SizedBox(height: 16.0), // 간격 추가
+            const SizedBox(height: 16.0), // 간격 추가
             if (exercises.isNotEmpty) ...[
-              Text(
+              const Text(
                 '추가된 운동 목록:', // 운동 목록 제목
                 style: TextStyle(
                   fontFamily: 'Roboto', // 폰트 설정
@@ -129,7 +129,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                   color: Colors.black, // 글자 색상 설정
                 ),
               ),
-              SizedBox(height: 8.0), // 간격 추가
+              const SizedBox(height: 8.0), // 간격 추가
               // 운동 목록을 리스트 형태로 표시
               ...exercises.asMap().entries.map((entry) {
                 int index = entry.key; // 운동의 인덱스
@@ -137,21 +137,21 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 return ListTile(
                   title: Text(
                     '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회 X ${exercise['sets']}세트', // 운동 정보 표시
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
                       color: Colors.black87, // 글자 색상 설정
                     ),
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
+                    icon: const Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
                     onPressed: () => _showEditExerciseOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
                   ),
                 );
               }).toList(),
             ],
 
-            SizedBox(height: 32.0), // 간격 추가
+            const SizedBox(height: 32.0), // 간격 추가
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -164,9 +164,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0), // 둥근 모서리
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩
+                    padding: const EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩
                   ),
-                  child: Text(
+                  child: const Text(
                 '운동 추가', // 버튼 텍스트
                 style: TextStyle(
                   fontFamily: 'Bebas Neue', // 폰트
@@ -178,7 +178,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
             ),
               ),
 
-            SizedBox(width: 16.0), // 간격 추가
+            const SizedBox(width: 16.0), // 간격 추가
               Expanded(
                 child: ElevatedButton(
                   onPressed: _saveRoutine, // 저장 버튼 클릭 시 루틴 저장
@@ -188,9 +188,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
+                    padding: const EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
                   ),
-                  child: Text(
+                  child: const Text(
                     '저장', // 버튼 텍스트
                     style: TextStyle(
                       fontFamily: 'Bebas Neue',
@@ -203,7 +203,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
               ),
             ],
             ),
-            SizedBox(height: 16.0), // 간격 추가
+            const SizedBox(height: 16.0), // 간격 추가
           ],
         ),
       ),
@@ -241,7 +241,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: part,
                         child: Text(
                           part,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -260,7 +260,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 부위',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -270,7 +270,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
 
                     // 운동 이름 선택
                     DropdownButtonFormField<String>(
@@ -280,7 +280,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: exerciseName,
                         child: Text(
                           exerciseName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -294,7 +294,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 이름',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -304,7 +304,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
 
                     // 운동 시간 선택
                     DropdownButtonFormField<int>(
@@ -313,7 +313,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       items: secondsOptions.map((seconds) => DropdownMenuItem(
                         value: seconds,
                         child: Text('$seconds 초',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -327,7 +327,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 시간 (초)',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -337,7 +337,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
 
                     // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
@@ -346,7 +346,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       items: repsOptions.map((reps) => DropdownMenuItem(
                         value: reps,
                         child: Text('$reps 회',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -360,7 +360,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '세트 당 운동 횟수',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -370,7 +370,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
 
                     // 세트 수 선택
                     DropdownButtonFormField<int>(
@@ -379,7 +379,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       items: setOptions.map((sets) => DropdownMenuItem(
                         value: sets,
                         child: Text('$sets 세트',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -393,7 +393,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '세트 수',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -403,7 +403,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 32.0),
+                    const SizedBox(height: 32.0),
 
                     ElevatedButton(
                       onPressed: () {
@@ -424,7 +424,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           Navigator.pop(context); // 모달 닫기
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('모든 정보를 입력해주세요.')),
+                            const SnackBar(content: Text('모든 정보를 입력해주세요.')),
                           );
                         }
                       },
@@ -434,9 +434,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
                       ),
-                      child: Text(
+                      child: const Text(
                         '추가',
                         style: TextStyle(
                           fontFamily: 'Bebas Neue',
@@ -464,21 +464,21 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
       context: context,
       builder: (context) {
         return Container(
-          padding: EdgeInsets.all(16.0), // 패딩 설정
+          padding: const EdgeInsets.all(16.0), // 패딩 설정
           child: Column(
             mainAxisSize: MainAxisSize.min, // 최소 크기 설정
             children: [
               ListTile(
-                leading: Icon(Icons.edit, color: Colors.black), // 수정 아이콘
-                title: Text('운동 수정'), // 수정 옵션 제목
+                leading: const Icon(Icons.edit, color: Colors.black), // 수정 아이콘
+                title: const Text('운동 수정'), // 수정 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
                   _showEditExerciseForm(index); // 운동 수정 폼 표시
                 },
               ),
               ListTile(
-                leading: Icon(Icons.delete, color: Colors.black), // 삭제 아이콘
-                title: Text('운동 삭제'), // 삭제 옵션 제목
+                leading: const Icon(Icons.delete, color: Colors.black), // 삭제 아이콘
+                title: const Text('운동 삭제'), // 삭제 옵션 제목
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
                   _showDeleteConfirmationDialog(index); // 삭제 확인 다이얼로그 표시
@@ -498,14 +498,14 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
-          title: Text('삭제 확인'), // 대화 상자 제목
-          content: Text('정말 삭제하시겠습니까?'), // 대화 상자 내용
+          title: const Text('삭제 확인'), // 대화 상자 제목
+          content: const Text('정말 삭제하시겠습니까?'), // 대화 상자 내용
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('취소',
+              child: const Text('취소',
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Roboto',
@@ -519,7 +519,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 });
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('삭제',
+              child: const Text('삭제',
                 style: TextStyle(
                     color: Colors.red,
                     fontFamily: 'Roboto'
@@ -541,20 +541,20 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
           elevation: 4.0, // 그림자 효과 추가
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
-              side: BorderSide(
+              side: const BorderSide(
                 color: Colors.black,  // 테두리 색 검정으로 설정
                 width: 1.0,
               )
           ),
           backgroundColor: Colors.white, // 삭제 확인 다이얼로그 배경 색상 흰색으로 설정
-          title: Text('삭제 확인',
+          title: const Text('삭제 확인',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w600,
               fontSize: 20.0,
             ),
           ), // 대화 상자 제목
-          content: Text('정말 삭제하시겠습니까?',
+          content: const Text('정말 삭제하시겠습니까?',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 16.0,
@@ -565,7 +565,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
               onPressed: () {
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('취소',
+              child: const Text('취소',
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: 'Roboto',
@@ -581,7 +581,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 );
                 Navigator.of(context).pop(); // 대화 상자 닫기
               },
-              child: Text('삭제',
+              child: const Text('삭제',
                 style: TextStyle(
                     color: Colors.red,
                     fontFamily: 'Roboto',
@@ -668,9 +668,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: Text('운동 부위를 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('운동 부위를 선택하세요'), // 힌트 텍스트 추가
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     // 운동 종류 선택 (운동 부위에 따라 필터링된 목록)
                     DropdownButtonFormField<String>(
                       dropdownColor: Colors.white, // 운동 이름 선택 폼 색상 흰색으로 설정
@@ -694,7 +694,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '운동 이름',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -703,9 +703,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: Text('운동을 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('운동을 선택하세요'), // 힌트 텍스트 추가
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     // 운동 시간 선택
                     DropdownButtonFormField<int>(
                       dropdownColor: Colors.white, // 운동 시간 선택 폼 색상 흰색으로 설정
@@ -714,7 +714,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: seconds,
                         child: Text(
                           '$seconds 초',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -728,7 +728,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '시간 (초)',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -737,9 +737,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: Text('시간을 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('시간을 선택하세요'), // 힌트 텍스트 추가
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     // 세트 수 선택
 
                     // 세트 당 운동 횟수 선택
@@ -750,7 +750,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: reps,
                         child: Text(
                           '$reps 회',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -764,7 +764,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '세트 당 운동 횟수',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -773,9 +773,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: Text('세트 당 운동횟수를 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('세트 당 운동횟수를 선택하세요'), // 힌트 텍스트 추가
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     // 세트 수 선택 드롭다운 폼
                     DropdownButtonFormField<int>(
                       dropdownColor: Colors.white, // 세트 수 선택 폼 색상 흰색으로 설정
@@ -784,7 +784,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         value: sets,
                         child: Text(
                           '$sets 세트',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -798,7 +798,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       },
                       decoration: InputDecoration(
                         labelText: '세트 수',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
                           fontSize: 16.0,
@@ -807,9 +807,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
                     ),
-                    SizedBox(height: 32.0),
+                    const SizedBox(height: 32.0),
                     ElevatedButton(
                       onPressed: () {
                         if (selectedBodyPart != null &&
@@ -829,7 +829,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           Navigator.pop(context); // 모달 닫기
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('올바른 정보를 입력해주세요.')), // 유효하지 않은 입력 시 스낵바 표시
+                            const SnackBar(content: Text('올바른 정보를 입력해주세요.')), // 유효하지 않은 입력 시 스낵바 표시
                           );
                         }
                       },
@@ -839,9 +839,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0), // 버튼 모서리 둥글게 설정
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
+                        padding: const EdgeInsets.symmetric(vertical: 16.0), // 버튼 패딩 설정
                       ),
-                      child: Text(
+                      child: const Text(
                         '저장', // 버튼 텍스트
                         style: TextStyle(
                           fontFamily: 'Bebas Neue', // 폰트 설정
@@ -870,7 +870,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
     Function(String)? onChanged, // 입력 변경 시 호출되는 함수
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
+      padding: const EdgeInsets.symmetric(horizontal: 12.0), // 컨테이너 패딩 설정
       decoration: BoxDecoration(
         color: Colors.grey[100], // 배경색 설정
         borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
@@ -879,7 +879,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
         controller: controller, // 텍스트 컨트롤러 연결
         decoration: InputDecoration(
           labelText: label, // 라벨 텍스트 설정
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontFamily: 'Roboto', // 폰트 설정
             fontWeight: FontWeight.w600, // 글자 두께 설정
             fontSize: 16.0, // 글자 크기 설정

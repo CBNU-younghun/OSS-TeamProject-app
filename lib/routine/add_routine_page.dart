@@ -436,7 +436,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
     TextInputType keyboardType = TextInputType.text, // 키보드 타입 설정
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0), // 패딩 설정
+      padding: const EdgeInsets.symmetric(horizontal: 12.0), // 패딩 설정
       decoration: BoxDecoration(
         color: Colors.grey[100], // 배경색 설정
         borderRadius: BorderRadius.circular(16.0), // 모서리 둥글게 설정
@@ -445,7 +445,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
         controller: controller, // 컨트롤러 연결
         decoration: InputDecoration(
           labelText: label, // 라벨 텍스트 설정
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontFamily: 'Roboto', // 폰트 설정
             fontWeight: FontWeight.w600, // 글자 두께 설정
             fontSize: 16.0, // 글자 크기 설정
