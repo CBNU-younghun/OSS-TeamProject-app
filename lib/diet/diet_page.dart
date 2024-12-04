@@ -306,9 +306,11 @@ class _DietPageState extends State<DietPage> {
               onTap: () {
                 _goToDietDetailPage(index); // 식단을 탭하면 상세 페이지로 이동함
               },
+
               onLongPress: () {
-                _showDeleteConfirmationDialog(index); // 식단 삭제 확인 다이얼로그 표시
+                _showDietOptions(index); // 식단 옵션 메뉴 표시
               },
+
               child: Card(
                 color: Colors.white, // 카드 배경색을 흰색으로 설정
                 elevation: 4.0, // 카드 그림자 높이 설정
