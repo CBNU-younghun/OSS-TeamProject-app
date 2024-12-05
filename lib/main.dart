@@ -8,15 +8,28 @@ import 'exercise/exercise_info_page.dart'; // 운동 정보 페이지 임포트
 import 'user_info_page.dart'; // 사용자 정보 페이지 임포트
 import 'splash_screen.dart'; // 스플래시 스크린 임포트
 
+// 이스터에그 관련 import 추가
+import 'package:provider/provider.dart'; // Provider 패키지 임포트
+import 'providers/CrabAnimationProvider.dart'; // CrabAnimationProvider 임포트
+import 'utils/CrabAnimation.dart'; // CrabAnimation 위젯 임포트
+
+
 // 앱의 시작점
 void main() {
-  runApp(HealthManagementApp()); // HealthManagementApp 위젯 실행
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => CrabAnimationProvider(),
+      child: HealthManagementApp(),
+    ),
+  ); // HealthManagementApp 위젯 실행
 }
+
 
 // 건강 관리 앱의 메인 클래스
 class HealthManagementApp extends StatelessWidget {
   final Color backgroundColor = Colors.white; // 앱의 배경색 설정
   final Color accentColor = Colors.blue; // 강조 색상 설정
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +43,24 @@ class HealthManagementApp extends StatelessWidget {
       themeMode: ThemeMode.light, // 항상 라이트 모드 사용
       home: SplashScreen(), // 앱 시작 시 SplashScreen 위젯 표시
       debugShowCheckedModeBanner: false, // 디버그 배너 숨김
+
+      // 이스터에그 관련 builder 추가
+      builder: (context, child) {
+        return Stack(
+          children: [
+            child!,
+            Consumer<CrabAnimationProvider>(
+              builder: (context, provider, _) {
+                return provider.isCrabVisible
+                    ? Positioned.fill(
+                  child: CrabAnimation(),
+                )
+                    : SizedBox.shrink();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -2,7 +2,10 @@
 import 'dart:convert'; // JSON 데이터를 인코딩 및 디코딩하기 위해 사용됨
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지임
 import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하거나 시스템과의 상호작용을 위해 사용됨
+import 'package:oss_team_project_app/providers/CrabAnimationProvider.dart';
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위해 import 추가
+import 'package:oss_team_project_app/utils/CrabAnimation.dart';
+import 'package:provider/provider.dart';
 
 
 // ExerciseInfoPage는 운동 정보를 표시하고, 사용자가 운동을 선택하여 상세 정보를 확인할 수 있는 화면이다
@@ -35,6 +38,16 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
 
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
   List<Map<String, dynamic>> get filteredCategory {
+
+    if (searchQuery.toLowerCase() == "대게먹고싶다") {    //이스터에그
+      return [
+        {
+          'name': '대게먹고싶다',
+          'englishName': 'Want to eat crab'
+        }
+      ];
+    }
+
     if (selectedBodyPart == null) {
       if (searchQuery.isNotEmpty) {
         return exercises.where((exercise) {
@@ -269,14 +282,21 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                             ),
                           ],
                         ),
+                        // onTap 부분 수정
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => _ExerciseDetailPage(exercise: exercise),
-                              fullscreenDialog: true, // 전체 화면 다이얼로그로 표시함
-                            ),
-                          );
+                          if (exercise['name'] == '대게먹고싶다') {
+                            // 프로바이더를 통해 게 애니메이션을 표시
+                            Provider.of<CrabAnimationProvider>(context, listen: false).showCrab();
+
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => _ExerciseDetailPage(exercise: exercise),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          }
                         },
                       ),
                     );
