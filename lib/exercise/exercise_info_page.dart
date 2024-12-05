@@ -75,12 +75,6 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
               color: Colors.black, // 폰트 색상 설정
             ),
           ),
-          shape: const Border(
-            bottom: BorderSide(
-              color: Color(0xFFEFEFEF),
-              width: 1,
-            ),
-          ), // header border setting
           backgroundColor: Colors.white, // 앱바 배경색을 흰색으로 설정함
           iconTheme: const IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정함
           actions: [
