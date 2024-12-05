@@ -287,10 +287,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                           if (exercise['name'] == '대게먹고싶다') {
                             // 프로바이더를 통해 게 애니메이션을 표시
                             Provider.of<CrabAnimationProvider>(context, listen: false).showCrab();
-                            // 알림 메시지 등 추가 가능
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('게 애니메이션이 시작되었습니다!')),
-                            );
+
                           } else {
                             Navigator.push(
                               context,

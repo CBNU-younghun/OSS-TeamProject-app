@@ -1,6 +1,5 @@
-// utils/CrabAnimation.dart
-
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class CrabAnimation extends StatefulWidget {
@@ -12,6 +11,7 @@ class _CrabAnimationState extends State<CrabAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
+
   List<String> crabImages = [
     'assets/ester egg/crab1.png',
     'assets/ester egg/crab2.png',
@@ -22,44 +22,65 @@ class _CrabAnimationState extends State<CrabAnimation>
   int _currentImageIndex = 0;
   Timer? _timer;
 
+  final Random _random = Random();
+
   @override
   void initState() {
     super.initState();
 
-    // 게가 앱의 가장자리를 따라 이동하도록 위치 설정
-    List<Offset> positions = [
-      Offset(-0.1, 0.0),  // 왼쪽 중간
-      Offset(1.0, 0.0),   // 오른쪽 중간
-      Offset(1.0, 1.0),   // 오른쪽 아래
-      Offset(0.0, 1.0),   // 왼쪽 아래
-      Offset(0.0, -0.1),  // 왼쪽 위
-      Offset(-0.1, 0.0),  // 왼쪽 중간 (초기 위치)
-    ];
-
     _controller = AnimationController(
-      duration: Duration(seconds: 20),
+      duration: Duration(seconds: 5),
       vsync: this,
     );
 
-    _animation = TweenSequence<Offset>([
-      for (int i = 0; i < positions.length - 1; i++)
-        TweenSequenceItem(
-          tween: Tween<Offset>(
-            begin: positions[i],
-            end: positions[i + 1],
-          ).chain(CurveTween(curve: Curves.linear)),
-          weight: 1,
-        ),
-    ]).animate(_controller);
+    _animation = Tween<Offset>(
+      begin: Offset(0.0, 0.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
 
-    _controller.repeat();
+    // 초기 애니메이션 설정
+    _setRandomAnimation();
 
-    // 이미지 변경을 위한 타이머 설정
+    // 애니메이션이 완료되면 새로운 랜덤 위치로 이동
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _setRandomAnimation();
+      }
+    });
+
+    // 이미지 변경 타이머 설정
     _timer = Timer.periodic(Duration(milliseconds: 200), (Timer timer) {
       setState(() {
         _currentImageIndex = (_currentImageIndex + 1) % crabImages.length;
       });
     });
+  }
+
+  void _setRandomAnimation() {
+    // 랜덤한 종료 위치 설정
+    double randomX = _random.nextDouble() * 2 - 1; // -1.0 ~ 1.0 사이의 값
+    double randomY = _random.nextDouble() * 2 - 1; // -1.0 ~ 1.0 사이의 값
+
+    setState(() {
+      _animation = Tween<Offset>(
+        begin: _animation.value,
+        end: Offset(randomX, randomY),
+      ).animate(
+        CurvedAnimation(
+          parent: _controller,
+          curve: Curves.easeInOut,
+        ),
+      );
+    });
+
+    // 애니메이션 시작
+    _controller.reset();
+    _controller.forward();
   }
 
   @override
