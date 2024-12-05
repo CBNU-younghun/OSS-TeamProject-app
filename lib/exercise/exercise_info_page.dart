@@ -153,9 +153,9 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                   ),
                   const SizedBox(width: 2.0),
                   PopupMenuButton<String>(
-                    icon: const Icon(
-                      Icons.filter_alt_outlined,
-                      color: Colors.black,
+                    icon: Icon(
+                      selectedFilter == 'bookmark' ? Icons.filter_alt : Icons.filter_alt_outlined,
+                      color: selectedFilter == 'bookmark' ? Colors.black : Colors.black,
                     ),
                     onSelected: (value) {
                       setState(() {
