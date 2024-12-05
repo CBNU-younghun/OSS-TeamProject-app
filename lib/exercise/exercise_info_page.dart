@@ -474,17 +474,7 @@ class _ExerciseDetailPage extends StatelessWidget {
               const SizedBox(height: 24),
               // 사진
               Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xFFEFEFEF),
-                      width: 1.0,
-                    ),
-                  ),
-                  child: ClipRRect(
-                    child: Image.asset('assets/images/${exercise['imageUrl']}'),
-                  ),
-                ),
+                child: Image.asset('assets/images/${exercise['imageUrl']}'),
               ),
               const SizedBox(height: 30),
               // 3colum
