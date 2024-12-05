@@ -63,7 +63,6 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     return result;
   }
 
-  //t
   void toggleFavorite(Map<String, dynamic> exercise) {
     setState(() {
       if (favoriteExercises.contains(exercise)) {
@@ -345,12 +344,10 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                                         : Icons.star_border,
                                     color: favoriteExercises.contains(exercise)
                                         ? Colors.yellow
-                                        : Colors.black,
+                                        : Colors.grey,
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      exercise['isBookmarked'] = !(exercise['isBookmarked'] ?? false);
-                                    });
+                                    toggleFavorite(exercise);
                                   },
                                 ),
                               ],
