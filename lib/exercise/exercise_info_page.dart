@@ -483,19 +483,19 @@ class _ExerciseDetailPage extends StatelessWidget {
                 children: [
                   const Text("준비", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  ...exercise['preparation'].map<Widget>((prep) => Text("- $prep",style: const TextStyle(fontSize: 16.0))).toList(),
+                  ...exercise['preparation'].map<Widget>((prep) => Text("• $prep",style: const TextStyle(fontSize: 16.0))).toList(),
 
                   const SizedBox(height: 30),
 
                   const Text("실행 방법", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  ...exercise['steps'].map<Widget>((step) => Text("- $step",style: const TextStyle(fontSize: 16.0))).toList(),
+                  ...exercise['steps'].map<Widget>((step) => Text("• $step",style: const TextStyle(fontSize: 16.0))).toList(),
 
                   const SizedBox(height: 30),
 
                   const Text("중요한 포인트", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  ...exercise['keyPoints'].map<Widget>((point) => Text("- $point",style: const TextStyle(fontSize: 16.0))).toList(),
+                  ...exercise['keyPoints'].map<Widget>((point) => Text("• $point",style: const TextStyle(fontSize: 16.0))).toList(),
 
                   const SizedBox(height: 40),
                 ],
