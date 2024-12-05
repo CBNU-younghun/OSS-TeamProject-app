@@ -39,6 +39,11 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
   List<Map<String, dynamic>> get filteredCategory {
     List<Map<String, dynamic>> result = exercises;
+    if (selectedFilter == 'bookmark') {
+      showFavoritesOnly = true;
+    } else {
+      showFavoritesOnly = false;
+    }
     // Bookmark 필터링
     if (showFavoritesOnly) {
       result = result.where((exercise) => favoriteExercises.contains(exercise)).toList();
@@ -58,7 +63,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     return result;
   }
 
-  //Bookmark 상태 관리 로직
+  //t
   void toggleFavorite(Map<String, dynamic> exercise) {
     setState(() {
       if (favoriteExercises.contains(exercise)) {
@@ -332,10 +337,12 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                               children: [
                                 IconButton(
                                   icon: Icon(
-                                    exercise['isBookmarked'] == true
+                                    favoriteExercises.contains(exercise)
                                         ? Icons.star
                                         : Icons.star_border,
-                                    color: exercise['isBookmarked'] == true ? Colors.yellow : Colors.black,
+                                    color: favoriteExercises.contains(exercise)
+                                        ? Colors.yellow
+                                        : Colors.black,
                                   ),
                                   onPressed: () {
                                     setState(() {
