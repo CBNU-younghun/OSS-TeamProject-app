@@ -160,6 +160,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                     onSelected: (value) {
                       setState(() {
                         selectedFilter = value;
+                        showFavoritesOnly = selectedFilter == 'bookmark';
                       });
                     },
                     itemBuilder: (context){
