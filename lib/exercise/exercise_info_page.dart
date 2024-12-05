@@ -38,6 +38,10 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
   List<Map<String, dynamic>> get filteredCategory {
     List<Map<String, dynamic>> result = exercises;
+    // Bookmark 필터링
+    if (showFavoritesOnly) {
+      result = result.where((exercise) => favoriteExercises.contains(exercise)).toList();
+    }
     // 운동 부위 필터링
     if (selectedBodyPart != null) {
       result = result.where((exercise) => exercise['bodyPart'] == selectedBodyPart).toList();
