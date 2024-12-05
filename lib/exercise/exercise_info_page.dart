@@ -63,8 +63,10 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     setState(() {
       if (favoriteExercises.contains(exercise)) {
         favoriteExercises.remove(exercise);
+        exercise['isBookmarked'] = false;
       } else {
         favoriteExercises.add(exercise);
+        exercise['isBookmarked'] = true;
       }
     });
   }
@@ -170,7 +172,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                       PopupMenuItem(
                         child: Row(
                           children: [
-                            if (selectedFilter == 'favorites')
+                            if (selectedFilter == 'bookmark')
                               const Icon(Icons.check, size: 20, color: Colors.black), // チェックマーク
                             const SizedBox(width: 8.0),
                             const Text('Bookmark'),
