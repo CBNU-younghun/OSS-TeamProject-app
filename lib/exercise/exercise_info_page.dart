@@ -16,6 +16,8 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   String? selectedBodyPart; // 현재 선택된 운동 부위를 저장하는 변수이다
   List<Map<String, dynamic>> filteredExercises = []; // 선택된 부위에 해당하는 운동 목록을 저장하는 리스트이다
   String searchQuery = ""; //검색 쿼리(사용자 입력)를 저장하기 위한 변수
+  List<Map<String, dynamic>> favoriteExercises = [];
+  bool showFavoritesOnly = false; // bookmark 필터 상태
 
   // 로컬 JSON 파일에서 운동 데이터를 로드하는 함수이다
   Future<void> _loadExercises() async {
@@ -35,31 +37,21 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
 
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
   List<Map<String, dynamic>> get filteredCategory {
-    if (selectedBodyPart == null) {
-      if (searchQuery.isNotEmpty) {
-        return exercises.where((exercise) {
-          return exercise['name'].toLowerCase().contains(searchQuery)||
-                 exercise['englishName'].toLowerCase().contains(searchQuery)||
-                 exercise['difficulty'].toLowerCase().contains(searchQuery);
-        }).toList();
-      }
-      return exercises;
+    List<Map<String, dynamic>> result = exercises;
+    // 운동 부위 필터링
+    if (selectedBodyPart != null) {
+      result = result.where((exercise) => exercise['bodyPart'] == selectedBodyPart).toList();
     }
-    // 카테고리가 선택되어 있는 경우
-    final categoryFiltered = exercises.where((exercise) {
-      return exercise['bodyPart'] == selectedBodyPart; // 카테고리 필터링
-    }).toList();
-
-    // 검색 쿼리가 입력되어 있는 경우 추가로 압축
+    // 검색 필터링
     if (searchQuery.isNotEmpty) {
-      return categoryFiltered.where((exercise) {
-        return exercise['name'].toLowerCase().contains(searchQuery)||
-               exercise['englishName'].toLowerCase().contains(searchQuery)||
-                exercise['difficulty'].toLowerCase().contains(searchQuery);
+      result = result.where((exercise) {
+        return exercise['name'].toLowerCase().contains(searchQuery) ||
+            exercise['englishName'].toLowerCase().contains(searchQuery) ||
+            exercise['difficulty'].toLowerCase().contains(searchQuery);
       }).toList();
     }
 
-    return categoryFiltered;
+    return result;
   }
 
   @override
@@ -293,7 +285,6 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
 }
 
 // ExerciseDetailPage는 선택된 운동의 상세 정보를 표시하는 페이지이다
-
 class _ExerciseDetailPage extends StatelessWidget {
   final Map<String, dynamic> exercise; // 상세 정보를 표시할 운동 데이터
 
