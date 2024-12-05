@@ -419,7 +419,7 @@
     "name": "런닝",
     "englishName": "Running",
     "bodyPart": "유산소",
-    "effectiveBody": "",
+    "effectiveBody": "유산소",
     "difficulty": "Low Level",
     "caloriesBurned": "400-500 kcal",
     "imageUrl" : "all-body.jpg",
