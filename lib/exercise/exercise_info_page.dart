@@ -18,6 +18,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   String searchQuery = ""; //검색 쿼리(사용자 입력)를 저장하기 위한 변수
   List<Map<String, dynamic>> favoriteExercises = [];
   bool showFavoritesOnly = false; // bookmark 필터 상태
+  String? selectedFilter;
 
   // 로컬 JSON 파일에서 운동 데이터를 로드하는 함수이다
   Future<void> _loadExercises() async {
@@ -113,32 +114,78 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                 right: 20.0,
                 bottom: 0.0,
               ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: "Search",
-                  hintStyle: TextStyle(
-                    color: Colors.black,
-                    //fontSize: 16.0,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                          hintText: "Search",
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            //fontSize: 16.0,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor:  Color(0xFFF4F4F4),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 16.0,
+                          )
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value.toLowerCase();
+                        });
+                      },
                     ),
-                  filled: true,
-                  fillColor:  Color(0xFFF4F4F4),
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 16.0,
-                  )
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value.toLowerCase();
-                  });
-                },
+                  ),
+                  const SizedBox(width: 2.0),
+                  PopupMenuButton<String>(
+                    icon: const Icon(
+                      Icons.filter_alt_outlined,
+                      color: Colors.black,
+                    ),
+                    onSelected: (value) {
+                      setState(() {
+                        selectedFilter = value;
+                      });
+                    },
+                    itemBuilder: (context){
+                      return[
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            if (selectedFilter == 'all')
+                              const Icon(Icons.check, size: 20, color: Colors.black), // チェックマーク
+                            const SizedBox(width: 8.0),
+                            const Text('All Data'),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            if (selectedFilter == 'favorites')
+                              const Icon(Icons.check, size: 20, color: Colors.black), // チェックマーク
+                            const SizedBox(width: 8.0),
+                            const Text('Bookmark'),
+                          ],
+                        ),
+                      ),
+                    ];
+                      },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    color: Colors.white,
+                  ),
+                ],
               ),
             ),
 
