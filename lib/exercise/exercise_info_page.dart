@@ -18,7 +18,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   String searchQuery = ""; //검색 쿼리(사용자 입력)를 저장하기 위한 변수
   List<Map<String, dynamic>> favoriteExercises = [];
   bool showFavoritesOnly = false; // bookmark 필터 상태
-  String? selectedFilter;
+  String? selectedFilter = 'all';
 
   // 로컬 JSON 파일에서 운동 데이터를 로드하는 함수이다
   Future<void> _loadExercises() async {
@@ -166,6 +166,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                     itemBuilder: (context){
                       return[
                       PopupMenuItem(
+                        value: 'all',
                         child: Row(
                           children: [
                             if (selectedFilter == 'all')
@@ -176,6 +177,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                         ),
                       ),
                       PopupMenuItem(
+                        value: 'bookmark',
                         child: Row(
                           children: [
                             if (selectedFilter == 'bookmark')
