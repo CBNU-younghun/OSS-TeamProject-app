@@ -269,6 +269,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
+                      hint: const Text('운동 부위 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
 
@@ -293,7 +294,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         });
                       },
                       decoration: InputDecoration(
-                        labelText: '운동 이름',
+                        labelText: '운동 종류',
                         labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
@@ -303,6 +304,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
+                      hint: const Text('운동 종류 선택'), // 힌특 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
 
@@ -336,6 +338,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
+                      hint: const Text('운동 시간 (초) 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
 
@@ -369,6 +372,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
+                      hint: const Text('세트 당 운동횟수 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
 
@@ -402,6 +406,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
+                      hint: const Text('세트 수 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 32.0),
 
@@ -668,7 +673,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: const Text('운동 부위를 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('운동 부위 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
                     // 운동 종류 선택 (운동 부위에 따라 필터링된 목록)
@@ -693,7 +698,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         });
                       },
                       decoration: InputDecoration(
-                        labelText: '운동 이름',
+                        labelText: '운동 종류',
                         labelStyle: const TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w600,
@@ -703,7 +708,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: const Text('운동을 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('운동 종류 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
                     // 운동 시간 선택
@@ -737,7 +742,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: const Text('시간을 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('운동 시간 (초) 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
                     // 세트 수 선택
@@ -773,7 +778,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: const Text('세트 당 운동횟수를 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('세트 당 운동횟수 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 16.0),
                     // 세트 수 선택 드롭다운 폼
@@ -807,7 +812,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      hint: const Text('세트 수를 선택하세요'), // 힌트 텍스트 추가
+                      hint: const Text('세트 수 선택'), // 힌트 텍스트 추가
                     ),
                     const SizedBox(height: 32.0),
                     ElevatedButton(
