@@ -116,12 +116,12 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                 decoration: const InputDecoration(
                   hintText: "Search",
                   hintStyle: TextStyle(
-                    color: Color(0xFFB9B9BB),
+                    color: Colors.black,
                     //fontSize: 16.0,
                   ),
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Color(0xFFB9B9BB),
+                    color: Colors.black,
                   ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
