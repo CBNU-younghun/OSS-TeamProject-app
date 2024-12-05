@@ -58,6 +58,17 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     return result;
   }
 
+  //Bookmark 상태 관리 로직
+  void toggleFavorite(Map<String, dynamic> exercise) {
+    setState(() {
+      if (favoriteExercises.contains(exercise)) {
+        favoriteExercises.remove(exercise);
+      } else {
+        favoriteExercises.add(exercise);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
