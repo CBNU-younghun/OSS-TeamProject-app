@@ -216,12 +216,12 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                            isSelected ? Colors.blue : const Color(0xFFECEDEE),
-                            minimumSize: const Size(80, 30),
+                            isSelected ? Colors.blue : Colors.white70,
+                            minimumSize: const Size(65, 30),
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(horizontal: 18.0),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(90),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                           onPressed: () {
