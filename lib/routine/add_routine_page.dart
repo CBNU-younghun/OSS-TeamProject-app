@@ -21,6 +21,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
   int? selectedReps; // 세트당 운동횟수
   List<int> repsOptions = List.generate(50, (index) => index + 1); // 세트당 운동횟수 옵션
   List<Map<String, dynamic>> filteredExercises = []; // 선택된 부위에 따라 필터링된 운동 목록
+  String? selectedBodyPart; // 선택된 운동 부위
 
   @override
   void initState() {
@@ -39,15 +40,15 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
   // 운동을 추가하는 함수이다
   void _addExercise() {
     if (selectedExercise != null &&
-        selectedSets != null &&
-        (selectedTime != null || selectedReps != null)) { // 시간 또는 횟수 중 하나만 입력해도 유효
+        selectedSets != null && // 유산소와 무관하게 시간은 항상 필요
+        (selectedBodyPart == '유산소' || (selectedTime != null || selectedReps != null))) { // 시간 또는 횟수 중 하나만 입력해도 유효
       setState(() {
         addedExercises.add({
           'exercise': selectedExercise!['name'], // 운동 이름 추가
           'time': selectedTime ?? 0, // 운동 시간이 null이면 0으로 처리
-          'sets': selectedSets, // 세트 수 추가
+          'sets': selectedBodyPart == '유산소' ? 0 : selectedSets, // 세트 수 추가, 유산소는 세트 0
           'bodyPart': selectedExercise!['bodyPart'], // 운동 부위 추가
-          'reps': selectedReps ?? 0, // 세트당 운동횟수가 null이면 0으로 처리
+          'reps': selectedBodyPart == '유산소' ? 0 : selectedReps ?? 0, // 세트당 운동횟수가 null이면 0으로 처리, 유산소는 0으로 처리
         });
         selectedTime = null; // 선택된 시간 초기화
         selectedSets = null; // 선택된 세트 수 초기화
@@ -146,6 +147,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 hint: const Text('운동 부위 선택'),
                 onChanged: (value) {
                   setState(() {
+                    selectedBodyPart = value; // 선택된 운동 부위 저장
                     filteredExercises = exercises
                         .where((exercise) => exercise['bodyPart'] == value)
                         .map((exercise) => exercise as Map<String,dynamic>)
@@ -256,7 +258,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               ),
             ),
             const SizedBox(height: 16.0),
-
+if(selectedBodyPart != '유산소')...[
             // 세트당 운동횟수 선택 필드
             Container(
               decoration: const BoxDecoration(
@@ -341,6 +343,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 ),
               ),
             ),
+            ],
             const SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween, // 버튼 간격 설정
@@ -409,7 +412,9 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
                 return ListTile(
                   title: Text(
-                    '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회, ${exercise['sets']}세트',// 운동 이름, 시간, 세트 수 표시
+                    exercise['bodyPart'] == '유산소'
+                    ? '${exercise['exercise']} - ${exercise['time']}초' // 운동부위가 유산소일 경우
+                    : '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회, ${exercise['sets']}세트',// 운동 이름, 시간, 세트 수 표시
                     style: const TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
