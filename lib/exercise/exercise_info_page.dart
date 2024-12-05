@@ -55,7 +55,6 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
             exercise['difficulty'].toLowerCase().contains(searchQuery);
       }).toList();
     }
-
     return result;
   }
 
@@ -272,50 +271,78 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                       child: ListTile(
                         contentPadding:
                         const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
-                        title: Column(
+                        title: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // 운동명(타이틀)과 영어명을 세로로 늘어놓다
+                                  Flexible(
+                                    flex: 0,
+                                    child: Text(
+                                      exercise['name'],
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10.0),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      exercise['englishName'],
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.grey,
+                                      ),
+                                      maxLines: 1, // 1行で収める
+                                      overflow: TextOverflow.ellipsis, // 表示しきれない場合は...を表示
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // 난이도와 운동 부위를 세로로 나열합니다
+                                  Text(
+                                    '${exercise['difficulty']}  | ${exercise['effectiveBody']}',
+                                    style: const TextStyle(fontSize: 14.0, color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                // 운동명(타이틀)과 영어명을 세로로 늘어놓다
-                                Flexible(
-                                  flex: 0,
-                                  child: Text(
-                                    exercise['name'],
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                IconButton(
+                                  icon: Icon(
+                                    exercise['isBookmarked'] == true
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    color: exercise['isBookmarked'] == true ? Colors.yellow : Colors.black,
                                   ),
-                                ),
-                                const SizedBox(width: 10.0),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    exercise['englishName'],
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.grey,
-                                    ),
-                                    maxLines: 1, // 1行で収める
-                                    overflow: TextOverflow.ellipsis, // 表示しきれない場合は...を表示
-                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      exercise['isBookmarked'] = !(exercise['isBookmarked'] ?? false);
+                                    });
+                                  },
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                // 난이도와 운동 부위를 세로로 나열합니다
-                                Text(
-                                  '${exercise['difficulty']}  | ${exercise['effectiveBody']}',
-                                  style: const TextStyle(fontSize: 14.0, color: Colors.black),
-                                ),
-                              ],
                             ),
                           ],
                         ),
