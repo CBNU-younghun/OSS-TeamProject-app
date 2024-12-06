@@ -7,6 +7,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "200-250 kcal",
     "imageUrl" : "leg.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 양손으로 들어준다.",
       "다리는 어깨너비로 벌리고, 발끝은 20~30도 정도 벌려준다.",
@@ -32,6 +33,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "arm.jpg",
+    "isBookmarked": false,
     "preparation": [
       "벤치에 누워 두 발을 바닥에 고정한다.",
       "어깨를 뒤로 당긴 후 고정하고 가슴을 내밀어 준다.",
@@ -58,6 +60,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "몸통 패드가 가슴 높이에 오도록 의자 높이를 조절한다.",
       "다리를 어깨너비로 벌리고 머신과 몸을 밀착시킨다."
@@ -79,6 +82,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "200-280 kcal",
     "imageUrl" : "chest.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 두 손에 든 채로 벤치에 누워 두 발을 바닥에 고정한다.",
       "어깨를 뒤로 당긴 후 고정하고 가슴을 내밀어 준다.",
@@ -105,6 +109,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "100-150 kcal",
     "imageUrl" : "shoulder.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 양손에 들고 다리를 모아서 벤치에 않는다.",
       "허리를 앞으로 쭉 숙여준다.",
@@ -129,6 +134,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "shoulder.jpg",
+    "isBookmarked": false,
     "preparation": [
       "등받이를 70~80도 정도로 조절한다.",
       "벤치에 앉아 어깨와 가슴을 펴고 허리를 세워 준다.",
@@ -154,6 +160,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 양손으로 들고 다리는 어깨너비로 벌려준다.",
       "덤벨을 허벅지 옆으로 위치시켜준다.",
@@ -176,6 +183,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "arm.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 두손으로 잡고 벤치에 앉는다.",
       "덤벨을 손이 천장을 향하도록 들어 잡아 머리 뒤로 위치시켜준다.",
@@ -200,6 +208,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "인클라인 벤치를 50-60도 각도로 조절한다.",
       "덤벨을 들고, 상체를 벤치에 기대 몸을 고정한다.",
@@ -224,6 +233,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "arm.jpg",
+    "isBookmarked": true,
     "preparation": [
       "덤벨을 양손을 들고 발을 어깨너비로 선다.",
       "덤벨을 손바닥이 앞을 향하도록 잡고 허벅지 옆에 위치시켜 준다.",
@@ -239,6 +249,7 @@
       "덤벨을 내릴 때, 완전히 내리지 않고 이두에 힘이 완전히 풀리지 않을 정도까지만 내려준다."
     ]
   },
+
   {
     "name": "덤벨 플라이",
     "englishName": "Dumbbell Fly",
