@@ -249,7 +249,6 @@
       "덤벨을 내릴 때, 완전히 내리지 않고 이두에 힘이 완전히 풀리지 않을 정도까지만 내려준다."
     ]
   },
-
   {
     "name": "덤벨 플라이",
     "englishName": "Dumbbell Fly",
@@ -258,6 +257,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "180-250 kcal",
     "imageUrl" : "chest.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 두손에 든 채로 벤치에 누워 두발을 바닥에 고정한다.",
       "허리는 자연스럽게 아치 모양으로 되게 한다.",
@@ -282,6 +282,7 @@
     "difficulty": "High Level",
     "caloriesBurned": "250-300 kcal",
     "imageUrl" : "back&leg.jpg",
+    "isBookmarked": false,
     "preparation": [
       "바벨과 1-3cm 떨어진 곳에서 정강이를 위치시켜 준다.",
       "다리는 어깨너비로 벌려준다.",
@@ -312,6 +313,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "arm.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 양손을 들고 발을 어깨너비로 선다.",
       "덤벨을 손바닥이 앞을 향하도록 잡고 허벅지 옆에 위치시켜 준다.",
@@ -337,6 +339,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "chest.jpg",
+    "isBookmarked": false,
     "preparation": [
       "벤치 높이를 조절한다.",
       "벤치에 누워 두 발을 바닥에 고정한다.",
@@ -365,6 +368,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "chest&arm.jpg",
+    "isBookmarked": false,
     "preparation": [
       "두 손으로 그립을 잡아 몸을 띄워준다.",
       "자연스럽게 몸을 고정한다.",
@@ -390,6 +394,7 @@
     "difficulty": " Level",
     "caloriesBurned": "Low",
     "imageUrl" : "150-200 kcal",
+    "isBookmarked": false,
     "preparation": [
       "무릎이 조이지 않도록 무릎패드를 조절한다.",
       "어깨 너비보다 조금 넓게 바를 잡아준다.",
@@ -413,6 +418,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "150-250 kcal",
     "imageUrl" : "abs.jpg",
+    "isBookmarked": false,
     "preparation": [
       "무릎을 세우고 바닥에 앉아준다.",
       "복부에 힘을 주고상체를 살짝 뒤로 보내준다.",
@@ -434,6 +440,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "400-500 kcal",
     "imageUrl" : "all-body.jpg",
+    "isBookmarked": false,
     "preparation": [
       "스트레칭을 한다.",
       "자연스럽게 허리를 세워 선다."
@@ -456,6 +463,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "200-250 kcal",
     "imageUrl" : "leg.jpg",
+    "isBookmarked": false,
     "preparation": [
       "발을 골반 너비로 선다.",
       "가슴을 펴고, 허리를 세워준다."
@@ -481,6 +489,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "150-250 kcal",
     "imageUrl" : "abs.jpg",
+    "isBookmarked": false,
     "preparation": [
       "바닥에 바로 누워 준다.",
       "몸이 흔들리지 않게 양손으로 바닥을 짚어준다."
@@ -493,6 +502,7 @@
       "올릴 때 호흡을 뱉고, 내릴 때 호흡을 마신다."
     ]
   },
+
   {
     "name": "레그 익스텐션",
     "englishName": "Let Extension",
