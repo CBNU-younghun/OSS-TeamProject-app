@@ -1002,7 +1002,6 @@
       "팔로 하지 않도록 한다."
     ]
   },
-
   {
     "name": "시티드 케이블 로우",
     "englishName": "Seated Cable Row",
@@ -1011,6 +1010,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "다리를 고정하고 그립을 잡는다.",
       "허리를 세우고 가슴을 편다."
@@ -1032,6 +1032,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "50-75 kcal",
     "imageUrl" : "abs.jpg",
+    "isBookmarked": false,
     "preparation": [
       "바닥에 바로 누워준다.",
       "양손을 머리 뒤를 잡고 턱을 당겨준다."
@@ -1052,6 +1053,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "shoulder&arm.jpg",
+    "isBookmarked": false,
     "preparation": [
       "벤치에 앉아 가슴을 펴고 허리를 세워 준다.",
       "덤벨을 양손에 들고 손바닥이 몸을 향하게 어깨 앞에 위치시켜 준다."
@@ -1073,6 +1075,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "바를 눈높이 위치 혹은 그 위에 위치하도록 높이를 조절한다.",
       "바를 어깨너비보다 조금 넓게 잡아준다.",
@@ -1098,6 +1101,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "shoulder.jpg",
+    "isBookmarked": false,
     "preparation": [
       "바벨을 잡고 어깨너비로 선다.",
       "바벨을 어깨너비보다 조금 넓게 잡고, 바벨을 허벅지 앞에 위치하게 한다.",
@@ -1119,6 +1123,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "shoulder.jpg",
+    "isBookmarked": false,
     "preparation": [
       "바벨이 쇄골 바로 위에 위치하게 한다.",
       "팔꿈치는 바벨 살짝 앞에 위치하게 한다.",
@@ -1143,6 +1148,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "무릎이 조이지 않도록 무릎패드를 조절한다.",
       "어깨 너비보다 조금 넓게 바를 잡아준다.",
@@ -1167,6 +1173,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 한 손에 들고 덤벨을 든 반대쪽 무릎을 벤치에 올려준다.",
       "덤벨을 들지 않은 팔을 벤치에 올려 펴서 상체를 지지해 준다.",
@@ -1190,6 +1197,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "arm.jpg",
+    "isBookmarked": false,
     "preparation": [
       "덤벨을 든 팔의 반대쪽 무릎을 벤치에 올려준다.",
       "덤벨을 들지 않은 팔은 쭉 펴서 상체를 지지해 준다.",
@@ -1213,6 +1221,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "arm.jpg",
+    "isBookmarked": false,
     "preparation": [
       "어깨너비로 선다.",
       "바를 잡고 허벅지 옆에 위치시켜 준다.",
