@@ -3,6 +3,8 @@ import 'dart:convert'; // JSON 데이터를 인코딩 및 디코딩하기 위해
 import 'package:flutter/material.dart'; // Flutter의 기본 위젯들을 제공하는 패키지임
 import 'package:flutter/services.dart'; // 애플리케이션의 자산(asset)에 접근하거나 시스템과의 상호작용을 위해 사용됨
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위해 import 추가
+import 'favorite_exercise.dart';
+
 
 
 // ExerciseInfoPage는 운동 정보를 표시하고, 사용자가 운동을 선택하여 상세 정보를 확인할 수 있는 화면이다
@@ -16,7 +18,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   String? selectedBodyPart; // 현재 선택된 운동 부위를 저장하는 변수이다
   List<Map<String, dynamic>> filteredExercises = []; // 선택된 부위에 해당하는 운동 목록을 저장하는 리스트이다
   String searchQuery = ""; //검색 쿼리(사용자 입력)를 저장하기 위한 변수
-  List<Map<String, dynamic>> favoriteExercises = [];
+  final favoriteService = FavoriteService();
   bool showFavoritesOnly = false; // bookmark 필터 상태
   String? selectedFilter = 'all';
 
@@ -46,7 +48,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     }
     // Bookmark 필터링
     if (showFavoritesOnly) {
-      result = result.where((exercise) => favoriteExercises.contains(exercise)).toList();
+      result = result.where((exercise) => favoriteService.favoriteExercises.contains(exercise)).toList();
     }
     // 운동 부위 필터링
     if (selectedBodyPart != null) {
@@ -62,25 +64,12 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     }
     return result;
   }
-
-  void toggleFavorite(Map<String, dynamic> exercise) {
-    setState(() {
-      if (favoriteExercises.contains(exercise)) {
-        favoriteExercises.remove(exercise);
-        exercise['isBookmarked'] = false;
-      } else {
-        favoriteExercises.add(exercise);
-        exercise['isBookmarked'] = true;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            '운동 정보', // 선택된 부위가 없으면 '운동 정보' 제목을, 있으면 해당 부위 이름을 표시함
+            '운동 정보',
             style: TextStyle(
               fontFamily: 'Roboto', // 폰트 적용
               fontSize: 28.0, // 폰트 크기 설정
@@ -196,7 +185,6 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                 ],
               ),
             ),
-
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -338,17 +326,19 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      favoriteService.toggleFavorite(exercise);
+                                    });
+                                  },
                                   icon: Icon(
-                                    favoriteExercises.contains(exercise)
+                                    favoriteService.isFavorite(exercise)
                                         ? Icons.star
                                         : Icons.star_border,
-                                    color: favoriteExercises.contains(exercise)
+                                    color: favoriteService.isFavorite(exercise)
                                         ? Colors.yellow
                                         : Colors.grey,
                                   ),
-                                  onPressed: () {
-                                    toggleFavorite(exercise);
-                                  },
                                 ),
                               ],
                             ),
@@ -422,7 +412,9 @@ class _ExerciseDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              Row(
+                children: [
+                  Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${exercise['name']}',
@@ -430,8 +422,10 @@ class _ExerciseDetailPage extends StatelessWidget {
                     ),
                   ),
                   Text('(${exercise['englishName']})',
-                  style: const TextStyle(fontSize: 16.0, color: Color(0xFF666666),),
+                    style: const TextStyle(fontSize: 16.0, color: Color(0xFF666666),),
                   ),
+                ],
+              ),
                 ],
               ),
               const SizedBox(height: 24),
