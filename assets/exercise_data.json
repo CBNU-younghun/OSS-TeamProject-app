@@ -502,7 +502,6 @@
       "올릴 때 호흡을 뱉고, 내릴 때 호흡을 마신다."
     ]
   },
-
   {
     "name": "레그 익스텐션",
     "englishName": "Let Extension",
@@ -760,7 +759,6 @@
       "천천히 내리며, 과하게 내리지 않는다."
     ]
   },
-
   {
     "name": "벤치프레스",
     "englishName": "Bench Press",
@@ -769,6 +767,7 @@
     "difficulty": "High Level",
     "caloriesBurned": "220-300 kcal",
     "imageUrl" : "chest.jpg",
+    "isBookmarked": false,
     "preparation": [
       "벤치에 누워 두 발을 바닥에 고정한다.",
       "어깨를 뒤로 당긴 후 고정하고 가슴을 내밀어 준다.",
@@ -795,6 +794,7 @@
     "difficulty": "High Level",
     "caloriesBurned": "200-300 kcal",
     "imageUrl" : "back.jpg",
+    "isBookmarked": false,
     "preparation": [
       "바벨이 정강이 앞에 위차하도록 높이를 조절한다.",
       "다리를 어깨너비로 벌려준다.",
@@ -822,6 +822,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "leg.jpg",
+    "isBookmarked": false,
     "preparation": [
       "다리를 어깨너비로 벌려 선다.",
       "한쪽 다리는 발바닥이 위를 향하도록 벤치 위에 올려준다.",
@@ -846,6 +847,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "150-200 kcal",
     "imageUrl" : "shoulder.jpg",
+    "isBookmarked": false,
     "preparation": [
       "양손에 덤벨을 들고 어깨너비로 선다./ 벤치에 앉는다.",
       "상체를 살짝 앞으로 숙여 무게 중심이 어깨로 가도록 한다.",
@@ -869,6 +871,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "200-400 kcal",
     "imageUrl" : "all-body.jpg",
+    "isBookmarked": false,
     "preparation": [
       "다리가 완전히 펴지지 않을 만큼 안장의 높이를 조절해준다.",
       "머신에 앉고 손을 손잡이를 잡는다.",
@@ -889,6 +892,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "180-230 kcal",
     "imageUrl" : "shoulder.jpg",
+    "isBookmarked": false,
     "preparation": [
       "손잡이가 인중 높이에 위치하도록 한다.",
       "엉덩이를 패드 안쪽까지 밀착하도록 앉는다.",
@@ -914,6 +918,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "250-350 kcal",
     "imageUrl" : "all-body.jpg",
+    "isBookmarked": false,
     "preparation": [
       "자엽스럽게 허리 세워 선다."
     ],
@@ -933,6 +938,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "leg-b.jpg",
     "imageUrl" : "200-250 kcal",
+    "isBookmarked": false,
     "preparation": [
       "바벨을 발 앞에 위치키셔준다.",
       "다리를 골반 너비로 벌려 앉는다.",
@@ -960,6 +966,7 @@
     "difficulty": "Low Level",
     "caloriesBurned": "50-100 kcal",
     "imageUrl" : "abs.jpg",
+    "isBookmarked": false,
     "preparation": [
       "벤치 끝에 앉고 상체를 뒤로 조금 기울이고 손을 몸 뒤로 이동해 상체를 고정해준다.",
       "턱을 당기고 복근을 바로보면 상복부를 말아주어 허리를 잡아준다."
@@ -981,6 +988,7 @@
     "difficulty": "Medium Level",
     "caloriesBurned": "75-125 kcal",
     "imageUrl" : "shoulder.jpg",
+    "isBookmarked": false,
     "preparation": [
       "머신에 앉아 엉덩이를 뒤로 빼고 상채를 앞으로패드에 기댄다.",
       "손잡이를 잡아준다."
