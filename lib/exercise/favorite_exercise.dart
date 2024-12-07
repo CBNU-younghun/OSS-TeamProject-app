@@ -1,22 +1,35 @@
-import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoriteService extends ChangeNotifier {
-  List<Map<String, dynamic>> _favoriteExercises = [];
+class FavoriteService {
+  Set<String> favoriteExerciseNames = {};
 
-  List<Map<String, dynamic>> get favoriteExercises => _favoriteExercises;
+  late SharedPreferences _prefs;
 
-  //Bookmark에 추가되어 있는지 확인
-  bool isFavorite(Map<String, dynamic> exercise) {
-    return _favoriteExercises.contains(exercise);
+  Future<void> init() async {
+      _prefs = await SharedPreferences.getInstance();
+      final storedData = _prefs.getStringList('favoriteExercises');
+
+      if (storedData != null) {
+        favoriteExerciseNames = storedData.toSet();
+      }
   }
 
-  //Bookmark추가/삭제 토글함수
   void toggleFavorite(Map<String, dynamic> exercise) {
-    if (_favoriteExercises.contains(exercise)) {
-      _favoriteExercises.remove(exercise);
+    final exerciseName = exercise['name'].toString();
+    if (favoriteExerciseNames.contains(exerciseName)) {
+      favoriteExerciseNames.remove(exerciseName);
     } else {
-      _favoriteExercises.add(exercise);
+      favoriteExerciseNames.add(exerciseName);
     }
-    notifyListeners();
+    _saveFavorites();
+  }
+
+  bool isFavorite(Map<String, dynamic> exercise) {
+    final exerciseName = exercise['name'].toString();
+    return favoriteExerciseNames.contains(exerciseName);
+  }
+
+  void _saveFavorites() async {
+    await _prefs.setStringList('favoriteExercises', favoriteExerciseNames.toList());
   }
 }
