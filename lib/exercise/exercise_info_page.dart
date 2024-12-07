@@ -52,6 +52,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   }
 
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
+  List<Map<String, dynamic>> get filteredCategory {
     List<Map<String, dynamic>> result = exercises;
         if (searchQuery.toLowerCase() == "대게먹고싶다") {    //이스터에그
       return [
