@@ -6,6 +6,7 @@ import 'package:oss_team_project_app/providers/CrabAnimationProvider.dart';
 import '../user_info_page.dart'; // 마이페이지로 이동하기 위해 import 추가
 import 'package:oss_team_project_app/utils/CrabAnimation.dart';
 import 'package:provider/provider.dart';
+import 'favorite_exercise.dart';
 
 
 // ExerciseInfoPage는 운동 정보를 표시하고, 사용자가 운동을 선택하여 상세 정보를 확인할 수 있는 화면이다
@@ -19,27 +20,40 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
   String? selectedBodyPart; // 현재 선택된 운동 부위를 저장하는 변수이다
   List<Map<String, dynamic>> filteredExercises = []; // 선택된 부위에 해당하는 운동 목록을 저장하는 리스트이다
   String searchQuery = ""; //검색 쿼리(사용자 입력)를 저장하기 위한 변수
+  final favoriteService = FavoriteService();
+  bool showFavoritesOnly = false; // bookmark 필터 상태
+  String? selectedFilter = 'all';
 
   // 로컬 JSON 파일에서 운동 데이터를 로드하는 함수이다
   Future<void> _loadExercises() async {
-    String data = await rootBundle.loadString(
-        'assets/exercise_data.json'); // assets 폴더의 exercise_data.json 파일을 로드함
+    // assets 폴더의 exercise_data.json 파일을 로드함
+    String data = await rootBundle.loadString('assets/exercise_data.json');
     setState(() {
-      exercises = List<Map<String, dynamic>>.from(
-          json.decode(data)); // JSON 데이터를 디코딩하여 exercises 리스트에 저장함
+      // JSON 데이터를 디코딩하여 exercises 리스트에 저장함
+      exercises = List<Map<String, dynamic>>.from(json.decode(data));
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _loadExercises(); // 위젯이 초기화될 때 운동 데이터를 로드함
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    try {
+      await favoriteService.init();
+      await _loadExercises();
+    } catch (e) {
+      print('에러가 발생했습니다: $e');
+    } finally {
+      setState(() {});
+    }
   }
 
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
-  List<Map<String, dynamic>> get filteredCategory {
-
-    if (searchQuery.toLowerCase() == "대게먹고싶다") {    //이스터에그
+    List<Map<String, dynamic>> result = exercises;
+        if (searchQuery.toLowerCase() == "대게먹고싶다") {    //이스터에그
       return [
         {
           'name': '대게먹고싶다',
@@ -48,49 +62,44 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
       ];
     }
 
-    if (selectedBodyPart == null) {
-      if (searchQuery.isNotEmpty) {
-        return exercises.where((exercise) {
-          return exercise['name'].toLowerCase().contains(searchQuery);
-        }).toList();
-      }
-      return exercises;
+    if (selectedFilter == 'bookmark') {
+      showFavoritesOnly = true;
+    } else {
+      showFavoritesOnly = false;
     }
-    // 카테고리가 선택되어 있는 경우
-    final categoryFiltered = exercises.where((exercise) {
-      return exercise['bodyPart'] == selectedBodyPart; // 카테고리 필터링
-    }).toList();
 
-    // 검색 쿼리가 입력되어 있는 경우 추가로 압축
+    // Bookmark 필터링
+    if (showFavoritesOnly) {
+      result = result.where((exercise) => favoriteService.isFavorite(exercise)).toList();
+    }
+    // 운동 부위 필터링
+    if (selectedBodyPart != null) {
+      result = result.where((exercise) => exercise['bodyPart'] == selectedBodyPart).toList();
+    }
+    // 검색 필터링
     if (searchQuery.isNotEmpty) {
-      return categoryFiltered.where((exercise) {
-        return exercise['name'].toLowerCase().contains(searchQuery);
+      result = result.where((exercise) {
+        return exercise['name'].toLowerCase().contains(searchQuery) ||
+            exercise['englishName'].toLowerCase().contains(searchQuery) ||
+            exercise['difficulty'].toLowerCase().contains(searchQuery);
       }).toList();
     }
-
-    return categoryFiltered;
+    return result;
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            '운동 정보', // 선택된 부위가 없으면 '운동 정보' 제목을, 있으면 해당 부위 이름을 표시함
+            '운동 정보',
             style: TextStyle(
               fontFamily: 'Roboto', // 폰트 적용
-              fontSize: 21.0, // 폰트 크기 설정
+              fontSize: 28.0, // 폰트 크기 설정
               fontWeight: FontWeight.w900, // 폰트 두께 설정
               color: Colors.black, // 폰트 색상 설정
             ),
           ),
-          shape: const Border(
-            bottom: BorderSide(
-              color: Color(0xFFEFEFEF),
-              width: 1,
-            ),
-          ), // header border setting
           backgroundColor: Colors.white, // 앱바 배경색을 흰색으로 설정함
           iconTheme: const IconThemeData(color: Colors.black), // 앱바 아이콘 색상을 검은색으로 설정함
           actions: [
@@ -111,11 +120,9 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
           ],
         ),
         body: exercises.isEmpty
-            ? const Center(
-            child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
+            ? const Center(child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
             : Column(
           children: [
-
             Padding(
               padding: const EdgeInsets.only(
                 top: 20.0,
@@ -123,35 +130,83 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                 right: 20.0,
                 bottom: 0.0,
               ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: "Search",
-                  hintStyle: TextStyle(
-                    color: Color(0xFFB9B9BB),
-                    //fontSize: 16.0,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Color(0xFFB9B9BB),
-                  ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                          hintText: "Search",
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            //fontSize: 16.0,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor:  Color(0xFFF4F4F4),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 16.0,
+                          )
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value.toLowerCase();
+                        });
+                      },
                     ),
-                  filled: true,
-                  fillColor:  Color(0xFFF4F4F4),
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 16.0,
-                  )
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value.toLowerCase();
-                  });
-                },
+                  ),
+                  const SizedBox(width: 2.0),
+                  PopupMenuButton<String>(
+                    icon: Icon(
+                      selectedFilter == 'bookmark' ? Icons.filter_alt : Icons.filter_alt_outlined,
+                      color: selectedFilter == 'bookmark' ? Colors.black : Colors.black,
+                    ),
+                    onSelected: (value) {
+                      setState(() {
+                        selectedFilter = value;
+                        showFavoritesOnly = selectedFilter == 'bookmark';
+                      });
+                    },
+                    itemBuilder: (context){
+                      return[
+                      PopupMenuItem(
+                        value: 'all',
+                        child: Row(
+                          children: [
+                            if (selectedFilter == 'all')
+                              const Icon(Icons.check, size: 20, color: Colors.black), // チェックマーク
+                            const SizedBox(width: 8.0),
+                            const Text('All Data'),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'bookmark',
+                        child: Row(
+                          children: [
+                            if (selectedFilter == 'bookmark')
+                              const Icon(Icons.check, size: 20, color: Colors.black), // チェックマーク
+                            const SizedBox(width: 8.0),
+                            const Text('Bookmark'),
+                          ],
+                        ),
+                      ),
+                    ];
+                      },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    color: Colors.white,
+                  ),
+                ],
               ),
             ),
-
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -170,12 +225,12 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                            isSelected ? Colors.blue : const Color(0xFFECEDEE),
-                            minimumSize: const Size(80, 30),
+                            isSelected ? Colors.blue : Colors.white70,
+                            minimumSize: const Size(65, 30),
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(horizontal: 18.0),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(90),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                           onPressed: () {
@@ -228,57 +283,87 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                           ),
                         ],
                         border: Border.all(
-                          color: const Color(0xFFDEDFE0),
+                          color: Colors.black,
                           width: 1.0,
                         ),
                       ),
                       child: ListTile(
                         contentPadding:
                         const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
-                        title: Column(
+                        title: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                // 운동명(타이틀)과 영어명을 세로로 늘어놓다
-                                Flexible(
-                                  flex: 0,
-                                  child: Text(
-                                    exercise['name'],
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // 운동명(타이틀)과 영어명을 세로로 늘어놓다
+                                  Flexible(
+                                    flex: 0,
+                                    child: Text(
+                                      exercise['name'],
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ),
-                                const SizedBox(width: 10.0),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    exercise['englishName'],
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.grey,
+                                  const SizedBox(width: 10.0),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      exercise['englishName'],
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.grey,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 1, // 1行で収める
-                                    overflow: TextOverflow.ellipsis, // 表示しきれない場合は...を表示
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // 난이도와 운동 부위를 세로로 나열합니다
+                                  Text(
+                                    '${exercise['difficulty']}  | ${exercise['effectiveBody']}',
+                                    style: const TextStyle(fontSize: 14.0, color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      favoriteService.toggleFavorite(exercise);
+                                    });
+                                  },
+                                  icon: Icon(
+                                    favoriteService.isFavorite(exercise)
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    color: favoriteService.isFavorite(exercise)
+                                        ? Colors.yellow
+                                        : Colors.grey,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                // 난이도와 운동 부위를 세로로 나열합니다
-                                Text(
-                                  '${exercise['difficulty']}  | ${exercise['effectiveBody']}',
-                                  style: const TextStyle(fontSize: 14.0, color: Colors.black),
-                                ),
-                              ],
                             ),
                           ],
                         ),
@@ -330,7 +415,7 @@ class _ExerciseDetailPage extends StatelessWidget {
           '실천 방법',
           style: TextStyle(
             fontFamily: 'Roboto', // 폰트 적용함
-            fontSize: 21.0,
+            fontSize: 28.0,
             fontWeight: FontWeight.w900, // 폰트 두께 설정함
             color: Colors.black, // 폰트 색상 설정함
           ),
@@ -356,7 +441,9 @@ class _ExerciseDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              Row(
+                children: [
+                  Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${exercise['name']}',
@@ -364,8 +451,10 @@ class _ExerciseDetailPage extends StatelessWidget {
                     ),
                   ),
                   Text('(${exercise['englishName']})',
-                  style: const TextStyle(fontSize: 16.0, color: Color(0xFF666666),),
+                    style: const TextStyle(fontSize: 16.0, color: Color(0xFF666666),),
                   ),
+                ],
+              ),
                 ],
               ),
               const SizedBox(height: 24),
@@ -494,20 +583,10 @@ class _ExerciseDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 30),
               // 사진
               Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xFFEFEFEF),
-                      width: 1.0,
-                    ),
-                  ),
-                  child: ClipRRect(
-                    child: Image.asset('assets/images/${exercise['imageUrl']}'),
-                  ),
-                ),
+                child: Image.asset('assets/images/${exercise['imageUrl']}'),
               ),
               const SizedBox(height: 30),
               // 3colum
@@ -516,19 +595,19 @@ class _ExerciseDetailPage extends StatelessWidget {
                 children: [
                   const Text("준비", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  ...exercise['preparation'].map<Widget>((prep) => Text("- $prep",style: const TextStyle(fontSize: 16.0))).toList(),
+                  ...exercise['preparation'].map<Widget>((prep) => Text("• $prep",style: const TextStyle(fontSize: 16.0))).toList(),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 30),
 
                   const Text("실행 방법", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  ...exercise['steps'].map<Widget>((step) => Text("- $step",style: const TextStyle(fontSize: 16.0))).toList(),
+                  ...exercise['steps'].map<Widget>((step) => Text("• $step",style: const TextStyle(fontSize: 16.0))).toList(),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 30),
 
                   const Text("중요한 포인트", style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  ...exercise['keyPoints'].map<Widget>((point) => Text("- $point",style: const TextStyle(fontSize: 16.0))).toList(),
+                  ...exercise['keyPoints'].map<Widget>((point) => Text("• $point",style: const TextStyle(fontSize: 16.0))).toList(),
 
                   const SizedBox(height: 40),
                 ],
