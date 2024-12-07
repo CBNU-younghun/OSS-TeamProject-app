@@ -24,18 +24,29 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
 
   // 로컬 JSON 파일에서 운동 데이터를 로드하는 함수이다
   Future<void> _loadExercises() async {
-    String data = await rootBundle.loadString(
-        'assets/exercise_data.json'); // assets 폴더의 exercise_data.json 파일을 로드함
+    // assets 폴더의 exercise_data.json 파일을 로드함
+    String data = await rootBundle.loadString('assets/exercise_data.json');
     setState(() {
-      exercises = List<Map<String, dynamic>>.from(
-          json.decode(data)); // JSON 데이터를 디코딩하여 exercises 리스트에 저장함
+      // JSON 데이터를 디코딩하여 exercises 리스트에 저장함
+      exercises = List<Map<String, dynamic>>.from(json.decode(data));
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _loadExercises(); // 위젯이 초기화될 때 운동 데이터를 로드함
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    try {
+      await favoriteService.init();
+      await _loadExercises();
+    } catch (e) {
+      print('에러가 발생했습니다: $e');
+    } finally {
+      setState(() {});
+    }
   }
 
   // 현재 선택된 카테고리를 기반으로 필터링한 운동 가져오기
@@ -48,7 +59,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     }
     // Bookmark 필터링
     if (showFavoritesOnly) {
-      result = result.where((exercise) => favoriteService.favoriteExercises.contains(exercise)).toList();
+      result = result.where((exercise) => favoriteService.isFavorite(exercise)).toList();
     }
     // 운동 부위 필터링
     if (selectedBodyPart != null) {
@@ -64,6 +75,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
     }
     return result;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,8 +109,7 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
           ],
         ),
         body: exercises.isEmpty
-            ? const Center(
-            child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
+            ? const Center(child: CircularProgressIndicator()) // 운동 데이터가 로드되지 않았으면 로딩 인디케이터를 표시함
             : Column(
           children: [
             Padding(
@@ -300,8 +311,8 @@ class _ExerciseInfoPageState extends State<ExerciseInfoPage> {
                                         fontSize: 14.0,
                                         color: Colors.grey,
                                       ),
-                                      maxLines: 1, // 1行で収める
-                                      overflow: TextOverflow.ellipsis, // 表示しきれない場合は...を表示
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ],
