@@ -418,15 +418,14 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         if (selectedBodyPart != null &&
                             selectedExercise != null &&
                             selectedTime != null &&
-                            selectedSets != null &&
-                            selectedReps != null) {
+                            (selectedBodyPart == '유산소' || (selectedSets != null && selectedReps != null))) {
                           setState(() {
                             exercises.add({
                               'bodyPart': selectedBodyPart,
                               'exercise': selectedExercise,
                               'time': selectedTime,
-                              'sets': selectedSets,
-                              'reps': selectedReps,
+                              if(selectedBodyPart != '유산소')'sets': selectedSets,
+                              if(selectedBodyPart != '유산소')'reps': selectedReps,
                             }); // 운동 추가
                           });
                           Navigator.pop(context); // 모달 닫기
