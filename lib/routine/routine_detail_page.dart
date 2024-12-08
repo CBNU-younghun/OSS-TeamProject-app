@@ -825,15 +825,14 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         if (selectedBodyPart != null &&
                             exercises[index]['exercise'] != null &&
                             exercises[index]['time'] != null &&
-                            exercises[index]['sets'] != null &&
-                            exercises[index]['reps'] != null) {
+                            (selectedBodyPart == '유산소' || (exercises[index]['sets'] != null && exercises[index]['reps'] != null))) {
                           setState(() {
                             exercises[index] = {
                               'exercise': exercises[index]['exercise'], // 운동 이름 업데이트
                               'bodyPart': selectedBodyPart, // 운동 부위 업데이트
                               'time': exercises[index]['time'], // 운동 시간 업데이트
-                              'sets': exercises[index]['sets'], // 세트 수 업데이트
-                              'reps': exercises[index]['reps'], // 세트 당 운동 횟수 업데이트
+                              if(selectedBodyPart != '유산소')'sets': exercises[index]['sets'], // 세트 수 업데이트
+                              if(selectedBodyPart != '유산소')'reps': exercises[index]['reps'], // 세트 당 운동 횟수 업데이트
                             };
                           });
                           Navigator.pop(context); // 모달 닫기
