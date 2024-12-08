@@ -258,7 +258,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               ),
             ),
             const SizedBox(height: 16.0),
-if(selectedBodyPart != '유산소')...[
+            if(selectedBodyPart != '유산소')...[
             // 세트당 운동횟수 선택 필드
             Container(
               decoration: const BoxDecoration(

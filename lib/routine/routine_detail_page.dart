@@ -342,6 +342,8 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     const SizedBox(height: 16.0),
 
+                    if(selectedBodyPart != '유산소') ...[
+
                     // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
                       dropdownColor: Colors.white,  // 세트 당 운동횟수 선택 드롭다운 폼 색상 흰색으로 설정
@@ -408,6 +410,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       ),
                       hint: const Text('세트 수 선택'), // 힌트 텍스트 추가
                     ),
+                    ],
                     const SizedBox(height: 32.0),
 
                     ElevatedButton(
