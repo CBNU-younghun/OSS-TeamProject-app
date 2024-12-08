@@ -135,8 +135,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 int index = entry.key; // 운동의 인덱스
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
                 return ListTile(
-                  title: Text(
-                    '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회 X ${exercise['sets']}세트', // 운동 정보 표시
+                  title: Text(exercise['bodyPart'] == '유산소'
+                      ? '${exercise['exercise']} - ${exercise['time']}초' //운동 부위가 유산소일 경우
+                      : '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회 X ${exercise['sets']}세트', // 운동 정보 표시
                     style: const TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
