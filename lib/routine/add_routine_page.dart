@@ -39,16 +39,17 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
 
   // 운동을 추가하는 함수이다
   void _addExercise() {
-    if (selectedExercise != null &&
-        selectedSets != null && // 유산소와 무관하게 시간은 항상 필요
-        (selectedBodyPart == '유산소' || (selectedTime != null || selectedReps != null))) { // 시간 또는 횟수 중 하나만 입력해도 유효
+    if (selectedBodyPart!= null &&
+        selectedExercise != null &&
+        selectedTime != null && // 유산소와 무관하게 시간은 항상 필요
+        (selectedBodyPart == '유산소' || (selectedReps != null || selectedSets != null))) { // 시간 또는 횟수 중 하나만 입력해도 유효
       setState(() {
         addedExercises.add({
+          'bodyPart': selectedExercise!['bodyPart'], // 운동 부위 추가
           'exercise': selectedExercise!['name'], // 운동 이름 추가
           'time': selectedTime ?? 0, // 운동 시간이 null이면 0으로 처리
-          'sets': selectedBodyPart == '유산소' ? 0 : selectedSets, // 세트 수 추가, 유산소는 세트 0
-          'bodyPart': selectedExercise!['bodyPart'], // 운동 부위 추가
-          'reps': selectedBodyPart == '유산소' ? 0 : selectedReps ?? 0, // 세트당 운동횟수가 null이면 0으로 처리, 유산소는 0으로 처리
+          if(selectedBodyPart != '유산소')'sets': selectedSets, // 세트 수 추가
+          if(selectedBodyPart != '유산소')'reps': selectedReps ?? 0, // 세트당 운동횟수가 null이면 0으로 처리
         });
         selectedTime = null; // 선택된 시간 초기화
         selectedSets = null; // 선택된 세트 수 초기화
@@ -258,7 +259,7 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               ),
             ),
             const SizedBox(height: 16.0),
-if(selectedBodyPart != '유산소')...[
+            if(selectedBodyPart != '유산소')...[
             // 세트당 운동횟수 선택 필드
             Container(
               decoration: const BoxDecoration(
