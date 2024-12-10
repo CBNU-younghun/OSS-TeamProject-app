@@ -410,11 +410,15 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
               ...addedExercises.asMap().entries.map((entry) {
                 int index = entry.key; // 운동의 인덱스
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
+                String timeText = exercise['time'] > 0 ? '${exercise['time']}초 동안' : ''; // 시간이 0보다 크면 텍스트 표시
+                String repsText = exercise['reps'] > 0 ? '${exercise['reps']}회' : ''; // 횟수가 0보다 크면 텍스트 표시
+                String setsText = exercise['sets'] != null && exercise['sets'] > 0 ? '${exercise['sets']}세트' : ''; // 세트 수가 0보다 크면 텍스트 표시
+
                 return ListTile(
                   title: Text(
                     exercise['bodyPart'] == '유산소'
-                    ? '${exercise['exercise']} - ${exercise['time']}초' // 운동부위가 유산소일 경우
-                    : '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회, ${exercise['sets']}세트',// 운동 이름, 시간, 세트 수 표시
+                        ? '${exercise['exercise']} - $timeText' // 유산소 운동일 경우 시간만 표시
+                        : '${exercise['exercise']} - $timeText ${[repsText, setsText].where((text) => text.isNotEmpty).join(', ')}',
                     style: const TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
