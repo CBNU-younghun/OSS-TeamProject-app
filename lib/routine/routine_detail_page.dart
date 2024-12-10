@@ -135,8 +135,9 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                 int index = entry.key; // 운동의 인덱스
                 Map<String, dynamic> exercise = entry.value; // 운동 데이터
                 return ListTile(
-                  title: Text(
-                    '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회 X ${exercise['sets']}세트', // 운동 정보 표시
+                  title: Text(exercise['bodyPart'] == '유산소'
+                      ? '${exercise['exercise']} - ${exercise['time']}초' //운동 부위가 유산소일 경우
+                      : '${exercise['exercise']} - ${exercise['time']}초 동안 ${exercise['reps']}회 X ${exercise['sets']}세트', // 운동 정보 표시
                     style: const TextStyle(
                       fontFamily: 'Roboto', // 폰트 설정
                       fontSize: 16.0, // 글자 크기 설정
@@ -342,6 +343,8 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     const SizedBox(height: 16.0),
 
+                    if(selectedBodyPart != '유산소') ...[
+
                     // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
                       dropdownColor: Colors.white,  // 세트 당 운동횟수 선택 드롭다운 폼 색상 흰색으로 설정
@@ -408,6 +411,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       ),
                       hint: const Text('세트 수 선택'), // 힌트 텍스트 추가
                     ),
+                    ],
                     const SizedBox(height: 32.0),
 
                     ElevatedButton(
@@ -415,15 +419,14 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                         if (selectedBodyPart != null &&
                             selectedExercise != null &&
                             selectedTime != null &&
-                            selectedSets != null &&
-                            selectedReps != null) {
+                            (selectedBodyPart == '유산소' || (selectedSets != null && selectedReps != null))) {
                           setState(() {
                             exercises.add({
                               'bodyPart': selectedBodyPart,
                               'exercise': selectedExercise,
                               'time': selectedTime,
-                              'sets': selectedSets,
-                              'reps': selectedReps,
+                              if(selectedBodyPart != '유산소')'sets': selectedSets,
+                              if(selectedBodyPart != '유산소')'reps': selectedReps,
                             }); // 운동 추가
                           });
                           Navigator.pop(context); // 모달 닫기
@@ -746,6 +749,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                     ),
                     const SizedBox(height: 16.0),
                     // 세트 수 선택
+                    if(selectedBodyPart != '유산소') ... [
 
                     // 세트 당 운동 횟수 선택
                     DropdownButtonFormField<int>(
@@ -814,21 +818,21 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       ),
                       hint: const Text('세트 수 선택'), // 힌트 텍스트 추가
                     ),
+                    ],
                     const SizedBox(height: 32.0),
                     ElevatedButton(
                       onPressed: () {
                         if (selectedBodyPart != null &&
                             exercises[index]['exercise'] != null &&
                             exercises[index]['time'] != null &&
-                            exercises[index]['sets'] != null &&
-                            exercises[index]['reps'] != null) {
+                            (selectedBodyPart == '유산소' || (exercises[index]['sets'] != null && exercises[index]['reps'] != null))) {
                           setState(() {
                             exercises[index] = {
                               'exercise': exercises[index]['exercise'], // 운동 이름 업데이트
                               'bodyPart': selectedBodyPart, // 운동 부위 업데이트
                               'time': exercises[index]['time'], // 운동 시간 업데이트
-                              'sets': exercises[index]['sets'], // 세트 수 업데이트
-                              'reps': exercises[index]['reps'], // 세트 당 운동 횟수 업데이트
+                              if(selectedBodyPart != '유산소')'sets': exercises[index]['sets'], // 세트 수 업데이트
+                              if(selectedBodyPart != '유산소')'reps': exercises[index]['reps'], // 세트 당 운동 횟수 업데이트
                             };
                           });
                           Navigator.pop(context); // 모달 닫기
