@@ -63,6 +63,55 @@ class _DietDetailPageState extends State<DietDetailPage> {
     }
   }
 
+  //삭제 확인 다이얼로그 표시 함수
+  void _showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '삭제 확인',
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w600,
+              fontSize: 20.0,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          content: Text('해당 식단을 삭제하시겠습니까?'),
+          actions: [
+            TextButton(
+              child: Text(
+                '취소',
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    color: Colors.black
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+            ),
+            TextButton(
+              child: Text(
+                '삭제',
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    color: Colors.red
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+                _deleteDiet(); // 식단 삭제 함수 호출
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   // 식단을 삭제하는 함수
   void _deleteDiet() {
     widget.onDelete(); // 상위 위젯의 onDelete 콜백 함수 호출
@@ -467,7 +516,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.delete, color: Colors.black), // 쓰레기통 아이콘 추가
-            onPressed: _deleteDiet, // 아이콘 클릭 시 삭제 함수 호출
+            onPressed: _showDeleteConfirmationDialog,// 아이콘 클릭 시 삭제 함수 호출
           ),
         ],
       ),
