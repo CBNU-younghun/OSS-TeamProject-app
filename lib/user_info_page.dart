@@ -58,7 +58,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
   // 저장된 사용자 정보를 로드하는 함수
   void _loadUserInfo() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance(); // SharedPreferences 인스턴스를 가져옴
+    SharedPreferences prefs =
+        await SharedPreferences.getInstance(); // SharedPreferences 인스턴스를 가져옴
     setState(() {
       // 저장된 나이, 키, 몸무게를 각 컨트롤러에 설정
       ageController.text = (prefs.getInt('age') ?? '').toString();
@@ -104,7 +105,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   // BMI 카테고리에 따른 색상을 반환하는 함수
-  Color _getBMICategoryColor(String category) {
+  Color _getBMICategoryColor(String? category) {
+    if (category == null) {
+      // BMI 카테고리가 없을 경우 흰색 반환
+      return Colors.white;
+    }
+
     switch (category) {
       case '저체중':
         return Colors.grey;
@@ -115,7 +121,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
       case '비만':
         return Colors.red;
       default:
-        return Colors.black;
+        return Colors.white; // 혹시 예상치 못한 값일 경우도 흰색
     }
   }
 
@@ -142,44 +148,45 @@ class _UserInfoPageState extends State<UserInfoPage> {
         child: ListView(
           children: [
             // BMI 정보 표시를 최상단으로 이동
-            if (bmi != null && bmiCategory != null) ...[
-              Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // 아이콘 표시
-                    FaIcon(
-                      FontAwesomeIcons.male, // 전신 사람 아이콘
-                      size: 100,
-                      color: _getBMICategoryColor(bmiCategory!), // BMI 카테고리에 따른 색상 적용
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.male,
+                    size: 100,
+                    color: _getBMICategoryColor(bmiCategory),
+                  ),
+                  SizedBox(height: 16.0),
+                  Text(
+                    bmi != null
+                        ? 'BMI: ${bmi!.toStringAsFixed(1)}'
+                        : 'BMI 정보가 없습니다.',
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(height: 16.0),
-                    Text(
-                      'BMI: ${bmi!.toStringAsFixed(1)}',
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  Text(
+                    bmiCategory != null ? '체중 분류: $bmiCategory' : '체중 분류 정보 없음',
+                    style: TextStyle(
+                      fontSize: 20.0,
                     ),
-                    Text(
-                      '체중 분류: $bmiCategory',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(height: 32.0),
-            ],
+            ),
+            SizedBox(height: 32.0),
+
             // 나이 입력 필드
             _buildTextField(
               controller: ageController,
               label: '나이',
               hintText: '나이를 입력하세요',
             ),
-            SizedBox(height: 16.0), // 위젯 사이의 간격을 줌
+            SizedBox(height: 16.0), // 위젯 사이 간격
+
             // 키 입력 필드
             _buildTextField(
               controller: heightController,
@@ -188,32 +195,34 @@ class _UserInfoPageState extends State<UserInfoPage> {
               onChanged: (_) => _updateBMI(), // 값 변경 시 BMI 업데이트
             ),
             SizedBox(height: 16.0),
+
             // 몸무게 입력 필드
             _buildTextField(
               controller: weightController,
               label: '몸무게 (kg)',
               hintText: '몸무게를 입력하세요',
-              onChanged: (_) => _updateBMI(), // 값 변경 시 BMI 업데이트
+              onChanged: (_) => _updateBMI(),
             ),
             SizedBox(height: 32.0),
+
             // 저장 버튼
             ElevatedButton(
-              onPressed: _saveUserInfo, // 버튼을 눌렀을 때 사용자 정보를 저장
+              onPressed: _saveUserInfo,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // 버튼의 배경색을 설정
-                elevation: 4.0, // 버튼의 그림자 높이를 설정
+                backgroundColor: Colors.blue,
+                elevation: 4.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0), // 버튼의 모서리를 둥글게 만듬
+                  borderRadius: BorderRadius.circular(16.0),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 16.0), // 버튼의 상하 여백을 설정
+                padding: EdgeInsets.symmetric(vertical: 16.0),
               ),
               child: Text(
-                '저장', // 버튼에 표시될 텍스트
+                '저장',
                 style: TextStyle(
-                  fontFamily: 'Bebas Neue', // 폰트를 설정
-                  fontSize: 20.0, // 폰트 크기를 설정
-                  fontWeight: FontWeight.bold, // 폰트를 굵게 설정
-                  color: Colors.white, // 텍스트의 색상을 설정
+                  fontFamily: 'Bebas Neue',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
             ),
