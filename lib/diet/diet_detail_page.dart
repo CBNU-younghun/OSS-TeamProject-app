@@ -466,7 +466,13 @@ class _DietDetailPageState extends State<DietDetailPage> {
                         final selectedFoodData = foodData.firstWhere(
                               (food) => food['foodName'] == selectedFood,
                         );
-                        
+
+                        // 중량 비율 계산
+                        double ratio = selectedWeight! / 100.0;
+                        double calories = selectedFoodData['calories'] * ratio;
+                        double carbs = selectedFoodData['carbs'] * ratio;
+                        double protein = selectedFoodData['protein'] * ratio;
+                        double fat = selectedFoodData['fat'] * ratio;
 
                         setState(() {
                           foods.add({
