@@ -130,7 +130,7 @@ class _DietDetailPageState extends State<DietDetailPage> {
             mainAxisSize: MainAxisSize.min, // 컨텐츠에 맞게 크기 조절
             children: [
               ListTile(
-                leading: Icon(Icons.edit, color: Colors.blue), // 수정 아이콘
+                leading: Icon(Icons.edit), // 수정 아이콘
                 title: Text('음식 수정'), // 수정 옵션 텍스트
                 onTap: () {
                   Navigator.pop(context); // 모달 닫기
