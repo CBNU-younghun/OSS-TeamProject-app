@@ -23,6 +23,12 @@ class _AddDietPageState extends State<AddDietPage> {
   String? selectedCategory;
   String? selectedFood;
 
+  // [추가 부분 시작] 중량 선택을 위한 변수 및 리스트
+  // 100g 단위로 선택할 수 있게끔 옵션을 정의
+  int? selectedWeight;
+  List<int> weightOptions = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+  // [추가 부분 끝]
+
   // 음식 카테고리 리스트
   List<String> categories = [
     '곡류, 서류 제품', '과일류', '구이류', '국 및 탕류', '김치류', '나물·숙채류', '두류, 견과 및 종실류', '면 및 만두류', '밥류', '볶음류',
@@ -80,19 +86,40 @@ class _AddDietPageState extends State<AddDietPage> {
       return;
     }
 
+    // [추가 부분 시작] 중량 선택 여부 확인
+    if (selectedWeight == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('중량을 선택해주세요.')),
+      );
+      return;
+    }
+    // [추가 부분 끝]
+
     // 선택된 음식 데이터를 foodData 리스트에서 가져오기
     final selectedFoodData = foodData.firstWhere(
           (food) => food['식품명'] == selectedFood,
     );
 
+    // [추가 부분 시작] 중량 비율 계산 로직
+    // 기본 값(칼로리, 영양소)은 100g 기준이므로
+    // 선택된 중량 / 100 비율을 곱하여 영양소 값을 재계산
+    double ratio = selectedWeight! / 100.0;
+    double calories = selectedFoodData['에너지(kcal)'] * ratio;
+    double carbs = selectedFoodData['탄수화물(g)'] * ratio;
+    double protein = selectedFoodData['단백질(g)'] * ratio;
+    double fat = selectedFoodData['지방(g)'] * ratio;
+    // [추가 부분 끝]
+
     // 선택된 음식 데이터를 foodList에 추가
     setState(() {
+      // [추가 부분] 계산된 영양소를 사용하도록 수정
       foodList.add({
         'foodName': selectedFoodData['식품명'], // 음식명 저장
-        'calories': selectedFoodData['에너지(kcal)'], // 칼로리 저장
-        'carbs': selectedFoodData['탄수화물(g)'], // 탄수화물 저장
-        'protein': selectedFoodData['단백질(g)'], // 단백질 저장
-        'fat': selectedFoodData['지방(g)'], // 지방 저장
+        'calories': calories, // 비율 계산된 칼로리
+        'carbs': carbs,       // 비율 계산된 탄수화물
+        'protein': protein,   // 비율 계산된 단백질
+        'fat': fat,           // 비율 계산된 지방
+        'weight': selectedWeight // 선택한 중량 정보 저장
       });
     });
 
@@ -100,6 +127,7 @@ class _AddDietPageState extends State<AddDietPage> {
     selectedCategory = null; // 카테고리 초기화
     filteredFoods = []; // 음식 리스트 초기화
     selectedFood = null; // 선택된 음식 초기화
+    selectedWeight = null; // [추가 부분] 중량 초기화
   }
 
   // 식단을 저장하는 함수
@@ -207,6 +235,34 @@ class _AddDietPageState extends State<AddDietPage> {
               ),
             SizedBox(height: 16.0),
 
+            // [추가 부분 시작] 음식이 선택되면 중량 선택 드롭다운 표시
+            if (selectedFood != null)
+              Container(
+                width: double.infinity,
+                child: DropdownButtonFormField<int>(
+                  value: selectedWeight,
+                  dropdownColor: Colors.white,
+                  onChanged: (value) => setState(() => selectedWeight = value),
+                  items: weightOptions.map((weight) {
+                    return DropdownMenuItem(
+                      value: weight,
+                      child: Text('${weight}g'),
+                    );
+                  }).toList(),
+                  hint: Text('중량 선택'),
+                  decoration: InputDecoration(
+                    labelText: '중량 선택',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                  ),
+                  isExpanded: true,
+                ),
+              ),
+            // [추가 부분 끝]
+
+            SizedBox(height: 16.0),
+
             // 음식 추가 및 저장 버튼을 같은 줄에 배치
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween, // 버튼 간격 설정
@@ -280,7 +336,8 @@ class _AddDietPageState extends State<AddDietPage> {
                 Map<String, dynamic> food = entry.value; // 음식 데이터
                 return ListTile(
                   title: Text(
-                    '${food['foodName']} - ${food['calories']}kcal', // 음식명과 칼로리 표시
+                    // [추가 부분] 중량 정보와 비율 계산된 kcal 표시
+                    '${food['foodName']} - ${food['calories'].toStringAsFixed(1)}kcal (${food['weight']}g)',
                     style: TextStyle(
                       fontFamily: 'Roboto',
                       fontSize: 16.0,
