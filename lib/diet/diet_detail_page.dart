@@ -35,6 +35,10 @@ class _DietDetailPageState extends State<DietDetailPage> {
   String? selectedCategory;
   String? selectedFood;
 
+  // 중량 선택 기능을 위한 변수 및 리스트
+  int? selectedWeight;
+  List<int> weightOptions = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+
   @override
   void initState() {
     super.initState();
@@ -111,7 +115,6 @@ class _DietDetailPageState extends State<DietDetailPage> {
     );
   }
 
-
   // 식단을 삭제하는 함수
   void _deleteDiet() {
     widget.onDelete(); // 상위 위젯의 onDelete 콜백 함수 호출
@@ -158,7 +161,11 @@ class _DietDetailPageState extends State<DietDetailPage> {
   void _showEditFoodForm(int index) {
     // 음식 데이터 로드
     final Map<String, dynamic> currentFood = foods[index];
-    final TextEditingController foodNameController = TextEditingController(text: currentFood['foodName']);
+
+    // 기존 음식 수정을 위해, 선택한 음식, 카테고리, 중량을 초기화
+    selectedCategory = null;
+    selectedFood = null;
+    selectedWeight = null;
 
     showModalBottomSheet(
       context: context,
@@ -234,6 +241,32 @@ class _DietDetailPageState extends State<DietDetailPage> {
                         ),
                         isExpanded: true,
                       ),
+
+                    // 음식이 선택된 경우 중량 선택 드롭다운 표시
+                    if (selectedFood != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top:16.0),
+                        child: DropdownButtonFormField<int>(
+                          value: selectedWeight,
+                          dropdownColor: Colors.white,
+                          onChanged: (value) => setModalState(() => selectedWeight = value),
+                          items: weightOptions.map((weight) {
+                            return DropdownMenuItem(
+                              value: weight,
+                              child: Text('${weight}g'),
+                            );
+                          }).toList(),
+                          hint: Text('중량 선택'),
+                          decoration: InputDecoration(
+                            labelText: '중량 선택',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                          ),
+                          isExpanded: true,
+                        ),
+                      ),
+
                     SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
@@ -243,17 +276,35 @@ class _DietDetailPageState extends State<DietDetailPage> {
                           );
                           return;
                         }
+
+                        // 중량 선택 여부 확인
+                        if (selectedWeight == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('중량을 선택해주세요.')),
+                          );
+                          return;
+                        }
+
                         // 선택된 음식 데이터를 가져와서 foods 리스트에 업데이트
                         final selectedFoodData = foodData.firstWhere(
                               (food) => food['foodName'] == selectedFood,
                         );
+
+                        // 중량 비율 계산
+                        double ratio = selectedWeight! / 100.0;
+                        double calories = selectedFoodData['calories'] * ratio;
+                        double carbs = selectedFoodData['carbs'] * ratio;
+                        double protein = selectedFoodData['protein'] * ratio;
+                        double fat = selectedFoodData['fat'] * ratio;
+
                         setState(() {
                           foods[index] = {
                             'foodName': selectedFoodData['foodName'],
-                            'calories': selectedFoodData['calories'],
-                            'carbs': selectedFoodData['carbs'],
-                            'protein': selectedFoodData['protein'],
-                            'fat': selectedFoodData['fat'],
+                            'calories': calories,
+                            'carbs': carbs,
+                            'protein': protein,
+                            'fat': fat,
+                            'weight': selectedWeight // 중량 정보 저장
                           };
                         });
                         Navigator.pop(context);
@@ -288,6 +339,11 @@ class _DietDetailPageState extends State<DietDetailPage> {
 
   // 음식 추가 폼을 보여주는 함수
   void _showAddFoodForm() {
+    // 새로운 음식 추가 시 선택 항목 초기화
+    selectedCategory = null;
+    selectedFood = null;
+    selectedWeight = null;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -362,6 +418,32 @@ class _DietDetailPageState extends State<DietDetailPage> {
                         ),
                         isExpanded: true,
                       ),
+
+                    // 음식이 선택되면 중량 선택 드롭다운 표시
+                    if (selectedFood != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top:16.0),
+                        child: DropdownButtonFormField<int>(
+                          value: selectedWeight,
+                          dropdownColor: Colors.white,
+                          onChanged: (value) => setModalState(() => selectedWeight = value),
+                          items: weightOptions.map((weight) {
+                            return DropdownMenuItem(
+                              value: weight,
+                              child: Text('${weight}g'),
+                            );
+                          }).toList(),
+                          hint: Text('중량 선택'),
+                          decoration: InputDecoration(
+                            labelText: '중량 선택',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                          ),
+                          isExpanded: true,
+                        ),
+                      ),
+
                     SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () {
@@ -371,17 +453,29 @@ class _DietDetailPageState extends State<DietDetailPage> {
                           );
                           return;
                         }
+
+                        // 중량 선택 여부 확인
+                        if (selectedWeight == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('중량을 선택해주세요.')),
+                          );
+                          return;
+                        }
+
                         // 선택된 음식 데이터를 가져와서 foods 리스트에 추가
                         final selectedFoodData = foodData.firstWhere(
                               (food) => food['foodName'] == selectedFood,
                         );
+                        
+
                         setState(() {
                           foods.add({
                             'foodName': selectedFoodData['foodName'],
-                            'calories': selectedFoodData['calories'],
-                            'carbs': selectedFoodData['carbs'],
-                            'protein': selectedFoodData['protein'],
-                            'fat': selectedFoodData['fat'],
+                            'calories': calories,
+                            'carbs': carbs,
+                            'protein': protein,
+                            'fat': fat,
+                            'weight': selectedWeight // 중량 정보 저장
                           });
                         });
                         Navigator.pop(context);
@@ -524,14 +618,6 @@ class _DietDetailPageState extends State<DietDetailPage> {
         padding: EdgeInsets.all(16.0), // 전체 패딩 설정
         child: ListView(
           children: [
-            /*Text(
-              '식단 이름:', // 식단 이름 레이블
-              style: TextStyle(
-                fontFamily: 'Roboto', // 폰트 설정
-                fontSize: 18.0, // 글자 크기 설정
-                fontWeight: FontWeight.bold, // 글자 두께 설정
-              ),
-            ),*/
             _buildTextField(
               controller: nameController, // 식단 이름 텍스트 필드 컨트롤러 연결
               label: '식단 이름', // 텍스트 필드 라벨
@@ -767,7 +853,6 @@ class _DietDetailPageState extends State<DietDetailPage> {
       ],
     );
   }
-
 
   // 일관된 스타일의 텍스트 필드를 생성하는 헬퍼 메소드
   Widget _buildTextField({
