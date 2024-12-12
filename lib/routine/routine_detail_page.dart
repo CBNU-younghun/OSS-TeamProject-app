@@ -144,6 +144,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
                       color: Colors.black87, // 글자 색상 설정
                     ),
                   ),
+                  subtitle: Text('운동 부위: ${exercise['bodyPart']}'), // 운동 부위 표시
                   trailing: IconButton(
                     icon: const Icon(Icons.more_vert, color: Colors.black), // 옵션 아이콘 설정
                     onPressed: () => _showEditExerciseOptions(index), // 옵션 버튼 클릭 시 편집 옵션 표시
