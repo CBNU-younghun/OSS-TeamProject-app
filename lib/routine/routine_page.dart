@@ -210,7 +210,7 @@ class _RoutinePageState extends State<RoutinePage> {
             style: TextStyle(fontFamily: 'Roboto', fontWeight: FontWeight.w600, fontSize: 20.0),
           ),
           content: const Text(
-            '정말 삭제하시겠습니까?',
+            '정말 루틴을 삭제하시겠습니까?',
             style: TextStyle(fontFamily: 'Roboto', fontSize: 16.0),
           ),
           actions: [

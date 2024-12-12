@@ -280,14 +280,14 @@ class _AddRoutinePageState extends State<AddRoutinePage> {
                     ),
                   ),
                 )).toList(),
-                hint: const Text('세트 당 운동횟수 선택'),
+                hint: const Text('세트 당 운동 횟수 선택'),
                 onChanged: (value) {
                   setState(() {
                     selectedReps = value;
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: '세트 당 운동횟수',
+                  labelText: '세트 당 운동 횟수',
                   labelStyle: const TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w600,
