@@ -1,72 +1,88 @@
-//루틴 관리 페이지
-import 'dart:convert'; // JSON 인코딩 및 디코딩을 위해 사용
-import 'package:flutter/material.dart'; // Flutter의 위젯들을 사용하기 위해 임포트
-import 'package:shared_preferences/shared_preferences.dart'; // 로컬 저장소에 데이터 저장을 위해 사용
-import 'add_routine_page.dart'; // 루틴 추가 페이지를 위한 임포트
-import 'routine_detail_page.dart'; // 루틴 상세 페이지를 위한 임포트
-import '../user_info_page.dart'; // 사용자 정보 페이지를 위한 임포트
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'add_routine_page.dart';
+import 'routine_detail_page.dart';
+import '../user_info_page.dart';
 
-// 루틴 관리 화면
+enum SortOption { name, createdAt, lastUpdated }
+
 class RoutinePage extends StatefulWidget {
   @override
   _RoutinePageState createState() => _RoutinePageState();
 }
 
 class _RoutinePageState extends State<RoutinePage> {
-  // 저장된 루틴 정보를 담는 리스트
   List<Map<String, dynamic>> routines = [];
+  SortOption _currentSortOption = SortOption.createdAt;
 
   @override
   void initState() {
     super.initState();
-    _loadRoutines(); // 초기화 시 저장된 루틴 불러오기
+    _loadRoutines();
   }
 
-  // 로컬 저장소에서 루틴 데이터를 불러옴
   void _loadRoutines() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedRoutines = prefs.getString('routines');
     if (savedRoutines != null) {
       setState(() {
         routines = List<Map<String, dynamic>>.from(json.decode(savedRoutines));
+        _sortRoutines(_currentSortOption);
       });
     }
   }
 
-  // 현재 루틴 리스트를 로컬 저장소에 저장
   void _saveRoutines() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('routines', json.encode(routines));
   }
 
-  // 새로운 루틴 추가
   void _addNewRoutine(Map<String, dynamic> routine) {
     setState(() {
       if (!routine.containsKey('createdAt')) {
         routine['createdAt'] = DateTime.now().toIso8601String();
       }
       routines.add(routine);
-      _saveRoutines(); // 업데이트 후 저장
+      _sortRoutines(_currentSortOption);
+      _saveRoutines();
     });
   }
 
-  // 기존 루틴 업데이트
   void _updateRoutine(int index, Map<String, dynamic> updatedRoutine) {
     setState(() {
       routines[index] = updatedRoutine;
-      _saveRoutines(); // 변경사항 저장
+      routines[index]['lastUpdated'] = DateTime.now().toIso8601String();
+      _sortRoutines(_currentSortOption);
+      _saveRoutines();
     });
   }
 
-  // 루틴 삭제
   void _removeRoutine(int index) {
     setState(() {
       routines.removeAt(index);
-      _saveRoutines(); // 삭제 후 저장
+      _saveRoutines();
     });
   }
 
-  // 루틴 추가 페이지로 이동
+  void _sortRoutines(SortOption option) {
+    setState(() {
+      _currentSortOption = option;
+      switch (option) {
+        case SortOption.name:
+          routines.sort((a, b) => a['name'].compareTo(b['name']));
+          break;
+        case SortOption.createdAt:
+          routines.sort((a, b) => DateTime.parse(b['createdAt']).compareTo(DateTime.parse(a['createdAt'])));
+          break;
+        case SortOption.lastUpdated:
+          routines.sort((a, b) => DateTime.parse(b['lastUpdated'] ?? b['createdAt'])
+              .compareTo(DateTime.parse(a['lastUpdated'] ?? a['createdAt'])));
+          break;
+      }
+    });
+  }
+
   void _goToAddRoutinePage() async {
     final result = await Navigator.push(
       context,
@@ -76,11 +92,10 @@ class _RoutinePageState extends State<RoutinePage> {
       ),
     );
     if (result != null) {
-      _addNewRoutine(result); // 새 루틴 추가
+      _addNewRoutine(result);
     }
   }
 
-  // 루틴 상세 페이지로 이동
   void _goToRoutineDetailPage(int index) async {
     final result = await Navigator.push(
       context,
@@ -95,7 +110,7 @@ class _RoutinePageState extends State<RoutinePage> {
     );
     if (result != null) {
       setState(() {
-        _saveRoutines(); // 변경 사항 저장
+        _saveRoutines();
       });
     }
   }
@@ -116,7 +131,24 @@ class _RoutinePageState extends State<RoutinePage> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
         actions: [
-          // 사용자 정보 페이지로 이동
+          PopupMenuButton<SortOption>(
+            onSelected: _sortRoutines,
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<SortOption>>[
+              const PopupMenuItem<SortOption>(
+                value: SortOption.name,
+                child: Text('이름순'),
+              ),
+              const PopupMenuItem<SortOption>(
+                value: SortOption.createdAt,
+                child: Text('생성일순'),
+              ),
+              const PopupMenuItem<SortOption>(
+                value: SortOption.lastUpdated,
+                child: Text('최근 수정순'),
+              ),
+            ],
+            icon: Icon(Icons.sort),
+          ),
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -131,7 +163,6 @@ class _RoutinePageState extends State<RoutinePage> {
           ),
         ],
       ),
-      // 루틴 리스트 또는 빈 상태 표시
       body: routines.isEmpty
           ? const Center(
         child: Text(
@@ -189,7 +220,6 @@ class _RoutinePageState extends State<RoutinePage> {
           },
         ),
       ),
-      // 루틴 추가 버튼
       floatingActionButton: FloatingActionButton(
         onPressed: _goToAddRoutinePage,
         backgroundColor: Colors.blueAccent,
@@ -198,7 +228,6 @@ class _RoutinePageState extends State<RoutinePage> {
     );
   }
 
-  // 삭제 확인 다이얼로그
   void _showDeleteRoutineDialog(int index) {
     showDialog(
       context: context,
@@ -237,4 +266,3 @@ class _RoutinePageState extends State<RoutinePage> {
     );
   }
 }
-
